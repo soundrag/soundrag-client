@@ -1,17 +1,25 @@
-import { useState } from "react";
+import { ThemeProvider } from "styled-components";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+
+import GlobalStyle from "./style/GlobalStyle";
+import Theme from "./style/Theme";
+
+import SplashPage from "./pages/SplashPage";
+import StudioPage from "./pages/StudioPage";
+import UserDataPage from "./pages/UserDataPage";
 
 const App = () => {
-  const [count, setCount] = useState(0);
-
   return (
-    <>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-      </div>
-    </>
+    <ThemeProvider theme={Theme}>
+      <GlobalStyle />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<SplashPage />} />
+          <Route path="/studio" element={<StudioPage />} />
+          <Route path="/user" element={<UserDataPage />} />
+        </Routes>
+      </BrowserRouter>
+    </ThemeProvider>
   );
 };
 
