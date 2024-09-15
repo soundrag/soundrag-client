@@ -1,8 +1,9 @@
 import { create } from "zustand";
 
 const useAuthStore = create((set) => ({
-  isLoggedIn: false,
-  toggleLogin: () => set((state) => ({ isLoggedIn: !state.isLoggedIn })),
+  errorMessage: "",
+  setIsLoggedIn: (loggedIn) => set({ isLoggedIn: loggedIn }),
+  setErrorMessage: (message) => set({ errorMessage: message }),
 }));
 
 export default useAuthStore;

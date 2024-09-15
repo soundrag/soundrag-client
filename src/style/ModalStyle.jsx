@@ -4,7 +4,6 @@ const ModalBackground = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 99999;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -25,15 +24,19 @@ const ModalContainer = styled.div`
   border-radius: 5%;
   background-color: ${({ theme }) => theme.color.modalBackgroundColor};
   box-shadow: 0 0 1rem ${({ theme }) => theme.color.modalBackgroundColor};
+  cursor: auto;
 `;
 
 const ModalContent = styled.div`
-  font-size: ${({ theme }) => theme.fontSize.large};
+  color: ${({ theme }) => theme.color.mainColor};
+  font-size: ${({ theme }) => theme.fontSize.xLarge};
+  font-weight: bold;
 `;
 
 const ModalButtonContainer = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: ${({ hasSecondButton }) =>
+    hasSecondButton ? "space-between" : "center"};
   width: 100%;
 `;
 
