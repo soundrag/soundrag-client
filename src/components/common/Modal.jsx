@@ -9,16 +9,27 @@ import {
   ModalButtonContainer,
 } from "../../style/ModalStyle";
 
-const Modal = ({ content, firstButtonText, secondButtonText }) => {
-  const closeModal = useModalStore((state) => state.closeModal);
+const Modal = ({
+  modalId,
+  content,
+  firstButtonText,
+  secondButtonText,
+  handleFirstButton,
+  handleSecondButton,
+}) => {
+  const { closeModal } = useModalStore();
 
   return (
-    <ModalBackground onClick={closeModal}>
+    <ModalBackground onClick={() => closeModal(modalId)}>
       <ModalContainer onClick={(event) => event.stopPropagation()}>
         <ModalContent>{content}</ModalContent>
-        <ModalButtonContainer>
-          {firstButtonText && <Button text={firstButtonText} />}
-          {secondButtonText && <Button text={secondButtonText} />}
+        <ModalButtonContainer hasSecondButton={secondButtonText}>
+          {firstButtonText && (
+            <Button text={firstButtonText} handleClick={handleFirstButton} />
+          )}
+          {secondButtonText && (
+            <Button text={secondButtonText} handleClick={handleSecondButton} />
+          )}
         </ModalButtonContainer>
       </ModalContainer>
     </ModalBackground>

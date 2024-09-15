@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const NavContainer = styled.nav`
@@ -17,11 +16,7 @@ const NavContainer = styled.nav`
   background-color: ${({ theme }) => theme.color.menuBackgroundColor};
 `;
 
-const UserMenuContainer = styled.div`
-  display: flex;
-`;
-
-const StyledLink = styled(Link)`
+const NavItem = styled.div`
   display: flex;
   align-items: center;
   padding: 0.5rem 1rem;
@@ -29,26 +24,10 @@ const StyledLink = styled(Link)`
   color: ${({ theme }) => theme.color.mainColor};
   font-size: ${({ theme }) => theme.fontSize.large};
   font-weight: bold;
-  text-decoration: none;
-
-  &:hover {
-    color: ${({ theme }) => theme.color.buttonHoverColor};
-  }
 `;
 
 const SoundragImage = styled.img`
   width: 5rem;
 `;
 
-const GoogleImage = styled.img`
-  width: 2rem;
-  margin-right: 0.5rem;
-`;
-
-export {
-  NavContainer,
-  UserMenuContainer,
-  StyledLink,
-  SoundragImage,
-  GoogleImage,
-};
+export { NavContainer, NavItem, SoundragImage };

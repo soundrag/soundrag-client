@@ -1,5 +1,5 @@
 import Modal from "../components/common/Modal";
-import NavBar from "../components/common/NavBar";
+import NavHeader from "../components/common/NavHeader";
 import Button from "../components/common/Button";
 
 import useModalStore from "../stores/useModalStore";
@@ -7,15 +7,26 @@ import useModalStore from "../stores/useModalStore";
 import { StudioContainer, SaveButtonContainer } from "../style/StudioPageStyle";
 
 const StudioPage = () => {
-  const { isModalOpen, openModal } = useModalStore();
+  const { modals, openModal, closeModal } = useModalStore();
 
   return (
     <>
-      {isModalOpen && <Modal />}
-      <NavBar />
+      {modals.saveModal && (
+        <Modal
+          modalId="saveModal"
+          content="Save?"
+          firstButtonText="Back"
+          handleFirstButton={() => closeModal("saveModal")}
+        />
+      )}
+      <NavHeader />
       <StudioContainer></StudioContainer>
       <SaveButtonContainer>
-        <Button text="Save" size="xLarge" handleClick={openModal} />
+        <Button
+          text="Save"
+          size="xLarge"
+          handleClick={() => openModal("saveModal")}
+        />
       </SaveButtonContainer>
     </>
   );
