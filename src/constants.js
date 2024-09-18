@@ -1,0 +1,60 @@
+const ROOM_SIZE = 30;
+const WALL_HEIGHT = 5;
+const WALL_DEPTH = 0.2;
+
+const ROTATE_X_MINUS_90_DEGREES = [-Math.PI / 2, 0, 0];
+const ROTATE_Y_90_DEGREES = [0, Math.PI / 2, 0];
+
+const STANDARD_SPEAKER_SCALE = 0.5;
+const STANDARD_LISTENER_SCALE = 0.03;
+
+const DEFAULT_POSITION = [0, 0, 0];
+const FIRST_SPEAKER_STARTING_POSITION = [-2, -0.12, -5];
+const SECOND_SPEAKER_STARTING_POSITION = [-2, -0.12, 5];
+const LISTENER_STARTING_POSITION = [5, -0.12, 0];
+const CAMERA_STARTING_POSITION = [15, 10, 5];
+const DIRECTIONAL_LIGHT_POSITION = [5, 5, 5];
+const WALL_POSITIONS = [
+  {
+    direction: "forwardWall",
+    position: [0, WALL_HEIGHT / 2, -(ROOM_SIZE / 2)],
+    rotation: DEFAULT_POSITION,
+  },
+  {
+    direction: "backWall",
+    position: [0, WALL_HEIGHT / 2, ROOM_SIZE / 2],
+    rotation: DEFAULT_POSITION,
+  },
+  {
+    direction: "leftWall",
+    position: [-(ROOM_SIZE / 2), WALL_HEIGHT / 2, 0],
+    rotation: ROTATE_Y_90_DEGREES,
+  },
+  {
+    direction: "rightWall",
+    position: [ROOM_SIZE / 2, WALL_HEIGHT / 2, 0],
+    rotation: ROTATE_Y_90_DEGREES,
+  },
+];
+
+const MEDIUM_LIGHT_INTENSITY = 0.5;
+const HARD_LIGHT_INTENSITY = 1;
+
+export {
+  ROOM_SIZE,
+  WALL_HEIGHT,
+  WALL_DEPTH,
+  ROTATE_X_MINUS_90_DEGREES,
+  ROTATE_Y_90_DEGREES,
+  STANDARD_SPEAKER_SCALE,
+  STANDARD_LISTENER_SCALE,
+  DEFAULT_POSITION,
+  FIRST_SPEAKER_STARTING_POSITION,
+  SECOND_SPEAKER_STARTING_POSITION,
+  LISTENER_STARTING_POSITION,
+  CAMERA_STARTING_POSITION,
+  DIRECTIONAL_LIGHT_POSITION,
+  WALL_POSITIONS,
+  MEDIUM_LIGHT_INTENSITY,
+  HARD_LIGHT_INTENSITY,
+};

@@ -2,6 +2,8 @@ import Modal from "../components/common/Modal";
 import NavHeader from "../components/common/NavHeader";
 import Button from "../components/common/Button";
 
+import Studio from "../components/Studio";
+
 import useModalStore from "../stores/useModalStore";
 
 import { StudioContainer, SaveButtonContainer } from "../style/StudioPageStyle";
@@ -11,6 +13,17 @@ const StudioPage = () => {
 
   return (
     <>
+      <NavHeader />
+      <StudioContainer>
+        <Studio />
+      </StudioContainer>
+      <SaveButtonContainer>
+        <Button
+          text="Save"
+          size="xLarge"
+          handleClick={() => openModal("saveModal")}
+        />
+      </SaveButtonContainer>
       {modals.saveModal && (
         <Modal
           modalId="saveModal"
@@ -19,15 +32,6 @@ const StudioPage = () => {
           handleFirstButton={() => closeModal("saveModal")}
         />
       )}
-      <NavHeader />
-      <StudioContainer></StudioContainer>
-      <SaveButtonContainer>
-        <Button
-          text="Save"
-          size="xLarge"
-          handleClick={() => openModal("saveModal")}
-        />
-      </SaveButtonContainer>
     </>
   );
 };

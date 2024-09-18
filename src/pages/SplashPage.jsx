@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 import Button from "../components/common/Button";
 
-import SoundragLogo from "../assets/logo.svg";
+import SoundragLogo from "../assets/images/logo.svg";
 
 import {
   SplashContainer,
