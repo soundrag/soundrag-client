@@ -1,6 +1,6 @@
 import { useRef } from "react";
 
-import sampleFile from "../assets/sample.mp3";
+import sampleFile from "../assets/sounds/sample.mp3";
 
 import useAudioStore from "../stores/useAudioStore";
 

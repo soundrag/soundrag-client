@@ -1,7 +1,7 @@
 import AudioPlayer from "../AudioPlayer";
 import AuthPanel from "../AuthPanel";
 
-import soundragLogo from "../../assets/home-logo.svg";
+import soundragLogo from "../../assets/images/home-logo.svg";
 
 import {
   NavContainer,

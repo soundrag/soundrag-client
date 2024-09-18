@@ -5,7 +5,7 @@ import auth from "../../firebase";
 
 import Modal from "./common/Modal";
 
-import googleLogo from "../assets/google-logo.svg";
+import googleLogo from "../assets/images/google-logo.svg";
 
 import { loginUser, logoutUser, verifyUserAuth } from "../services/authService";
 
