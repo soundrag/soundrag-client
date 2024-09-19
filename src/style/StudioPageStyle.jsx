@@ -8,6 +8,11 @@ const StudioContainer = styled.div`
   width: 100vw;
   height: 100vh;
   gap: 10rem;
+  background: radial-gradient(
+    circle,
+    rgba(55, 55, 54, 1) 0%,
+    rgba(0, 0, 0, 1) 30%
+  );
 `;
 
 const SaveButtonContainer = styled.div`

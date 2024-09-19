@@ -13,11 +13,7 @@ const Floor = () => {
   const floorTexture = useLoadedTexture("/textures/carpet.jpg");
 
   return (
-    <mesh
-      position={DEFAULT_POSITION}
-      rotation={ROTATE_X_MINUS_90_DEGREES}
-      receiveShadow
-    >
+    <mesh position={DEFAULT_POSITION} rotation={ROTATE_X_MINUS_90_DEGREES}>
       <planeGeometry args={[ROOM_SIZE, ROOM_SIZE]} />
       <meshStandardMaterial map={floorTexture} />
     </mesh>
@@ -28,7 +24,7 @@ const Wall = ({ position, rotation }) => {
   const wallTexture = useLoadedTexture("/textures/foam.jpg");
 
   return (
-    <mesh position={position} rotation={rotation} receiveShadow>
+    <mesh position={position} rotation={rotation}>
       <boxGeometry args={[ROOM_SIZE, WALL_HEIGHT, WALL_DEPTH]} />
       <meshStandardMaterial map={wallTexture} />
     </mesh>

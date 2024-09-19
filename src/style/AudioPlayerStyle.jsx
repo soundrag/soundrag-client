@@ -14,7 +14,7 @@ const FileName = styled.div`
 `;
 
 const ControlButton = styled.button`
-  padding: 10px;
+  padding: 0.7rem;
   border: none;
   background-color: ${({ theme }) => theme.color.mainColor};
   color: ${({ theme }) => theme.color.whiteColor};
@@ -28,10 +28,11 @@ const ControlButton = styled.button`
 `;
 
 const UploadButton = styled.button`
-  padding: 10px;
+  padding: 0.7rem;
   border: none;
   background-color: ${({ theme }) => theme.color.buttonHoverFontColor};
   color: ${({ theme }) => theme.color.whiteColor};
+  font-weight: bold;
   cursor: pointer;
 
   &:hover {

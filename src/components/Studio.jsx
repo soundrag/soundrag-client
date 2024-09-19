@@ -7,6 +7,7 @@ import Listener from "./targets/Listener";
 import Speaker from "./targets/Speaker";
 
 import useModelStore from "../stores/useModelStore";
+import useModeStore from "../stores/useModeStore";
 
 import {
   STANDARD_SPEAKER_SCALE,
@@ -22,6 +23,7 @@ import {
 
 const Studio = () => {
   const { loadModel, setModelScale, setModelPosition } = useModelStore();
+  const { isViewMode } = useModeStore();
 
   useEffect(() => {
     loadModel("firstSpeaker", "/models/speaker.gltf");
@@ -38,13 +40,12 @@ const Studio = () => {
   }, [loadModel]);
 
   return (
-    <Canvas camera={{ position: CAMERA_STARTING_POSITION }} shadows>
-      <OrbitControls />
+    <Canvas camera={{ position: CAMERA_STARTING_POSITION }}>
+      <OrbitControls enabled={isViewMode()} />
       <ambientLight intensity={MEDIUM_LIGHT_INTENSITY} />
       <directionalLight
         position={DIRECTIONAL_LIGHT_POSITION}
         intensity={HARD_LIGHT_INTENSITY}
-        castShadow
       />
       <Room />
       <Speaker modelName="firstSpeaker" />
