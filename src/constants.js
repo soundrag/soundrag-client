@@ -1,3 +1,5 @@
+const SPEAKER_SIZE = 0.5;
+const LISTENER_SIZE = 1;
 const ROOM_SIZE = 30;
 const WALL_HEIGHT = 5;
 const WALL_DEPTH = 0.2;
@@ -41,6 +43,8 @@ const MEDIUM_LIGHT_INTENSITY = 0.5;
 const HARD_LIGHT_INTENSITY = 1;
 
 export {
+  SPEAKER_SIZE,
+  LISTENER_SIZE,
   ROOM_SIZE,
   WALL_HEIGHT,
   WALL_DEPTH,

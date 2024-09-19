@@ -1,5 +1,6 @@
 import AudioPlayer from "../AudioPlayer";
 import AuthPanel from "../AuthPanel";
+import Switch from "../Switch";
 
 import soundragLogo from "../../assets/images/home-logo.svg";
 
@@ -17,6 +18,9 @@ const NavHeader = () => {
       </NavItem>
       <NavItem>
         <AudioPlayer />
+      </NavItem>
+      <NavItem>
+        <Switch />
       </NavItem>
       <NavItem>
         <AuthPanel />

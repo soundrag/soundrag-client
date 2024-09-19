@@ -1,36 +1,27 @@
-import { useEffect } from "react";
-import { useThree } from "@react-three/fiber";
+import { forwardRef, useImperativeHandle } from "react";
 
-import useModelStore from "../../stores/useModelStore";
+import useDraggableTarget from "../../hooks/useDraggableTarget";
 
-const Model = ({ modelName }) => {
-  const { model, scale, position } = useModelStore((state) => ({
-    model: state.models[modelName],
-    scale: state.scales[modelName],
-    position: state.positions[modelName],
-  }));
+const Model = forwardRef(function Model({ modelName }, ref) {
+  const { meshRef, model, position, scale, bind } = useDraggableTarget({
+    modelName,
+  });
 
-  const { scene } = useThree();
+  useImperativeHandle(ref, () => {
+    meshRef.current;
+  });
 
-  useEffect(() => {
-    if (model) {
-      const clonedScene = model.clone();
+  if (!model) return null;
 
-      clonedScene.position.set(...position);
-      clonedScene.scale.set(scale, scale, scale);
-
-      clonedScene.traverse((child) => {
-        if (child.isMesh) {
-          child.castShadow = true;
-        }
-      });
-      scene.add(clonedScene);
-
-      return () => scene.remove(clonedScene);
-    }
-  }, [model, modelName, scene, scale, position]);
-
-  return null;
-};
+  return (
+    <primitive
+      ref={meshRef}
+      object={model}
+      position={position}
+      scale={scale}
+      {...bind()}
+    />
+  );
+});
 
 export default Model;
