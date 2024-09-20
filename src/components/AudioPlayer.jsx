@@ -13,7 +13,7 @@ import {
   UploadButton,
 } from "../style/AudioPlayerStyle";
 
-import { formatTime } from "../utils/formatter";
+import { formatTime } from "../utils/formatters";
 
 const AudioPlayer = () => {
   const {

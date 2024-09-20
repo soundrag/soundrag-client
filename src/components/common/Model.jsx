@@ -1,14 +1,11 @@
-import { forwardRef, useImperativeHandle } from "react";
+/* eslint-disable no-unused-vars */
+import { forwardRef } from "react";
 
 import useDraggableTarget from "../../hooks/useDraggableTarget";
 
 const Model = forwardRef(function Model({ modelName }, ref) {
   const { meshRef, model, position, scale, bind } = useDraggableTarget({
     modelName,
-  });
-
-  useImperativeHandle(ref, () => {
-    meshRef.current;
   });
 
   if (!model) return null;

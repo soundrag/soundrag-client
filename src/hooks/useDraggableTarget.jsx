@@ -22,7 +22,7 @@ import {
 const useDraggableTarget = ({ modelName }) => {
   const meshRef = useRef();
   const initialPointerPosition = useRef(new Vector3());
-  const initialObjectPosition = useRef(new Vector3());
+  const initialTargetPosition = useRef(new Vector3());
 
   const { camera, gl } = useThree();
 
@@ -38,7 +38,7 @@ const useDraggableTarget = ({ modelName }) => {
   const size = isSpeaker ? SPEAKER_SIZE : LISTENER_SIZE;
   const plane = getPlane(isSpeaker, camera);
 
-  const onDragStartHandler = ({ event }) => {
+  const handleDragStart = ({ event }) => {
     if (!isDragMode()) return;
     event.stopPropagation();
 
@@ -48,16 +48,16 @@ const useDraggableTarget = ({ modelName }) => {
       camera,
       gl,
     );
-    initialObjectPosition.current.copy(new Vector3(...position));
+    initialTargetPosition.current.copy(new Vector3(...position));
   };
 
-  const onDragHandler = ({ event }) => {
+  const handleDrag = ({ event }) => {
     if (!isDragMode()) return;
     event.stopPropagation();
 
     const currentIntersect = calculateIntersectPoint(plane, event, camera, gl);
     const newPosition = calculateNewPosition(
-      initialObjectPosition.current,
+      initialTargetPosition.current,
       currentIntersect,
       initialPointerPosition.current,
     );
@@ -67,8 +67,8 @@ const useDraggableTarget = ({ modelName }) => {
   };
 
   const bind = useGesture({
-    onDragStart: onDragStartHandler,
-    onDrag: onDragHandler,
+    onDragStart: handleDragStart,
+    onDrag: handleDrag,
   });
 
   return { meshRef, model, position, scale, bind };

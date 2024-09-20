@@ -29,6 +29,7 @@ const calculateNewPosition = (
   initialIntersect,
 ) => {
   const delta = currentIntersect.clone().sub(initialIntersect);
+
   return initialPosition.clone().add(delta);
 };
 
