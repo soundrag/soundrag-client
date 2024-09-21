@@ -7,40 +7,6 @@ const PlayerContainer = styled.div`
   gap: 10px;
 `;
 
-const FileName = styled.div`
-  position: absolute;
-  left: 30%;
-  bottom: -50%;
-`;
-
-const ControlButton = styled.button`
-  padding: 0.7rem;
-  border: none;
-  background-color: ${({ theme }) => theme.color.mainColor};
-  color: ${({ theme }) => theme.color.whiteColor};
-  font-weight: bold;
-  cursor: pointer;
-
-  &:hover {
-    background-color: ${({ theme }) => theme.color.buttonHoverColor};
-    color: ${({ theme }) => theme.color.blackColor};
-  }
-`;
-
-const UploadButton = styled.button`
-  padding: 0.7rem;
-  border: none;
-  background-color: ${({ theme }) => theme.color.buttonHoverFontColor};
-  color: ${({ theme }) => theme.color.whiteColor};
-  font-weight: bold;
-  cursor: pointer;
-
-  &:hover {
-    background-color: ${({ theme }) => theme.color.buttonMainFontColor};
-    color: ${({ theme }) => theme.color.blackColor};
-  }
-`;
-
 const RangeSlider = styled.input.attrs({ type: "range" })`
   -webkit-appearance: none;
   appearance: none;
@@ -113,11 +79,60 @@ const TimeTable = styled.div`
   }
 `;
 
+const FileName = styled.div`
+  position: absolute;
+  left: 36%;
+  bottom: -60%;
+`;
+
+const ResetButton = styled.button`
+  padding: 0.7rem;
+  border: none;
+  background-color: ${({ theme }) => theme.color.buttonHoverFontColor};
+  color: ${({ theme }) => theme.color.whiteColor};
+  font-weight: bold;
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.color.buttonMainFontColor};
+    color: ${({ theme }) => theme.color.blackColor};
+  }
+`;
+
+const UploadButton = styled.button`
+  padding: 0.7rem;
+  border: none;
+  background-color: ${({ theme }) => theme.color.buttonHoverFontColor};
+  color: ${({ theme }) => theme.color.whiteColor};
+  font-weight: bold;
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.color.buttonMainFontColor};
+    color: ${({ theme }) => theme.color.blackColor};
+  }
+`;
+
+const ControlButton = styled.button`
+  padding: 0.7rem;
+  border: none;
+  background-color: ${({ theme }) => theme.color.mainColor};
+  color: ${({ theme }) => theme.color.whiteColor};
+  font-weight: bold;
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.color.buttonHoverColor};
+    color: ${({ theme }) => theme.color.blackColor};
+  }
+`;
+
 export {
   PlayerContainer,
-  FileName,
   RangeSlider,
   TimeTable,
-  ControlButton,
+  FileName,
+  ResetButton,
   UploadButton,
+  ControlButton,
 };

@@ -35,8 +35,8 @@ const ModalContent = styled.div`
 
 const ModalButtonContainer = styled.div`
   display: flex;
-  justify-content: ${({ hasSecondButton }) =>
-    hasSecondButton ? "space-between" : "center"};
+  justify-content: ${({ $hasSecondButton }) =>
+    $hasSecondButton ? "space-between" : "center"};
   width: 100%;
 `;
 
