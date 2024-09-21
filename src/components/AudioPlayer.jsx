@@ -1,95 +1,89 @@
-import { useRef } from "react";
+import Modal from "./common/Modal";
+import UploadZone from "./UploadZone";
 
-import sampleFile from "../assets/sounds/sample.mp3";
+import useAudioControl from "../hooks/useAudioControl";
 
 import useAudioStore from "../stores/useAudioStore";
+import useModalStore from "../stores/useModalStore";
 
 import {
   PlayerContainer,
-  FileName,
   RangeSlider,
   TimeTable,
-  ControlButton,
+  FileName,
+  ResetButton,
   UploadButton,
+  ControlButton,
 } from "../style/AudioPlayerStyle";
 
-import { formatTime } from "../utils/formatters";
+import { formatDuration, formatSilderValue } from "../utils/formatters";
 
 const AudioPlayer = () => {
   const {
+    audioRef,
+    handlePlayPause,
+    handleLoadedMetadata,
+    handleTimeUpdate,
+    handleSeekChange,
+  } = useAudioControl();
+
+  const {
     isPlaying,
-    currentTime,
     duration,
+    currentTime,
     fileName,
-    togglePlayPause,
-    setCurrentTime,
-    setDuration,
-    setFileName,
+    fileUrl,
+    resetTemporaryFile,
+    resetUploadedFile,
+    setUploadedFile,
   } = useAudioStore();
+  const { modals, openModal, closeModal } = useModalStore();
 
-  const audioRef = useRef(null);
-
-  const handlePlayPause = () => {
-    const audio = audioRef.current;
-
-    if (!audio) return;
-
-    if (isPlaying) {
-      audio.pause();
-    } else {
-      if (audio.readyState >= 3) {
-        audio.play();
-      }
-    }
-
-    togglePlayPause();
+  const handleCloseButton = () => {
+    resetTemporaryFile();
+    closeModal("uploadModal");
   };
 
-  const handleLoadedMetadata = () => {
-    if (audioRef.current) {
-      setDuration(audioRef.current.duration);
-      setFileName(fileName);
-    }
-  };
-
-  const handleTimeUpdate = () => {
-    if (audioRef.current) {
-      setCurrentTime(audioRef.current.currentTime);
-    }
-  };
-
-  const handleSeekChange = (e) => {
-    const newTime = (e.target.value / 100) * duration;
-    if (audioRef.current) {
-      audioRef.current.currentTime = newTime;
-
-      setCurrentTime(newTime);
-    }
+  const handleUploadButton = () => {
+    setUploadedFile();
+    closeModal("uploadModal");
   };
 
   return (
     <PlayerContainer>
       <audio
         ref={audioRef}
-        src={sampleFile}
+        src={fileUrl}
         onLoadedMetadata={handleLoadedMetadata}
         onTimeUpdate={handleTimeUpdate}
       />
-      <UploadButton>Upload</UploadButton>
+      <ResetButton onClick={resetUploadedFile}>Reset</ResetButton>
+      <UploadButton onClick={() => openModal("uploadModal")}>
+        Upload
+      </UploadButton>
       <RangeSlider
         type="range"
-        value={(currentTime / duration) * 100 || 0}
+        value={formatSilderValue(currentTime, duration)}
         max="100"
         onChange={handleSeekChange}
       />
       <TimeTable>
-        <span>{formatTime(currentTime)}</span> /{" "}
-        <span className="duration-time">{formatTime(duration)}</span>
+        <span>{formatDuration(currentTime, duration)}</span>
       </TimeTable>
       <ControlButton onClick={handlePlayPause}>
         {isPlaying ? "Pause" : "Play"}
       </ControlButton>
       <FileName>{fileName}</FileName>
+      {modals.uploadModal && (
+        <Modal
+          modalId="uploadModal"
+          content={<UploadZone />}
+          firstButtonText="Cancel"
+          secondButtonText="Upload"
+          handleFirstButton={handleCloseButton}
+          handleSecondButton={handleUploadButton}
+        />
+      )}
     </PlayerContainer>
   );
 };

@@ -5,4 +5,12 @@ const formatTime = (time) => {
   return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
 };
 
-export { formatTime };
+const formatSilderValue = (currentTime, duration) => {
+  return (currentTime / duration) * 100 || 0;
+};
+
+const formatDuration = (currentTime, duration) => {
+  return `${formatTime(currentTime)} / ${formatTime(duration)}`;
+};
+
+export { formatTime, formatSilderValue, formatDuration };
