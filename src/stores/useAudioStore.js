@@ -24,6 +24,7 @@ const useAudioStore = create((set) => ({
 
   setTemporaryFile: (file) => {
     const audioUrl = URL.createObjectURL(file);
+
     set({
       temporaryFile: file,
       temporaryFileName: file.name,
@@ -45,6 +46,7 @@ const useAudioStore = create((set) => ({
   setUploadedFile: () => {
     set((state) => ({
       isPlaying: false,
+      hasUploaded: false,
 
       file: state.temporaryFile,
       fileName: state.temporaryFileName,

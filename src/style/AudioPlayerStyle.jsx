@@ -81,8 +81,9 @@ const TimeTable = styled.div`
 
 const FileName = styled.div`
   position: absolute;
-  left: 36%;
-  bottom: -60%;
+  left: 33%;
+  bottom: -55%;
+  font-size: ${({ theme }) => theme.fontSize.xSmall};
 `;
 
 const ResetButton = styled.button`
