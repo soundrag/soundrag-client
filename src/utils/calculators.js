@@ -45,8 +45,22 @@ const constrainPosition = (
 
   newPosition.x = Math.max(-halfSize, Math.min(halfSize, newPosition.x));
   newPosition.z = Math.max(-halfSize, Math.min(halfSize, newPosition.z));
-  newPosition.y =
-    isSpeaker && newPosition.y < heightConstraint ? 0 : WALL_HEIGHT - size * 4;
+
+  if (isSpeaker) {
+    newPosition.y =
+      newPosition.y < heightConstraint ? -0.12 : WALL_HEIGHT - size * 4;
+  }
+};
+
+const calculatePan = (listenerPosition, speakerPosition) => {
+  const distanceX = listenerPosition[0] - speakerPosition[0];
+  const distanceZ = listenerPosition[2] - speakerPosition[2];
+
+  const azimuth = Math.atan2(distanceX, distanceZ);
+
+  const pan = Math.cos(azimuth);
+
+  return pan;
 };
 
 export {
@@ -54,4 +68,5 @@ export {
   calculateIntersectPoint,
   calculateNewPosition,
   constrainPosition,
+  calculatePan,
 };

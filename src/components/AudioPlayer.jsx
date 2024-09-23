@@ -2,6 +2,7 @@ import Modal from "./common/Modal";
 import UploadZone from "./UploadZone";
 
 import useAudioControl from "../hooks/useAudioControl";
+import useSpatialAudio from "../hooks/useSpatialAudio";
 
 import useAudioStore from "../stores/useAudioStore";
 import useModalStore from "../stores/useModalStore";
@@ -24,8 +25,10 @@ const AudioPlayer = () => {
     handlePlayPause,
     handleLoadedMetadata,
     handleTimeUpdate,
+    handleTimeEnd,
     handleSeekChange,
   } = useAudioControl();
+  const { startAudioContext } = useSpatialAudio(audioRef);
 
   const {
     isPlaying,
@@ -49,6 +52,11 @@ const AudioPlayer = () => {
     closeModal("uploadModal");
   };
 
+  const handlePlayButton = async () => {
+    await startAudioContext();
+    handlePlayPause();
+  };
+
   return (
     <PlayerContainer>
       <audio
@@ -56,6 +64,7 @@ const AudioPlayer = () => {
         src={fileUrl}
         onLoadedMetadata={handleLoadedMetadata}
         onTimeUpdate={handleTimeUpdate}
+        onEnded={handleTimeEnd}
       />
       <ResetButton onClick={resetUploadedFile}>Reset</ResetButton>
       <UploadButton onClick={() => openModal("uploadModal")}>
@@ -70,7 +79,7 @@ const AudioPlayer = () => {
       <TimeTable>
         <span>{formatDuration(currentTime, duration)}</span>
       </TimeTable>
-      <ControlButton onClick={handlePlayPause}>
+      <ControlButton onClick={handlePlayButton}>
         {isPlaying ? "Pause" : "Play"}
       </ControlButton>
       <FileName>{fileName}</FileName>

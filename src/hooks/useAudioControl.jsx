@@ -1,8 +1,10 @@
 import { useRef } from "react";
 
-import { HAVE_FUTURE_DATA } from "../constants";
+import { AUDIO_STARTING_POINT, HAVE_FUTURE_DATA } from "../constants";
 
 import useAudioStore from "../stores/useAudioStore";
+
+import { hasCurrentRef } from "../utils/validators";
 
 const useAudioControl = () => {
   const audioRef = useRef(null);
@@ -28,21 +30,30 @@ const useAudioControl = () => {
   };
 
   const handleLoadedMetadata = () => {
-    if (audioRef.current) {
+    if (hasCurrentRef(audioRef)) {
       setDuration(audioRef.current.duration);
     }
   };
 
   const handleTimeUpdate = () => {
-    if (audioRef.current) {
+    if (hasCurrentRef(audioRef)) {
       setCurrentTime(audioRef.current.currentTime);
+    }
+  };
+
+  const handleTimeEnd = () => {
+    togglePlayPause();
+    if (hasCurrentRef(audioRef)) {
+      audioRef.current.currentTime = AUDIO_STARTING_POINT;
+
+      setCurrentTime(AUDIO_STARTING_POINT);
     }
   };
 
   const handleSeekChange = (e) => {
     const newTime = (e.target.value / 100) * duration;
 
-    if (audioRef.current) {
+    if (hasCurrentRef(audioRef)) {
       audioRef.current.currentTime = newTime;
 
       setCurrentTime(newTime);
@@ -54,6 +65,7 @@ const useAudioControl = () => {
     handlePlayPause,
     handleLoadedMetadata,
     handleTimeUpdate,
+    handleTimeEnd,
     handleSeekChange,
   };
 };
