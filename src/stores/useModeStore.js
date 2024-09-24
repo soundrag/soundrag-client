@@ -7,6 +7,13 @@ const useModeStore = create((set, get) => ({
 
   isDragMode: () => get().mode === "Drag",
 
+  toggleMode: () => {
+    const currentMode = get().mode;
+    const newMode = currentMode === "View" ? "Drag" : "View";
+
+    set({ mode: newMode });
+  },
+
   switchMode: (newMode) => set({ mode: newMode }),
 }));
 
