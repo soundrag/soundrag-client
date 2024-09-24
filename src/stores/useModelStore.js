@@ -6,6 +6,7 @@ const useModelStore = create((set, get) => ({
   models: {},
   scales: {},
   positions: {},
+  savedPositions: null,
 
   loadModel: async (modelName, path) => {
     const loader = new GLTFLoader();
@@ -25,6 +26,18 @@ const useModelStore = create((set, get) => ({
     const positions = get().positions;
 
     set({ positions: { ...positions, [modelName]: position } });
+  },
+
+  autoSetPositions: (positions) => {
+    set({ savedPositions: { ...positions } });
+  },
+
+  restorePositions: () => {
+    const savedPositions = get().savedPositions;
+
+    if (savedPositions) {
+      set({ positions: { ...savedPositions } });
+    }
   },
 }));
 
