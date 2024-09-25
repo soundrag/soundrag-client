@@ -28,6 +28,7 @@ const NavItem = styled.div`
 
 const SoundragImage = styled.img`
   width: 5rem;
+  cursor: pointer;
 `;
 
 export { NavContainer, NavItem, SoundragImage };

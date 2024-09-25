@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+const StudioPageContainer = styled.div``;
+
 const StudioContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -21,4 +23,4 @@ const SaveButtonContainer = styled.div`
   bottom: 10%;
 `;
 
-export { StudioContainer, SaveButtonContainer };
+export { StudioPageContainer, StudioContainer, SaveButtonContainer };

@@ -83,7 +83,8 @@ const FileName = styled.div`
   position: absolute;
   left: 33%;
   bottom: -55%;
-  font-size: ${({ theme }) => theme.fontSize.xSmall};
+  width: 100%;
+  font-size: ${({ theme }) => theme.fontSize.small};
 `;
 
 const ResetButton = styled.button`

@@ -1,12 +1,19 @@
 import axios from "axios";
+import auth from "../../firebase";
 
 const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
-  withCredentials: true,
 });
 
 axiosInstance.interceptors.request.use(
-  (config) => {
+  async (config) => {
+    const user = auth.currentUser;
+
+    if (user) {
+      const idToken = await user.getIdToken();
+
+      config.headers["Authorization"] = `Bearer ${idToken}`;
+    }
     return config;
   },
   (error) => {
@@ -18,28 +25,44 @@ axiosInstance.interceptors.response.use(
   (response) => {
     return response;
   },
-  (error) => {
-    if (error.response) {
-      switch (error.response.status) {
-        case 401:
-          console.error("로그인이 필요합니다.");
-          break;
-        case 403:
-          console.error("접근 권한이 없습니다.");
-          break;
-        case 404:
-          console.error("요청하신 페이지를 찾을 수 없습니다. ");
-          break;
-        case 500:
-          console.error("서버 처리 중 오류가 발생했습니다.");
-          break;
-        default:
-          console.error("네트워크 오류가 발생했습니다.");
-      }
-    } else {
-      console.error("인터넷 연결이 불안정합니다.");
-    }
+  async (error) => {
+    const originalRequest = error.config;
 
+    if (
+      error.response &&
+      error.response.status === 401 &&
+      !originalRequest._retry
+    ) {
+      originalRequest._retry = true;
+
+      const user = auth.currentUser;
+
+      if (!user) {
+        console.error("인증되지 않은 사용자입니다.");
+
+        return Promise.reject(error);
+      }
+
+      try {
+        await user.getIdToken(true);
+
+        const newIdToken = await user.getIdToken();
+
+        originalRequest.headers["Authorization"] = `Bearer ${newIdToken}`;
+
+        return axiosInstance(originalRequest);
+      } catch (refreshError) {
+        console.error("Token refresh failed:", refreshError);
+
+        await auth.signOut();
+
+        return Promise.reject(refreshError);
+      }
+    } else if (!error.response) {
+      console.error("No response from server");
+    } else {
+      console.error("An error occurred:", error.response.status);
+    }
     return Promise.reject(error);
   },
 );

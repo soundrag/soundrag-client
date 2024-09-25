@@ -3,14 +3,14 @@ import { useEffect, useRef } from "react";
 import useAudioStore from "../stores/useAudioStore";
 import useModelStore from "../stores/useModelStore";
 
+import { calculatePan } from "../utils/calculators";
+import { isValidateNumber, hasCurrentRef } from "../utils/validators";
+
 import {
   FLOOR_POSITION,
   CEILING_POSITION,
   DEFAULT_POSITION,
 } from "../constants";
-
-import { calculatePan } from "../utils/calculators";
-import { isValidatePosition, hasCurrentRef } from "../utils/validators";
 
 const useSpatialAudio = (audioRef) => {
   const audioContextRef = useRef(null);
@@ -91,7 +91,7 @@ const useSpatialAudio = (audioRef) => {
     if (hasPannerNodeFirstSpeaker) {
       const [x, y, z] = firstSpeakerPosition;
 
-      if (isValidatePosition(x, y, z)) {
+      if (isValidateNumber(x, y, z)) {
         firstPannerRef.current.positionX.setValueAtTime(
           x,
           audioContextRef.current.currentTime,
@@ -162,7 +162,7 @@ const useSpatialAudio = (audioRef) => {
     if (hasPannerNodeSecondSpeaker) {
       const [x, y, z] = secondSpeakerPosition;
 
-      if (isValidatePosition(x, y, z)) {
+      if (isValidateNumber(x, y, z)) {
         secondPannerRef.current.positionX.setValueAtTime(
           x,
           audioContextRef.current.currentTime,
@@ -236,7 +236,7 @@ const useSpatialAudio = (audioRef) => {
       const listener = audioContextRef.current.listener;
       const [x, y, z] = listenerPosition;
 
-      if (isValidatePosition(x, y, z)) {
+      if (isValidateNumber(x, y, z)) {
         listener.positionX.setValueAtTime(
           x,
           audioContextRef.current.currentTime,

@@ -1,6 +1,6 @@
 import styled, { keyframes } from "styled-components";
 
-const SplashContainer = styled.div`
+const SplashPageContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -104,7 +104,7 @@ const SplashButtonContainer = styled.div`
 `;
 
 export {
-  SplashContainer,
+  SplashPageContainer,
   SplashTitle,
   SubText,
   SplashLogo,
