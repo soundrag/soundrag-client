@@ -1,4 +1,4 @@
-import { useDropzone } from "react-dropzone";
+import useDropFile from "../hooks/useDropFile";
 
 import useAudioStore from "../stores/useAudioStore";
 
@@ -9,21 +9,9 @@ import {
 } from "../style/UploadZoneStyle";
 
 const UploadZone = () => {
-  const { hasUploaded, temporaryFileName, setTemporaryFile } = useAudioStore();
+  const { getRootProps, getInputProps, isDragActive } = useDropFile();
 
-  const handleDrop = (acceptedFiles) => {
-    if (acceptedFiles.length > 0) {
-      const file = acceptedFiles[0];
-
-      setTemporaryFile(file);
-    }
-  };
-
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    onDrop: handleDrop,
-    accept: { "audio/*": [".mp3", ".wav", ".ogg"] },
-    maxFiles: 1,
-  });
+  const { hasUploaded, temporaryFileName } = useAudioStore();
 
   return (
     <UploadZoneContainer {...getRootProps()}>

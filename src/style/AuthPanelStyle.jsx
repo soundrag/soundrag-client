@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+const AuthPanelContainer = styled.div``;
+
 const AuthContainer = styled.div`
   display: flex;
 `;
@@ -54,6 +56,7 @@ const GoogleImage = styled.img`
 `;
 
 export {
+  AuthPanelContainer,
   AuthContainer,
   GalleryButton,
   LogoutButton,

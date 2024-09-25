@@ -17,7 +17,7 @@ const useAutoSavedPosition = () => {
 
         toast.success("Auto Saved!");
       }
-    }, 3000);
+    }, 5000);
 
     return () => clearInterval(interval);
   }, [positions, autoSetPositions]);

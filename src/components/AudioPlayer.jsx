@@ -1,3 +1,5 @@
+import { toast } from "react-toastify";
+
 import Modal from "./common/Modal";
 import UploadZone from "./UploadZone";
 
@@ -42,7 +44,11 @@ const AudioPlayer = () => {
   } = useAudioStore();
   const { modals, openModal, closeModal } = useModalStore();
 
-  const handleCloseButton = () => {
+  const handleOpenUploadModal = () => {
+    openModal("uploadModal");
+  };
+
+  const handleCloseUploadModal = () => {
     resetTemporaryFile();
     closeModal("uploadModal");
   };
@@ -50,6 +56,7 @@ const AudioPlayer = () => {
   const handleUploadButton = () => {
     setUploadedFile();
     closeModal("uploadModal");
+    toast.success("Complete! (Upload)");
   };
 
   const handlePlayButton = async () => {
@@ -67,9 +74,7 @@ const AudioPlayer = () => {
         onEnded={handleTimeEnd}
       />
       <ResetButton onClick={resetUploadedFile}>Reset</ResetButton>
-      <UploadButton onClick={() => openModal("uploadModal")}>
-        Upload
-      </UploadButton>
+      <UploadButton onClick={handleOpenUploadModal}>Upload</UploadButton>
       <RangeSlider
         type="range"
         value={formatSilderValue(currentTime, duration)}
@@ -89,7 +94,7 @@ const AudioPlayer = () => {
           content={<UploadZone />}
           firstButtonText="Cancel"
           secondButtonText="Upload"
-          handleFirstButton={handleCloseButton}
+          handleFirstButton={handleCloseUploadModal}
           handleSecondButton={handleUploadButton}
         />
       )}

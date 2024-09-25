@@ -5,7 +5,7 @@ import Button from "../components/common/Button";
 import SoundragLogo from "../assets/images/logo.svg";
 
 import {
-  SplashContainer,
+  SplashPageContainer,
   SplashTitle,
   SubText,
   SplashLogo,
@@ -14,7 +14,7 @@ import {
 
 const SplashPage = () => {
   return (
-    <SplashContainer>
+    <SplashPageContainer>
       <SplashTitle>
         Soun
         <SubText>drag</SubText>
@@ -26,7 +26,7 @@ const SplashPage = () => {
           <Button text="Skip" size="xLarge" />
         </Link>
       </SplashButtonContainer>
-    </SplashContainer>
+    </SplashPageContainer>
   );
 };
 

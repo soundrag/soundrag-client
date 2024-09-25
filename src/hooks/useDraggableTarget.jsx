@@ -3,21 +3,22 @@ import { useThree } from "@react-three/fiber";
 import { useGesture } from "@use-gesture/react";
 import { Vector3 } from "three";
 
-import {
-  SPEAKER_SIZE,
-  LISTENER_SIZE,
-  ROOM_SIZE,
-  WALL_HEIGHT,
-} from "../constants";
-
 import useModelStore from "../stores/useModelStore";
 import useModeStore from "../stores/useModeStore";
+
 import {
   getPlane,
   calculateIntersectPoint,
   calculateNewPosition,
   constrainPosition,
 } from "../utils/calculators";
+
+import {
+  SPEAKER_SIZE,
+  LISTENER_SIZE,
+  ROOM_SIZE,
+  WALL_HEIGHT,
+} from "../constants";
 
 const useDraggableTarget = ({ modelName }) => {
   const meshRef = useRef();
@@ -31,7 +32,7 @@ const useDraggableTarget = ({ modelName }) => {
     scale: state.scales[modelName],
     position: state.positions[modelName],
   }));
-  const { setModelPosition } = useModelStore();
+  const { setModelPositions } = useModelStore();
   const { isDragMode } = useModeStore();
 
   const isSpeaker = modelName.includes("Speaker");
@@ -63,7 +64,7 @@ const useDraggableTarget = ({ modelName }) => {
     );
 
     constrainPosition(newPosition, isSpeaker, size, ROOM_SIZE, WALL_HEIGHT);
-    setModelPosition(modelName, newPosition.toArray());
+    setModelPositions(modelName, newPosition.toArray());
   };
 
   const bind = useGesture({

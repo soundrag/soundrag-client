@@ -13,4 +13,8 @@ const formatDuration = (currentTime, duration) => {
   return `${formatTime(currentTime)} / ${formatTime(duration)}`;
 };
 
-export { formatTime, formatSilderValue, formatDuration };
+const formatDate = (date) => {
+  return date.replace("T", " ").slice(0, 19);
+};
+
+export { formatTime, formatSilderValue, formatDuration, formatDate };
