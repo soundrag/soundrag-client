@@ -10,7 +10,7 @@ const PlayerContainer = styled.div`
 const RangeSlider = styled.input.attrs({ type: "range" })`
   -webkit-appearance: none;
   appearance: none;
-  width: 150px;
+  width: 20rem;
   background-color: transparent;
 
   &::-webkit-slider-runnable-track {
@@ -84,49 +84,27 @@ const FileName = styled.div`
   left: 33%;
   bottom: -55%;
   width: 100%;
-  font-size: ${({ theme }) => theme.fontSize.small};
+  font-size: ${({ theme }) => theme.fontSize.large};
 `;
 
 const ResetButton = styled.button`
-  padding: 0.7rem;
   border: none;
-  background-color: ${({ theme }) => theme.color.buttonHoverFontColor};
+  background: transparent;
   color: ${({ theme }) => theme.color.whiteColor};
   font-weight: bold;
   cursor: pointer;
-
-  &:hover {
-    background-color: ${({ theme }) => theme.color.buttonMainFontColor};
-    color: ${({ theme }) => theme.color.blackColor};
-  }
 `;
 
 const UploadButton = styled.button`
-  padding: 0.7rem;
   border: none;
-  background-color: ${({ theme }) => theme.color.buttonHoverFontColor};
-  color: ${({ theme }) => theme.color.whiteColor};
-  font-weight: bold;
+  background: transparent;
   cursor: pointer;
-
-  &:hover {
-    background-color: ${({ theme }) => theme.color.buttonMainFontColor};
-    color: ${({ theme }) => theme.color.blackColor};
-  }
 `;
 
 const ControlButton = styled.button`
-  padding: 0.7rem;
   border: none;
-  background-color: ${({ theme }) => theme.color.mainColor};
-  color: ${({ theme }) => theme.color.whiteColor};
-  font-weight: bold;
+  background: transparent;
   cursor: pointer;
-
-  &:hover {
-    background-color: ${({ theme }) => theme.color.buttonHoverColor};
-    color: ${({ theme }) => theme.color.blackColor};
-  }
 `;
 
 export {

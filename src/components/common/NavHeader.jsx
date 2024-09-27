@@ -21,18 +21,16 @@ const NavHeader = () => {
 
   return (
     <NavContainer>
-      <NavItem>
+      <NavItem className="left-nav-items">
         <SoundragImage
           src={soundragLogo}
           alt="soundrag logo"
           onClick={handleHomeButton}
         />
+        <Switch />
       </NavItem>
       <NavItem>
         <AudioPlayer />
-      </NavItem>
-      <NavItem>
-        <Switch />
       </NavItem>
       <NavItem>
         <AuthPanel />

@@ -6,6 +6,7 @@ const GlobalStyle = createGlobalStyle`
 
   html {
     font-family: "Jura", sans-serif;
+    background-color: ${({ theme }) => theme.color.menuBackgroundColor};
   }
 
   * {

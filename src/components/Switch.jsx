@@ -1,18 +1,30 @@
 import useModeStore from "../stores/useModeStore";
-
-import { SwitchContainer, SwitchButton } from "../style/SwitchStyle";
+import {
+  SwitchContainer,
+  SwitchButton,
+  SwitchSlider,
+} from "../style/SwitchStyle";
 
 const Switch = () => {
   const { isViewMode, isDragMode, switchMode } = useModeStore();
 
   return (
     <SwitchContainer>
-      <SwitchButton $active={isViewMode()} onClick={() => switchMode("View")}>
+      <SwitchButton
+        className="view-button"
+        $active={isViewMode()}
+        onClick={() => switchMode("View")}
+      >
         View
       </SwitchButton>
-      <SwitchButton $active={isDragMode()} onClick={() => switchMode("Drag")}>
+      <SwitchButton
+        className="drag-button"
+        $active={isDragMode()}
+        onClick={() => switchMode("Drag")}
+      >
         Drag
       </SwitchButton>
+      <SwitchSlider $active={isViewMode()} />
     </SwitchContainer>
   );
 };

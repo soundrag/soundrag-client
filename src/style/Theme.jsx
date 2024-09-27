@@ -7,7 +7,7 @@ const color = {
   buttonHoverFontColor: "#817676",
   buttonDisabledColor: "#CAB9B9",
   buttonDisabledSubColor: "#754E20",
-  menuBackgroundColor: "#F0F0F0",
+  menuBackgroundColor: "#2e2a2a",
   modalBackgroundColor: "#D9D9D9",
   redColor: "#FF0000",
   blueColor: "#0000FF",
