@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useState, useRef } from "react";
 import { useThree } from "@react-three/fiber";
 import { useGesture } from "@use-gesture/react";
 import { Vector3 } from "three";
@@ -27,6 +27,8 @@ const useDraggableTarget = ({ modelName }) => {
 
   const { camera, gl } = useThree();
 
+  const [isDragging, setIsDragging] = useState(false);
+
   const { model, scale, position } = useModelStore((state) => ({
     model: state.models[modelName],
     scale: state.scales[modelName],
@@ -42,6 +44,8 @@ const useDraggableTarget = ({ modelName }) => {
   const handleDragStart = ({ event }) => {
     if (!isDragMode()) return;
     event.stopPropagation();
+
+    setIsDragging(true);
 
     initialPointerPosition.current = calculateIntersectPoint(
       plane,
@@ -67,12 +71,20 @@ const useDraggableTarget = ({ modelName }) => {
     setModelPositions(modelName, newPosition.toArray());
   };
 
+  const handleDragEnd = ({ event }) => {
+    if (!isDragMode()) return;
+    event.stopPropagation();
+
+    setIsDragging(false);
+  };
+
   const bind = useGesture({
     onDragStart: handleDragStart,
     onDrag: handleDrag,
+    onDragEnd: handleDragEnd,
   });
 
-  return { meshRef, model, position, scale, bind };
+  return { meshRef, model, position, scale, bind, isDragging };
 };
 
 export default useDraggableTarget;

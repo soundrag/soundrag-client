@@ -18,7 +18,7 @@ const UploadInputText = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  color: ${({ $upload, theme }) => $upload && theme.color.redColor};
+  color: ${({ $upload, theme }) => $upload && theme.color.mainFontColor};
   font-size: ${({ theme }) => theme.fontSize.large};
 
   .file-message {

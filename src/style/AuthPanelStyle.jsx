@@ -1,14 +1,18 @@
 import styled from "styled-components";
 
-const AuthPanelContainer = styled.div``;
+const AuthPanelContainer = styled.div`
+  background: transparent;
+`;
 
 const AuthContainer = styled.div`
   display: flex;
+  background: transparent;
 `;
 
 const GalleryButton = styled.button`
   padding: 0.5rem 1rem;
   margin-right: 2rem;
+  background: transparent;
   color: ${({ theme }) => theme.color.mainColor};
   font-size: ${({ theme }) => theme.fontSize.large};
   font-weight: bold;
@@ -23,6 +27,7 @@ const GalleryButton = styled.button`
 const LogoutButton = styled.button`
   padding: 0.5rem 1rem;
   margin-right: 2rem;
+  background: transparent;
   color: ${({ theme }) => theme.color.mainColor};
   font-size: ${({ theme }) => theme.fontSize.large};
   font-weight: bold;
@@ -44,6 +49,7 @@ const UnAuthContainer = styled.button`
   font-weight: bold;
   border: none;
   cursor: pointer;
+  background: transparent;
 
   &:hover {
     color: ${({ theme }) => theme.color.buttonHoverColor};

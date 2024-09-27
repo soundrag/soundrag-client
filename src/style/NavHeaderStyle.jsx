@@ -14,6 +14,11 @@ const NavContainer = styled.nav`
   border-bottom: 0.2rem solid ${({ theme }) => theme.color.subColor};
   color: ${({ theme }) => theme.color.mainColor};
   background-color: ${({ theme }) => theme.color.menuBackgroundColor};
+
+  .left-nav-items {
+    display: flex;
+    gap: 4rem;
+  }
 `;
 
 const NavItem = styled.div`
