@@ -2,16 +2,19 @@ import { create } from "zustand";
 
 const useModeStore = create((set, get) => ({
   mode: "View",
+  modes: ["View", "Drag", "Rotate"],
 
   isViewMode: () => get().mode === "View",
 
   isDragMode: () => get().mode === "Drag",
 
-  toggleMode: () => {
-    const currentMode = get().mode;
-    const newMode = currentMode === "View" ? "Drag" : "View";
+  isRotateMode: () => get().mode === "Rotate",
 
-    set({ mode: newMode });
+  toggleMode: () => {
+    const currentModeIndex = get().modes.indexOf(get().mode);
+    const nextModeIndex = (currentModeIndex + 1) % get().modes.length;
+
+    set({ mode: get().modes[nextModeIndex] });
   },
 
   switchMode: (newMode) => set({ mode: newMode }),

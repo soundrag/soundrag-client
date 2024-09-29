@@ -11,6 +11,7 @@ const useAudioStore = create((set) => ({
   file: sampleFile,
   fileName: "sample.mp3",
   fileUrl: sampleFile,
+  showFullFileName: false,
 
   temporaryFile: null,
   temporaryFileName: null,
@@ -21,6 +22,9 @@ const useAudioStore = create((set) => ({
   setDuration: (duration) => set({ duration }),
 
   setCurrentTime: (currentTime) => set({ currentTime }),
+
+  setShowFullFileName: () =>
+    set((state) => ({ showFullFileName: !state.showFullFileName })),
 
   setTemporaryFile: (file) => {
     const audioUrl = URL.createObjectURL(file);

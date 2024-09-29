@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom";
-
 import Modal from "./common/Modal";
 
 import googleLogo from "../assets/images/google-logo.svg";
@@ -12,15 +10,12 @@ import useModalStore from "../stores/useModalStore";
 import {
   AuthPanelContainer,
   AuthContainer,
-  GalleryButton,
-  LogoutButton,
-  UnAuthContainer,
+  AuthButton,
   GoogleImage,
 } from "../style/AuthPanelStyle";
 
 const AuthPanel = () => {
-  const { handleLogin, handleLogout, isLoggedIn, handleGallery } =
-    useUserAuth();
+  const { handleLogin, handleLogout, isLoggedIn } = useUserAuth();
 
   const { errorMessage } = useAuthStore();
   const { modals, closeModal } = useModalStore();
@@ -31,19 +26,17 @@ const AuthPanel = () => {
 
   return (
     <AuthPanelContainer>
-      {isLoggedIn ? (
-        <AuthContainer>
-          <Link to="/user">
-            <GalleryButton onClick={handleGallery}>My Gallery</GalleryButton>
-          </Link>
-          <LogoutButton onClick={handleLogout}>Log out</LogoutButton>
-        </AuthContainer>
-      ) : (
-        <UnAuthContainer onClick={handleLogin}>
-          <GoogleImage src={googleLogo} alt="google logo" />
-          Log in
-        </UnAuthContainer>
-      )}
+      <AuthContainer>
+        {isLoggedIn ? (
+          <AuthButton onClick={handleLogout}>Log out</AuthButton>
+        ) : (
+          <AuthButton onClick={handleLogin}>
+            <GoogleImage src={googleLogo} alt="google logo" />
+            Log In
+          </AuthButton>
+        )}
+      </AuthContainer>
+
       {modals.errorModal && (
         <Modal
           modalId="errorModal"

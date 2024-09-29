@@ -1,5 +1,6 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+
 import {
   GoogleAuthProvider,
   signInWithPopup,
@@ -11,19 +12,12 @@ import { loginUser, logoutUser } from "../services/authService";
 import { getUserPosition } from "../services/userService";
 
 import useAuthStore from "../stores/useAuthStore";
+import useDataStore from "../stores/useDataStore";
 import useModalStore from "../stores/useModalStore";
 
 const useUserAuth = () => {
-  const navigate = useNavigate();
-
-  const {
-    setUserId,
-    setUserData,
-    resetUserData,
-    isLoggedIn,
-    setIsLoggedIn,
-    setErrorMessage,
-  } = useAuthStore();
+  const { isLoggedIn, setIsLoggedIn, setErrorMessage } = useAuthStore();
+  const { setUserId, setUserData, resetUserData } = useDataStore();
   const { openModal } = useModalStore();
 
   useEffect(() => {
@@ -55,7 +49,6 @@ const useUserAuth = () => {
       await loginUser(idToken);
 
       setIsLoggedIn(true);
-      navigate("/studio");
     } catch (error) {
       handleError(error);
     }
@@ -72,12 +65,15 @@ const useUserAuth = () => {
     }
   };
 
-  const handleGallery = async () => {
-    const response = await getUserPosition();
+  const handleGallery = async (toggle) => {
+    try {
+      const response = await getUserPosition();
+      setUserData(response.data.user);
 
-    setUserData(response.data.user);
-
-    navigate("/user");
+      toggle();
+    } catch (error) {
+      toast.error("Failed to fetch user positions: " + error.message);
+    }
   };
 
   return {

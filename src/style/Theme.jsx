@@ -9,6 +9,7 @@ const color = {
   buttonDisabledSubColor: "#754E20",
   menuBackgroundColor: "#2e2a2a",
   modalBackgroundColor: "#D9D9D9",
+  galleryNameColor: "#b9815a",
   redColor: "#FF0000",
   blueColor: "#0000FF",
   blackColor: "#000000",

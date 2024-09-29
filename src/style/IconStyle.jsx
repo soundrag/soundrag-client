@@ -2,16 +2,47 @@ import styled from "styled-components";
 
 const IconContainer = styled.div`
   width: 2rem;
-  border-radius: 50%;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: all 0.3s ease;
+  cursor: pointer;
 
   &:hover {
-    box-shadow: 0 0 10px ${({ theme }) => theme.color.whiteColor};
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      width: 0.4rem;
+      height: 0.4rem;
+      border: 0.2rem solid
+        ${({ theme, $control }) =>
+          $control ? theme.color.mainColor : theme.color.buttonHoverFontColor};
+    }
+
+    &::before {
+      top: -0.1rem;
+      left: -0.1rem;
+      border-bottom: none;
+      border-right: none;
+      border-top-left-radius: 1rem;
+    }
+
+    &::after {
+      bottom: -0.1rem;
+      right: -0.1rem;
+      border-top: none;
+      border-left: none;
+      border-bottom-right-radius: 1rem;
+    }
   }
 `;
 
 const IconImage = styled.img`
-  width: 100%;
-  height: 100%;
+  width: 80%;
+  height: 80%;
 `;
 
 export { IconContainer, IconImage };

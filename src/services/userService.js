@@ -1,7 +1,7 @@
 import axiosInstance from "./instance";
 
 const getUserPosition = async () => {
-  const response = await axiosInstance.get("/user");
+  const response = await axiosInstance.get("/studio");
 
   return response;
 };
@@ -13,9 +13,7 @@ const saveUserPosition = async (userId, userData) => {
 };
 
 const deleteUserPosition = async (positionId) => {
-  const response = await axiosInstance.post(`/user/${positionId}`, {
-    positionId,
-  });
+  const response = await axiosInstance.delete(`/studio/${positionId}`);
 
   return response;
 };

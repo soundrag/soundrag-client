@@ -4,10 +4,10 @@ import Icon from "./common/Icon";
 import Modal from "./common/Modal";
 import UploadZone from "./UploadZone";
 
-import PlayButtonImage from "../assets/images/play-button.png";
-import PauseButtonImage from "../assets/images/pause-button.png";
-import UploadButtonImage from "../assets/images/upload-button.png";
-import ResetButtonImage from "../assets/images/reset-button.png";
+import PlayButtonImage from "../assets/images/play-button.svg";
+import PauseButtonImage from "../assets/images/pause-button.svg";
+import UploadButtonImage from "../assets/images/upload-button.svg";
+import ResetButtonImage from "../assets/images/reset-button.svg";
 
 import useAudioControl from "../hooks/useAudioControl";
 import useSpatialAudio from "../hooks/useSpatialAudio";
@@ -25,7 +25,11 @@ import {
   ControlButton,
 } from "../style/AudioPlayerStyle";
 
-import { formatDuration, formatSilderValue } from "../utils/formatters";
+import {
+  formatDuration,
+  formatFileName,
+  formatSilderValue,
+} from "../utils/formatters";
 
 const AudioPlayer = () => {
   const {
@@ -44,6 +48,8 @@ const AudioPlayer = () => {
     currentTime,
     fileName,
     fileUrl,
+    showFullFileName,
+    setShowFullFileName,
     resetTemporaryFile,
     resetUploadedFile,
     setUploadedFile,
@@ -68,6 +74,10 @@ const AudioPlayer = () => {
   const handlePlayButton = async () => {
     await startAudioContext();
     handlePlayPause();
+  };
+
+  const toggleFileName = () => {
+    setShowFullFileName(!showFullFileName);
   };
 
   return (
@@ -95,12 +105,18 @@ const AudioPlayer = () => {
         <span>{formatDuration(currentTime, duration)}</span>
       </TimeTable>
       <ControlButton onClick={handlePlayButton}>
-        <Icon imageSrc={isPlaying ? PauseButtonImage : PlayButtonImage} />
+        <Icon
+          imageSrc={isPlaying ? PauseButtonImage : PlayButtonImage}
+          $control={true}
+        />
       </ControlButton>
-      <FileName>{fileName}</FileName>
+      <FileName onClick={toggleFileName}>
+        {formatFileName(fileName, showFullFileName)}
+      </FileName>
       {modals.uploadModal && (
         <Modal
           modalId="uploadModal"
+          modalTitle="Upload"
           content={<UploadZone />}
           firstButtonText="Cancel"
           secondButtonText="Upload"

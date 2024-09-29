@@ -1,12 +1,12 @@
 import NavHeader from "../components/common/NavHeader";
 import Gallery from "../components/Gallery";
 
-import useAuthStore from "../stores/useAuthStore";
+import useDataStore from "../stores/useDataStore";
 
 import { GalleryPageContainer } from "../style/GalleryPageStyle";
 
 const GalleryPage = () => {
-  const { userData } = useAuthStore();
+  const { userData } = useDataStore();
 
   return (
     <GalleryPageContainer>

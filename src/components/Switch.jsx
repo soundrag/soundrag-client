@@ -1,30 +1,27 @@
 import useModeStore from "../stores/useModeStore";
-import {
-  SwitchContainer,
-  SwitchButton,
-  SwitchSlider,
-} from "../style/SwitchStyle";
+import { SwitchContainer, SwitchButton } from "../style/SwitchStyle";
+
+import ViewButtonImage from "../assets/images/view-button.svg";
+import DragButtonImage from "../assets/images/drag-button.svg";
+import RotateButtonImage from "../assets/images/rotate-button.svg";
 
 const Switch = () => {
-  const { isViewMode, isDragMode, switchMode } = useModeStore();
+  const { isViewMode, isDragMode, isRotateMode, switchMode } = useModeStore();
 
   return (
     <SwitchContainer>
-      <SwitchButton
-        className="view-button"
-        $active={isViewMode()}
-        onClick={() => switchMode("View")}
-      >
-        View
+      <SwitchButton $active={isViewMode()} onClick={() => switchMode("View")}>
+        <img src={ViewButtonImage} />
+      </SwitchButton>
+      <SwitchButton $active={isDragMode()} onClick={() => switchMode("Drag")}>
+        <img src={DragButtonImage} />
       </SwitchButton>
       <SwitchButton
-        className="drag-button"
-        $active={isDragMode()}
-        onClick={() => switchMode("Drag")}
+        $active={isRotateMode()}
+        onClick={() => switchMode("Rotate")}
       >
-        Drag
+        <img src={RotateButtonImage} />
       </SwitchButton>
-      <SwitchSlider $active={isViewMode()} />
     </SwitchContainer>
   );
 };

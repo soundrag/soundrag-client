@@ -3,77 +3,124 @@ import { toast } from "react-toastify";
 import Modal from "../components/common/Modal";
 import NavHeader from "../components/common/NavHeader";
 import Button from "../components/common/Button";
+import Gallery from "../components/Gallery";
 import Studio from "../components/Studio";
+import ModeSwitch from "../components/Switch";
 import UserInputs from "../components/UserInputs";
+
+import useUserAuth from "../hooks/useUserAuth";
 
 import { saveUserPosition } from "../services/userService";
 
 import useAuthStore from "../stores/useAuthStore";
+import useDataStore from "../stores/useDataStore";
+import useGalleryStore from "../stores/useGalleryStore";
 import useModalStore from "../stores/useModalStore";
 import useModelStore from "../stores/useModelStore";
 import useInputStore from "../stores/useInputStore";
 
 import {
+  GalleryContainer,
   StudioPageContainer,
   StudioContainer,
-  SaveButtonContainer,
+  GalleryButtonContainer,
+  MyGalleryContainer,
+  SwitchButtonContainer,
 } from "../style/StudioPageStyle";
 
 const StudioPage = () => {
-  const { userId, isLoggedIn } = useAuthStore();
+  const { handleGallery } = useUserAuth();
+  const { isLoggedIn } = useAuthStore();
+  const { userId, userData, setUserData } = useDataStore();
+  const { isGallery, toggleGallery, closeGallery } = useGalleryStore();
   const { modals, openModal, closeModal } = useModalStore();
   const { positions, positionId } = useModelStore();
-  const { name, description, setName, setDescription } = useInputStore();
+  const { name, setName } = useInputStore();
 
   const handleSaveButton = async () => {
     if (!userId) {
       return;
     }
 
-    const userData = {
+    const userDataToSave = {
       userId,
       positionId,
       name,
-      description,
       firstSpeakerPosition: positions.firstSpeaker,
       secondSpeakerPosition: positions.secondSpeaker,
       listenerPosition: positions.listener,
     };
 
-    await saveUserPosition(userId, userData);
+    try {
+      await saveUserPosition(userId, userDataToSave);
 
-    closeModal("saveModal");
+      const newUserData = [...userData, userDataToSave];
 
-    toast.success("Complete! (Save)");
+      setUserData(newUserData);
+      setName("");
+      closeModal("saveModal");
 
-    setName("");
-    setDescription("");
+      toast.success("Complete! (Save)");
+      if (isGallery) {
+        setUserData(newUserData);
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 409) {
+        toast.error("Position ID already exists.");
+      } else {
+        toast.error(error.message);
+      }
+    }
   };
 
   const handleCancelButton = () => {
-    closeModal("saveModal");
-
     setName("");
-    setDescription("");
+    closeModal("saveModal");
+  };
+
+  const handleGalleryButton = (event) => {
+    event.stopPropagation();
+
+    handleGallery(toggleGallery);
+  };
+
+  const handleCloseGalleryButton = () => {
+    closeGallery();
   };
 
   return (
     <StudioPageContainer>
       <NavHeader />
-      <StudioContainer>
+      <StudioContainer onClick={handleCloseGalleryButton}>
         <Studio />
+        <GalleryContainer>
+          <GalleryButtonContainer>
+            <Button
+              text={isGallery ? "Back" : "Gallery"}
+              size="large"
+              handleClick={handleGalleryButton}
+            />
+            <Button
+              text="Save"
+              size="large"
+              isDisabled={!isLoggedIn}
+              handleClick={() => openModal("saveModal")}
+            />
+          </GalleryButtonContainer>
+          {isGallery && (
+            <MyGalleryContainer onClick={(e) => e.stopPropagation()}>
+              <Gallery />
+            </MyGalleryContainer>
+          )}
+        </GalleryContainer>
       </StudioContainer>
-      <SaveButtonContainer>
-        <Button
-          text="Save"
-          size="xLarge"
-          isDisabled={!isLoggedIn}
-          handleClick={() => openModal("saveModal")}
-        />
-      </SaveButtonContainer>
+      <SwitchButtonContainer>
+        <ModeSwitch />
+      </SwitchButtonContainer>
       {modals.saveModal && (
         <Modal
           modalId="saveModal"
+          modalTitle="Save"
           content={<UserInputs />}
           firstButtonText="Cancel"
           secondButtonText="Save"
