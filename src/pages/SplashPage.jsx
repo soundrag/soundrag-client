@@ -21,7 +21,6 @@ const SplashPage = () => {
       </SplashTitle>
       <SplashLogo src={SoundragLogo} alt="Soundrag Logo" />
       <SplashButtonContainer>
-        <Button text="Tutorial" size="xLarge" isDisabled />
         <Link to="/studio">
           <Button text="Skip" size="xLarge" />
         </Link>

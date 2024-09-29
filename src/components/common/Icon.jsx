@@ -1,8 +1,8 @@
 import { IconContainer, IconImage } from "../../style/IconStyle";
 
-const Icon = ({ imageSrc }) => {
+const Icon = ({ imageSrc, $control }) => {
   return (
-    <IconContainer>
+    <IconContainer $control={$control}>
       <IconImage src={imageSrc} />
     </IconContainer>
   );

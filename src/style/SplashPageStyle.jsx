@@ -5,6 +5,7 @@ const SplashPageContainer = styled.div`
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
+  gap: 3rem;
   height: 100vh;
 `;
 
@@ -99,7 +100,7 @@ const SplashLogo = styled.img`
 
 const SplashButtonContainer = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   width: 200%;
 `;
 

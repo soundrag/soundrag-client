@@ -24,7 +24,7 @@ const UploadZone = () => {
         <UploadInputText $upload={hasUploaded}>
           {hasUploaded ? temporaryFileName : "Drag Zone"}
           <br />
-          <p className="file-message">(audio files only)</p>
+          {!hasUploaded && <p className="file-message">(audio files only)</p>}
         </UploadInputText>
       )}
     </UploadZoneContainer>

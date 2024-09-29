@@ -5,13 +5,15 @@ const DataListContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  width: 2rem;
   gap: 5rem;
-  margin-top: 5rem;
+  z-index: 9999;
 
   th {
     background-color: ${({ theme }) => theme.color.menuBackgroundColor};
+    color: ${({ theme }) => theme.color.whiteColor};
     padding: 1rem 0;
+    font-size: ${({ theme }) => theme.fontSize.xSmall};
   }
 `;
 
@@ -21,11 +23,6 @@ const DataList = styled.table`
 `;
 
 const DataListRow = styled.tr`
-  &:nth-child(even) {
-    color: ${({ theme }) => theme.color.blackColor};
-    background-color: ${({ theme }) => theme.color.modalBackgroundColor};
-  }
-
   .button-container {
     display: flex;
     gap: 2rem;
@@ -33,7 +30,9 @@ const DataListRow = styled.tr`
 `;
 
 const DataListCell = styled.td`
-  padding: 2rem;
+  padding: 0.5rem;
+  color: ${({ theme }) => theme.color.galleryNameColor};
+  font-size: ${({ theme }) => theme.fontSize.small};
 `;
 
 export { DataListContainer, DataList, DataListRow, DataListCell };

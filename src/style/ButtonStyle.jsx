@@ -6,12 +6,6 @@ const ButtonContainer = styled.button`
   font-weight: bold;
   border: none;
   border-radius: 5%;
-  border-right: 0.3rem solid
-    ${({ disabled, theme }) =>
-      disabled ? theme.color.buttonDisabledSubColor : theme.color.subColor};
-  border-bottom: 0.3rem solid
-    ${({ disabled, theme }) =>
-      disabled ? theme.color.buttonDisabledSubColor : theme.color.subColor};
   background-color: ${({ disabled, theme }) =>
     disabled ? theme.color.buttonDisabledColor : theme.color.mainColor};
   color: ${({ disabled, theme }) =>
@@ -21,10 +15,6 @@ const ButtonContainer = styled.button`
   &:hover {
     background-color: ${({ disabled, theme }) =>
       !disabled && theme.color.buttonHoverColor};
-    border-right: ${({ disabled, theme }) =>
-      !disabled && `0.1rem solid ${theme.color.buttonHoverSubColor}`};
-    border-bottom: ${({ disabled, theme }) =>
-      !disabled && `0.1rem solid ${theme.color.buttonHoverSubColor}`};
     color: ${({ disabled, theme }) =>
       !disabled && theme.color.buttonHoverFontColor};
   }

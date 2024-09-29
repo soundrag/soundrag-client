@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 const AuthPanelContainer = styled.div`
   background: transparent;
+  margin-right: 4rem;
 `;
 
 const AuthContainer = styled.div`
@@ -24,32 +25,16 @@ const GalleryButton = styled.button`
   }
 `;
 
-const LogoutButton = styled.button`
-  padding: 0.5rem 1rem;
-  margin-right: 2rem;
-  background: transparent;
-  color: ${({ theme }) => theme.color.mainColor};
-  font-size: ${({ theme }) => theme.fontSize.large};
-  font-weight: bold;
-  border: none;
-  cursor: pointer;
-
-  &:hover {
-    color: ${({ theme }) => theme.color.buttonHoverColor};
-  }
-`;
-
-const UnAuthContainer = styled.button`
+const AuthButton = styled.button`
   display: flex;
   align-items: center;
-  padding: 0.5rem 1rem;
-  margin-right: 2rem;
+  padding: 0;
+  background: transparent;
   color: ${({ theme }) => theme.color.mainColor};
   font-size: ${({ theme }) => theme.fontSize.large};
   font-weight: bold;
   border: none;
   cursor: pointer;
-  background: transparent;
 
   &:hover {
     color: ${({ theme }) => theme.color.buttonHoverColor};
@@ -65,7 +50,6 @@ export {
   AuthPanelContainer,
   AuthContainer,
   GalleryButton,
-  LogoutButton,
-  UnAuthContainer,
+  AuthButton,
   GoogleImage,
 };

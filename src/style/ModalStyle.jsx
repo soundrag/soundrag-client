@@ -18,19 +18,33 @@ const ModalContainer = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  gap: 5rem;
-  width: 14%;
-  padding: 3rem 3rem;
+  gap: 2rem;
+  padding: 2rem;
   border-radius: 5%;
   background-color: ${({ theme }) => theme.color.modalBackgroundColor};
   box-shadow: 0 0 1rem ${({ theme }) => theme.color.modalBackgroundColor};
   cursor: auto;
 `;
 
+const ModalTitle = styled.div`
+  color: ${({ theme }) => theme.color.mainColor};
+  font-size: ${({ theme }) => theme.fontSize.xxLarge};
+  font-weight: bold;
+`;
+
 const ModalContent = styled.div`
   color: ${({ theme }) => theme.color.mainColor};
-  font-size: ${({ theme }) => theme.fontSize.xLarge};
-  font-weight: bold;
+  font-size: ${({ theme }) => theme.fontSize.xxLarge};
+  text-align: center;
+
+  .delete-rule {
+    font-size: ${({ theme }) => theme.fontSize.small};
+
+    span {
+      color: ${({ theme }) => theme.color.redColor};
+      font-weight: bold;
+    }
+  }
 `;
 
 const ModalButtonContainer = styled.div`
@@ -40,4 +54,10 @@ const ModalButtonContainer = styled.div`
   width: 100%;
 `;
 
-export { ModalBackground, ModalContainer, ModalContent, ModalButtonContainer };
+export {
+  ModalBackground,
+  ModalContainer,
+  ModalTitle,
+  ModalContent,
+  ModalButtonContainer,
+};

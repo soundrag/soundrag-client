@@ -3,24 +3,21 @@ import useInputStore from "../stores/useInputStore";
 import { UserForm, UserLabel, UserInput } from "../style/UserInputsStyle";
 
 const UserInputs = () => {
-  const { name, description, setName, setDescription } = useInputStore();
+  const { name, setName } = useInputStore();
 
-  const handleChange = (event, callback) => {
-    callback(event.target.value);
+  const handleChange = (event) => {
+    setName(event.target.value);
   };
 
   return (
     <UserForm>
-      <UserLabel>Name: </UserLabel>
-      <UserInput
-        value={name}
-        onChange={(event) => handleChange(event, setName)}
-      />
-      <UserLabel>Description: </UserLabel>
-      <UserInput
-        value={description}
-        onChange={(event) => handleChange(event, setDescription)}
-      />
+      <UserLabel>
+        <p className="name-rule">
+          Name must be <span>between 1 and 20 </span>
+          characters.{" "}
+        </p>
+      </UserLabel>
+      <UserInput value={name} onChange={handleChange} />
     </UserForm>
   );
 };

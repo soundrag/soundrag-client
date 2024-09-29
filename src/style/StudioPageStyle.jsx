@@ -1,8 +1,15 @@
 import styled from "styled-components";
 
+const GalleryContainer = styled.div`
+  position: absolute;
+  top: 10rem;
+  right: 2rem;
+`;
+
 const StudioPageContainer = styled.div``;
 
 const StudioContainer = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -17,10 +24,28 @@ const StudioContainer = styled.div`
   );
 `;
 
-const SaveButtonContainer = styled.div`
-  position: fixed;
-  right: 10%;
-  bottom: 10%;
+const GalleryButtonContainer = styled.div`
+  display: flex;
+  gap: 2rem;
+  width: 100%;
 `;
 
-export { StudioPageContainer, StudioContainer, SaveButtonContainer };
+const MyGalleryContainer = styled.div`
+  position: absolute;
+  top: 4rem;
+`;
+
+const SwitchButtonContainer = styled.div`
+  position: absolute;
+  bottom: 3rem;
+  right: 2rem;
+`;
+
+export {
+  GalleryContainer,
+  StudioPageContainer,
+  StudioContainer,
+  GalleryButtonContainer,
+  MyGalleryContainer,
+  SwitchButtonContainer,
+};
