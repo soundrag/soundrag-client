@@ -17,4 +17,16 @@ const formatDate = (date) => {
   return date.replace("T", " ").slice(0, 19);
 };
 
-export { formatTime, formatSilderValue, formatDuration, formatDate };
+const formatFileName = (fileName, showFullFileName) => {
+  return fileName.length > 30 && !showFullFileName
+    ? `${fileName.substring(0, 30)}...`
+    : fileName;
+};
+
+export {
+  formatTime,
+  formatSilderValue,
+  formatDuration,
+  formatDate,
+  formatFileName,
+};
