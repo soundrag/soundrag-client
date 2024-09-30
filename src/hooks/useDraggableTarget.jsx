@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useRef } from "react";
 import { useThree } from "@react-three/fiber";
 import { useGesture } from "@use-gesture/react";
 import { Vector3 } from "three";
@@ -26,15 +26,21 @@ const useDraggableTarget = ({ modelName }) => {
   const initialTargetPosition = useRef(new Vector3());
 
   const { camera, gl } = useThree();
-
-  const [isDragging, setIsDragging] = useState(false);
-
-  const { model, scale, position } = useModelStore((state) => ({
+  const {
+    model,
+    scale,
+    position,
+    isDraggingModel,
+    setIsDraggingModel,
+    setModelPositions,
+  } = useModelStore((state) => ({
     model: state.models[modelName],
     scale: state.scales[modelName],
     position: state.positions[modelName],
+    isDraggingModel: state.getModelDragState(modelName),
+    setIsDraggingModel: state.setModelDragState,
+    setModelPositions: state.setModelPositions,
   }));
-  const { setModelPositions } = useModelStore();
   const { isDragMode } = useModeStore();
 
   const isSpeaker = modelName.includes("Speaker");
@@ -45,7 +51,7 @@ const useDraggableTarget = ({ modelName }) => {
     if (!isDragMode()) return;
     event.stopPropagation();
 
-    setIsDragging(true);
+    setIsDraggingModel(modelName, true);
 
     initialPointerPosition.current = calculateIntersectPoint(
       plane,
@@ -75,7 +81,7 @@ const useDraggableTarget = ({ modelName }) => {
     if (!isDragMode()) return;
     event.stopPropagation();
 
-    setIsDragging(false);
+    setIsDraggingModel(modelName, false);
   };
 
   const bind = useGesture({
@@ -84,7 +90,7 @@ const useDraggableTarget = ({ modelName }) => {
     onDragEnd: handleDragEnd,
   });
 
-  return { meshRef, model, position, scale, bind, isDragging };
+  return { meshRef, model, position, scale, bind, isDraggingModel };
 };
 
 export default useDraggableTarget;

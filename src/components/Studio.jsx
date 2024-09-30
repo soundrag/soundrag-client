@@ -6,6 +6,7 @@ import Listener from "./targets/Listener";
 import Speaker from "./targets/Speaker";
 
 import useLoadedModel from "../hooks/useLoadedModel";
+import useModelStore from "../stores/useModelStore";
 
 import useModeStore from "../stores/useModeStore";
 
@@ -18,22 +19,26 @@ import {
 
 const Studio = () => {
   const { isViewMode } = useModeStore();
+  const { speakers } = useModelStore();
 
   useLoadedModel();
 
   return (
-    <Canvas camera={{ position: CAMERA_STARTING_POSITION }}>
-      <OrbitControls enabled={isViewMode()} />
-      <ambientLight intensity={MEDIUM_LIGHT_INTENSITY} />
-      <directionalLight
-        position={DIRECTIONAL_LIGHT_POSITION}
-        intensity={HARD_LIGHT_INTENSITY}
-      />
-      <Room />
-      <Speaker modelName="firstSpeaker" />
-      <Speaker modelName="secondSpeaker" />
-      <Listener modelName="listener" />
-    </Canvas>
+    <>
+      <Canvas camera={{ position: CAMERA_STARTING_POSITION }}>
+        <OrbitControls enabled={isViewMode()} />
+        <ambientLight intensity={MEDIUM_LIGHT_INTENSITY} />
+        <directionalLight
+          position={DIRECTIONAL_LIGHT_POSITION}
+          intensity={HARD_LIGHT_INTENSITY}
+        />
+        <Room />
+        {speakers.map((speakerName) => (
+          <Speaker key={speakerName} modelName={speakerName} />
+        ))}
+        <Listener modelName="listener" />
+      </Canvas>
+    </>
   );
 };
 
