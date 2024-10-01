@@ -2,20 +2,23 @@ import { create } from "zustand";
 import { v4 as uuidv4 } from "uuid";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
-import { STANDARD_SPEAKER_SCALE } from "../constants";
-
 import {
   FIRST_SPEAKER_STARTING_POSITION,
   SECOND_SPEAKER_STARTING_POSITION,
   LISTENER_STARTING_POSITION,
+  DEFAULT_ROTATION,
+  LISTENER_STARTING_ROTATION,
 } from "../constants";
-import { toast } from "react-toastify";
 
 const useModelStore = create((set, get) => ({
   models: {},
 
   scales: {},
-  rotations: {},
+  rotations: {
+    firstSpeaker: DEFAULT_ROTATION,
+    secondSpeaker: DEFAULT_ROTATION,
+    listener: LISTENER_STARTING_ROTATION,
+  },
 
   positions: {},
   userPositions: {},
@@ -24,6 +27,11 @@ const useModelStore = create((set, get) => ({
     firstSpeaker: FIRST_SPEAKER_STARTING_POSITION,
     secondSpeaker: SECOND_SPEAKER_STARTING_POSITION,
     listener: LISTENER_STARTING_POSITION,
+  },
+  savedRotations: {
+    firstSpeaker: DEFAULT_ROTATION,
+    secondSpeaker: DEFAULT_ROTATION,
+    listener: LISTENER_STARTING_ROTATION,
   },
   positionId: uuidv4(),
 
@@ -40,6 +48,12 @@ const useModelStore = create((set, get) => ({
 
   setModelScale: (modelName, scale) => {
     set((state) => ({ scales: { ...state.scales, [modelName]: scale } }));
+  },
+
+  setModelRotation: (modelName, rotation) => {
+    set((state) => ({
+      rotations: { ...state.rotations, [modelName]: rotation },
+    }));
   },
 
   setModelPositions: (modelName, position) => {
@@ -64,6 +78,9 @@ const useModelStore = create((set, get) => ({
     firstSpeakerPosition,
     secondSpeakerPosition,
     listenerPosition,
+    firstSpeakerRotation,
+    secondSpeakerRotation,
+    listenerRotation,
   ) => {
     set({
       userPositions: {
@@ -71,77 +88,31 @@ const useModelStore = create((set, get) => ({
         secondSpeaker: secondSpeakerPosition,
         listener: listenerPosition,
       },
+      rotations: {
+        firstSpeaker: firstSpeakerRotation,
+        secondSpeaker: secondSpeakerRotation,
+        listener: listenerRotation,
+      },
       positionId: uuidv4(),
     });
   },
 
-  autoSetPositions: (positions) => {
-    set({ savedPositions: positions });
+  autoSetPositions: (positions, rotations) => {
+    set({
+      savedPositions: positions,
+      savedRotations: rotations,
+    });
   },
 
   restorePositions: () => {
     const savedPositions = get().savedPositions;
-    if (savedPositions) {
-      set({ positions: JSON.parse(JSON.stringify(savedPositions)) });
+    const savedRotations = get().savedRotations;
+    if (savedPositions && savedRotations) {
+      set({
+        positions: JSON.parse(JSON.stringify(savedPositions)),
+        rotations: JSON.parse(JSON.stringify(savedRotations)),
+      });
     }
-  },
-
-  setRotation: (id, rotation) =>
-    set((state) => ({ rotations: { ...state.rotations, [id]: rotation } })),
-
-  addSpeaker: () => {
-    const currentLength = get().speakers.length;
-    if (currentLength > 6) {
-      toast.info("Maximum number of speakers reached");
-      return;
-    }
-
-    const newSpeakerName = `Speaker${currentLength + 1}`;
-    set((state) => {
-      const lastSpeakerPosition =
-        state.speakers.length > 0
-          ? state.positions[state.speakers[state.speakers.length - 1]]
-          : [0, 0, 0];
-      const newPosition = [
-        lastSpeakerPosition[0] + 2,
-        lastSpeakerPosition[1],
-        lastSpeakerPosition[2],
-      ];
-
-      return {
-        speakers: [...state.speakers, newSpeakerName],
-        positions: { ...state.positions, [newSpeakerName]: newPosition },
-        scales: { ...state.scales, [newSpeakerName]: STANDARD_SPEAKER_SCALE },
-        isDragging: { ...state.isDragging, [newSpeakerName]: false },
-      };
-    });
-
-    get().loadModel(newSpeakerName, "/models/speaker.gltf");
-  },
-
-  removeSpeaker: () => {
-    set((state) => {
-      if (state.speakers.length <= 2) return state;
-
-      const speakers = state.speakers.slice(0, -1);
-      const lastSpeaker = state.speakers[state.speakers.length - 1];
-
-      const newPositions = { ...state.positions };
-      delete newPositions[lastSpeaker];
-
-      const newScales = { ...state.scales };
-      delete newScales[lastSpeaker];
-
-      const newIsDragging = { ...state.isDragging };
-      delete newIsDragging[lastSpeaker];
-
-      return {
-        speakers,
-        positions: newPositions,
-        scales: newScales,
-        isDragging: newIsDragging,
-      };
-    });
   },
 
   setModelDragState: (modelName, dragging) => {

@@ -8,6 +8,7 @@ import {
   WALL_DEPTH,
   ROTATE_X_MINUS_90_DEGREES,
 } from "../../constants";
+import { DoubleSide } from "three";
 
 const Floor = () => {
   const floorTexture = useLoadedTexture("/textures/carpet.jpg");
@@ -15,7 +16,7 @@ const Floor = () => {
   return (
     <mesh position={DEFAULT_POSITION} rotation={ROTATE_X_MINUS_90_DEGREES}>
       <planeGeometry args={[ROOM_SIZE, ROOM_SIZE]} />
-      <meshStandardMaterial map={floorTexture} />
+      <meshStandardMaterial map={floorTexture} side={DoubleSide} />
     </mesh>
   );
 };

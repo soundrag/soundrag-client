@@ -116,10 +116,10 @@ const AudioPlayer = () => {
       {modals.uploadModal && (
         <Modal
           modalId="uploadModal"
-          modalTitle="Upload"
+          modalTitle="업로드"
           content={<UploadZone />}
-          firstButtonText="Cancel"
-          secondButtonText="Upload"
+          firstButtonText="취소"
+          secondButtonText="업로드"
           handleFirstButton={handleCloseUploadModal}
           handleSecondButton={handleUploadButton}
         />

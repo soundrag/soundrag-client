@@ -26,7 +26,13 @@ const Studio = () => {
   return (
     <>
       <Canvas camera={{ position: CAMERA_STARTING_POSITION }}>
-        <OrbitControls enabled={isViewMode()} />
+        <OrbitControls
+          enabled={isViewMode()}
+          enableDamping={false}
+          enablePan={false}
+          minDistance={20}
+          maxDistance={40}
+        />
         <ambientLight intensity={MEDIUM_LIGHT_INTENSITY} />
         <directionalLight
           position={DIRECTIONAL_LIGHT_POSITION}

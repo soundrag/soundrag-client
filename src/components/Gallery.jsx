@@ -1,6 +1,8 @@
 import { toast } from "react-toastify";
 
-import Button from "../components/common/Button";
+import DeleteButtonImage from "../assets/images/delete-button.svg";
+
+import Button from "./common/Button";
 import Modal from "./common/Modal";
 
 import { deleteUserPosition } from "../services/userService";
@@ -14,6 +16,7 @@ import {
   DataList,
   DataListRow,
   DataListCell,
+  DeleteButton,
 } from "../style/GalleryStyle";
 
 const Gallery = ({ data }) => {
@@ -36,6 +39,9 @@ const Gallery = ({ data }) => {
       item.firstSpeakerPosition,
       item.secondSpeakerPosition,
       item.listenerPosition,
+      item.firstSpeakerRotation,
+      item.secondSpeakerRotation,
+      item.listenerRotation,
     );
   };
 
@@ -65,8 +71,8 @@ const Gallery = ({ data }) => {
         {userData.length !== 0 && (
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Actions</th>
+              <th>이름</th>
+              <th>버튼</th>
             </tr>
           </thead>
         )}
@@ -77,15 +83,13 @@ const Gallery = ({ data }) => {
                 <DataListCell>{item.name}</DataListCell>
                 <DataListCell className="button-container">
                   <Button
-                    text="Detail"
-                    size="xSmall"
+                    text="보기"
+                    size="small"
                     handleClick={() => handleDetailButton(item)}
                   />
-                  <Button
-                    text="Del"
-                    size="xSmall"
-                    handleClick={() => handleOpenDeleteModal(item)}
-                  />
+                  <DeleteButton onClick={() => handleOpenDeleteModal(item)}>
+                    <img src={DeleteButtonImage} />
+                  </DeleteButton>
                 </DataListCell>
               </DataListRow>
             ))}
@@ -94,16 +98,16 @@ const Gallery = ({ data }) => {
       {modals.deleteModal && (
         <Modal
           modalId="deleteModal"
-          modalTitle="Delete"
+          modalTitle="삭제"
           content={
             <div>
               <p className="delete-rule">
-                This action is <span>permanent</span>
+                정말 <span>삭제</span> 하시겠습니까?
               </p>
             </div>
           }
-          firstButtonText="Back"
-          secondButtonText="Del"
+          firstButtonText="뒤로"
+          secondButtonText="삭제"
           handleFirstButton={handleCloseDeleteModal}
           handleSecondButton={() => handleDeleteButton(positionIdToDelete)}
         />

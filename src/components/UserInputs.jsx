@@ -13,8 +13,7 @@ const UserInputs = () => {
     <UserForm>
       <UserLabel>
         <p className="name-rule">
-          Name must be <span>between 1 and 20 </span>
-          characters.{" "}
+          이름은 <span>1 - 20</span> 자 이내로 입력하세요.
         </p>
       </UserLabel>
       <UserInput value={name} onChange={handleChange} />

@@ -20,11 +20,22 @@ const UploadInputText = styled.div`
   gap: 2rem;
   color: ${({ $upload, theme }) => $upload && theme.color.mainFontColor};
   font-size: ${({ theme }) => theme.fontSize.large};
+`;
+
+const UploadSubText = styled.div`
+  display: ${({ $upload }) => ($upload ? "none" : "flex")};
+  flex-direction: column;
+  gap: 0.3rem;
 
   .file-message {
     color: ${({ theme }) => theme.color.buttonHoverFontColor};
     font-size: ${({ theme }) => theme.fontSize.small};
   }
+
+  .click-message {
+    color: ${({ theme }) => theme.color.redColor};
+    font-size: ${({ theme }) => theme.fontSize.small};
+  }
 `;
 
-export { UploadZoneContainer, UploadInput, UploadInputText };
+export { UploadZoneContainer, UploadInput, UploadInputText, UploadSubText };

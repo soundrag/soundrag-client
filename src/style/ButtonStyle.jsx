@@ -1,7 +1,10 @@
 import styled from "styled-components";
 
 const ButtonContainer = styled.button`
-  padding: 0.6rem 1.2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.4rem 1.2rem;
   font-size: ${({ size, theme }) => theme.fontSize[size]};
   font-weight: bold;
   border: none;

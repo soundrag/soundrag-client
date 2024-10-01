@@ -28,11 +28,11 @@ const AuthPanel = () => {
     <AuthPanelContainer>
       <AuthContainer>
         {isLoggedIn ? (
-          <AuthButton onClick={handleLogout}>Log out</AuthButton>
+          <AuthButton onClick={handleLogout}>로그아웃</AuthButton>
         ) : (
           <AuthButton onClick={handleLogin}>
             <GoogleImage src={googleLogo} alt="google logo" />
-            Log In
+            로그인
           </AuthButton>
         )}
       </AuthContainer>

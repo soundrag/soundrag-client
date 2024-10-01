@@ -1,45 +1,36 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { useGesture } from "@use-gesture/react";
 
-import { ROTATE_Y_MINUS_90_DEGREES } from "../constants";
+import { DEFAULT_ROTATION, LISTENER_STARTING_ROTATION } from "../constants";
 
-const useRotatableTarget = (
-  initialRotation = [0, 0, 0],
-  isListener = false,
-  isOnCeiling = false,
-) => {
-  const initialRot = isListener
-    ? [0, ROTATE_Y_MINUS_90_DEGREES[1], 0]
-    : initialRotation;
-  const [rotation, setRotation] = useState(initialRot);
-  const [isTilted, setIsTilted] = useState(false);
+import useModelStore from "../stores/useModelStore";
+
+const useRotatableTarget = (modelName, isListener = false, isSpeaker) => {
   const meshRef = useRef(null);
+
+  const { rotations, setModelRotation } = useModelStore();
+
+  const initialRotation = isListener
+    ? LISTENER_STARTING_ROTATION
+    : DEFAULT_ROTATION;
 
   const bind = useGesture({
     onClick: () => {
-      if (isOnCeiling) {
-        setRotation((prev) => {
-          if (!isTilted) {
-            setIsTilted(true);
+      if (isSpeaker) {
+        const currentRotation = rotations[modelName] || initialRotation;
+        const newAngleY = (currentRotation[1] + Math.PI / 2) % (2 * Math.PI);
+        const newRotation = [currentRotation[0], newAngleY, currentRotation[2]];
 
-            return [prev[0], prev[1], -45];
-          } else {
-            setIsTilted(false);
-
-            return [prev[0], prev[1], 0];
-          }
-        });
-      } else {
-        setRotation((prev) => {
-          const newAngleY = (prev[1] + 90) % 360;
-
-          return [prev[0], newAngleY, prev[2]];
-        });
+        setModelRotation(modelName, newRotation);
       }
     },
   });
 
-  return { meshRef, rotation, bind };
+  return {
+    meshRef,
+    rotation: rotations[modelName] || initialRotation,
+    bind,
+  };
 };
 
 export default useRotatableTarget;
