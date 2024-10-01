@@ -17,12 +17,16 @@ import GlobalStyle from "./style/GlobalStyle";
 import Theme from "./style/Theme";
 
 const App = () => {
-  const { toggleMode } = useModeStore();
+  const { switchMode } = useModeStore();
   const { restorePositions } = useModelStore();
 
   const handleKeyDownEvent = (event) => {
-    if (event.key === "m" || event.key === "M" || event.key === "ㅡ") {
-      toggleMode();
+    if (event.key === "1") {
+      switchMode("View");
+    } else if (event.key === "2") {
+      switchMode("Drag");
+    } else if (event.key === "3") {
+      switchMode("Rotate");
     } else if (event.key === "Backspace") {
       restorePositions();
     }

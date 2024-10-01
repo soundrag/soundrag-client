@@ -36,6 +36,7 @@ const ModalContent = styled.div`
   color: ${({ theme }) => theme.color.mainColor};
   font-size: ${({ theme }) => theme.fontSize.xxLarge};
   text-align: center;
+  padding: 0 2rem;
 
   .delete-rule {
     font-size: ${({ theme }) => theme.fontSize.small};

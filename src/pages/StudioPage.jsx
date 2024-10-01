@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import Modal from "../components/common/Modal";
 import NavHeader from "../components/common/NavHeader";
 import Button from "../components/common/Button";
+import MessageBox from "../components/common/MessageBox";
 import Gallery from "../components/Gallery";
 import Studio from "../components/Studio";
 import ModeSwitch from "../components/Switch";
@@ -21,20 +22,23 @@ import useInputStore from "../stores/useInputStore";
 
 import {
   GalleryContainer,
+  KeyboardTutorialContainer,
   StudioPageContainer,
   StudioContainer,
   GalleryButtonContainer,
   MyGalleryContainer,
   SwitchButtonContainer,
+  TutorialContainer,
 } from "../style/StudioPageStyle";
 
 const StudioPage = () => {
   const { handleGallery } = useUserAuth();
+
   const { isLoggedIn } = useAuthStore();
   const { userId, userData, setUserData } = useDataStore();
   const { isGallery, toggleGallery, closeGallery } = useGalleryStore();
   const { modals, openModal, closeModal } = useModalStore();
-  const { positions, positionId } = useModelStore();
+  const { rotations, positions, positionId } = useModelStore();
   const { name, setName } = useInputStore();
 
   const handleSaveButton = async () => {
@@ -49,6 +53,9 @@ const StudioPage = () => {
       firstSpeakerPosition: positions.firstSpeaker,
       secondSpeakerPosition: positions.secondSpeaker,
       listenerPosition: positions.listener,
+      firstSpeakerRotation: rotations.firstSpeaker,
+      secondSpeakerRotation: rotations.secondSpeaker,
+      listenerRotation: rotations.listener,
     };
 
     try {
@@ -61,15 +68,14 @@ const StudioPage = () => {
       closeModal("saveModal");
 
       toast.success("Complete! (Save)");
+
       if (isGallery) {
         setUserData(newUserData);
       }
     } catch (error) {
-      if (error.response && error.response.status === 409) {
-        toast.error("Position ID already exists.");
-      } else {
-        toast.error(error.message);
-      }
+      error.response && error.response.status === 409
+        ? toast.error("Position ID already exists.")
+        : toast.error(error.message);
     }
   };
 
@@ -96,12 +102,13 @@ const StudioPage = () => {
         <GalleryContainer>
           <GalleryButtonContainer>
             <Button
-              text={isGallery ? "Back" : "Gallery"}
+              text={isGallery ? "뒤로" : "나의 정보"}
               size="large"
+              isDisabled={!isLoggedIn}
               handleClick={handleGalleryButton}
             />
             <Button
-              text="Save"
+              text="저장"
               size="large"
               isDisabled={!isLoggedIn}
               handleClick={() => openModal("saveModal")}
@@ -114,16 +121,22 @@ const StudioPage = () => {
           )}
         </GalleryContainer>
       </StudioContainer>
+      <KeyboardTutorialContainer>
+        <MessageBox about="keyboard" />
+      </KeyboardTutorialContainer>
       <SwitchButtonContainer>
         <ModeSwitch />
       </SwitchButtonContainer>
+      <TutorialContainer>
+        <MessageBox about="mode" />
+      </TutorialContainer>
       {modals.saveModal && (
         <Modal
           modalId="saveModal"
-          modalTitle="Save"
+          modalTitle="저장"
           content={<UserInputs />}
-          firstButtonText="Cancel"
-          secondButtonText="Save"
+          firstButtonText="취소"
+          secondButtonText="저장"
           handleFirstButton={handleCancelButton}
           handleSecondButton={handleSaveButton}
         />

@@ -1,5 +1,10 @@
 import useModeStore from "../stores/useModeStore";
-import { SwitchContainer, SwitchButton } from "../style/SwitchStyle";
+import {
+  SwitchContainer,
+  SwitchNumber,
+  SwitchImage,
+  SwitchButton,
+} from "../style/SwitchStyle";
 
 import ViewButtonImage from "../assets/images/view-button.svg";
 import DragButtonImage from "../assets/images/drag-button.svg";
@@ -11,16 +16,19 @@ const Switch = () => {
   return (
     <SwitchContainer>
       <SwitchButton $active={isViewMode()} onClick={() => switchMode("View")}>
-        <img src={ViewButtonImage} />
+        <SwitchNumber>1</SwitchNumber>
+        <SwitchImage src={ViewButtonImage} />
       </SwitchButton>
       <SwitchButton $active={isDragMode()} onClick={() => switchMode("Drag")}>
-        <img src={DragButtonImage} />
+        <SwitchNumber>2</SwitchNumber>
+        <SwitchImage src={DragButtonImage} />
       </SwitchButton>
       <SwitchButton
         $active={isRotateMode()}
         onClick={() => switchMode("Rotate")}
       >
-        <img src={RotateButtonImage} />
+        <SwitchNumber>3</SwitchNumber>
+        <SwitchImage src={RotateButtonImage} />
       </SwitchButton>
     </SwitchContainer>
   );
