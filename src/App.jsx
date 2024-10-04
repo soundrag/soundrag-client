@@ -39,7 +39,7 @@ const App = () => {
     <ThemeProvider theme={Theme}>
       <GlobalStyle />
       <ToastContainer
-        position="bottom-left"
+        position="bottom-right"
         theme="dark"
         autoClose={1000}
         limit={2}

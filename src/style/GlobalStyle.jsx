@@ -18,6 +18,10 @@ const GlobalStyle = createGlobalStyle`
     justify-content: center;
     user-select: none;
   }
+
+  button {
+    outline: none;
+  }
 `;
 
 export default GlobalStyle;
