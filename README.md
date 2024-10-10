@@ -36,14 +36,16 @@
 
 ## 목차
 
-- [1️⃣ 소개](#1%EF%B8%8F%E2%83%A3-%EC%86%8C%EA%B0%9C-1)
+<!-- toc -->
+
+- [1️⃣ 소개](#1%EF%B8%8F%E2%83%A3-%EC%86%8C%EA%B0%9C)
   * [① Soundrag는 무엇인가요?](#%E2%91%A0-soundrag%EB%8A%94-%EB%AC%B4%EC%97%87%EC%9D%B8%EA%B0%80%EC%9A%94)
   * [② Soundrag는 왜 만들었나요?](#%E2%91%A1-soundrag%EB%8A%94-%EC%99%9C-%EB%A7%8C%EB%93%A4%EC%97%88%EB%82%98%EC%9A%94)
-- [2️⃣ 기능](#2%EF%B8%8F%E2%83%A3-%EA%B8%B0%EB%8A%A5-1)
+- [2️⃣ 기능](#2%EF%B8%8F%E2%83%A3-%EA%B8%B0%EB%8A%A5)
   * [① 소리 변화](#%E2%91%A0-%EC%86%8C%EB%A6%AC-%EB%B3%80%ED%99%94)
   * [② 모델 조작](#%E2%91%A1-%EB%AA%A8%EB%8D%B8-%EC%A1%B0%EC%9E%91)
   * [③ 위치 저장](#%E2%91%A2-%EC%9C%84%EC%B9%98-%EC%A0%80%EC%9E%A5)
-- [3️⃣ 챌린지](#3%EF%B8%8F%E2%83%A3-%EC%B1%8C%EB%A6%B0%EC%A7%80-1)
+- [3️⃣ 챌린지](#3%EF%B8%8F%E2%83%A3-%EC%B1%8C%EB%A6%B0%EC%A7%80)
   * [① 공간 음향](#%E2%91%A0-%EA%B3%B5%EA%B0%84-%EC%9D%8C%ED%96%A5)
     + [**위치에 따라 달라지는 소리의 원리**](#%EC%9C%84%EC%B9%98%EC%97%90-%EB%94%B0%EB%9D%BC-%EB%8B%AC%EB%9D%BC%EC%A7%80%EB%8A%94-%EC%86%8C%EB%A6%AC%EC%9D%98-%EC%9B%90%EB%A6%AC)
     + [**API를 활용하여 공간 음향 구현하기**](#api%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%98%EC%97%AC-%EA%B3%B5%EA%B0%84-%EC%9D%8C%ED%96%A5-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0)
