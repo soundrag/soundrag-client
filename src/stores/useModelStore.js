@@ -3,6 +3,8 @@ import { v4 as uuidv4 } from "uuid";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
 import {
+  STANDARD_SPEAKER_SCALE,
+  STANDARD_LISTENER_SCALE,
   FIRST_SPEAKER_STARTING_POSITION,
   SECOND_SPEAKER_STARTING_POSITION,
   LISTENER_STARTING_POSITION,
@@ -10,19 +12,29 @@ import {
   LISTENER_STARTING_ROTATION,
 } from "../constants";
 
+import { isEqualPosition } from "../utils/validators";
+
 const useModelStore = create((set, get) => ({
   models: {},
 
-  scales: {},
+  scales: {
+    firstSpeaker: STANDARD_SPEAKER_SCALE,
+    secondSpeaker: STANDARD_SPEAKER_SCALE,
+    listener: STANDARD_LISTENER_SCALE,
+  },
   rotations: {
     firstSpeaker: DEFAULT_ROTATION,
     secondSpeaker: DEFAULT_ROTATION,
     listener: LISTENER_STARTING_ROTATION,
   },
+  positions: {
+    firstSpeaker: FIRST_SPEAKER_STARTING_POSITION,
+    secondSpeaker: SECOND_SPEAKER_STARTING_POSITION,
+    listener: LISTENER_STARTING_POSITION,
+  },
 
-  positions: {},
   userPositions: {},
-  previousPositions: {},
+
   savedPositions: {
     firstSpeaker: FIRST_SPEAKER_STARTING_POSITION,
     secondSpeaker: SECOND_SPEAKER_STARTING_POSITION,
@@ -58,18 +70,15 @@ const useModelStore = create((set, get) => ({
 
   setModelPositions: (modelName, position) => {
     set((state) => {
-      if (
-        JSON.stringify(state.positions[modelName]) === JSON.stringify(position)
-      ) {
+      const currentPosition = state.positions[modelName];
+
+      if (currentPosition && isEqualPosition(currentPosition, position)) {
         return state;
       }
+
       return {
         positions: { ...state.positions, [modelName]: position },
         positionId: uuidv4(),
-        previousPositions: {
-          ...state.previousPositions,
-          [modelName]: position,
-        },
       };
     });
   },
@@ -105,14 +114,12 @@ const useModelStore = create((set, get) => ({
   },
 
   restorePositions: () => {
-    const savedPositions = get().savedPositions;
-    const savedRotations = get().savedRotations;
-    if (savedPositions && savedRotations) {
-      set({
-        positions: JSON.parse(JSON.stringify(savedPositions)),
-        rotations: JSON.parse(JSON.stringify(savedRotations)),
-      });
-    }
+    const { savedPositions, savedRotations } = get();
+
+    set({
+      positions: { ...savedPositions },
+      rotations: { ...savedRotations },
+    });
   },
 
   setModelDragState: (modelName, dragging) => {
