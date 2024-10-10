@@ -1,3 +1,11 @@
+const isEqualPosition = (currentPosition, newPosition) => {
+  return (
+    currentPosition[0] === newPosition[0] &&
+    currentPosition[1] === newPosition[1] &&
+    currentPosition[2] === newPosition[2]
+  );
+};
+
 const isValidatePosition = (position) => {
   return position;
 };
@@ -14,4 +22,4 @@ const hasCurrentRef = (ref) => {
   return ref.current;
 };
 
-export { isValidatePosition, isValidateNumber, hasCurrentRef };
+export { isEqualPosition, isValidatePosition, isValidateNumber, hasCurrentRef };

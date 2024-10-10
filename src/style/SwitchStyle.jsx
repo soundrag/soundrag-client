@@ -18,14 +18,10 @@ const SwitchNumber = styled.div`
   font-size: ${({ theme }) => theme.fontSize.xSmall};
 `;
 
-const SwitchImage = styled.img`
-  width: 2rem;
-`;
-
 const SwitchButton = styled.button`
   position: relative;
   width: 50%;
-  padding: 0.2rem 0.5rem;
+  padding: 0.2rem 0.4rem;
   background-color: ${({ theme }) => theme.color.mainColor};
   box-shadow: 0 0 2rem
     ${({ theme, $active }) => $active && theme.color.whiteColor};
@@ -45,4 +41,4 @@ const SwitchButton = styled.button`
   }
 `;
 
-export { SwitchContainer, SwitchNumber, SwitchImage, SwitchButton };
+export { SwitchContainer, SwitchNumber, SwitchButton };

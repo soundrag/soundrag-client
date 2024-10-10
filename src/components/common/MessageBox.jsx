@@ -1,3 +1,5 @@
+import Icon from "./Icon";
+
 import ViewButtonImage from "../../assets/images/view-button.svg";
 import DragButtonImage from "../../assets/images/drag-button.svg";
 import RotateButtonImage from "../../assets/images/rotate-button.svg";
@@ -8,7 +10,6 @@ import useModeStore from "../../stores/useModeStore";
 import {
   MessageBoxContainer,
   MessageBoxMode,
-  MessageBoxModeImage,
   MessageBoxTitle,
   MessageBoxDescription,
 } from "../../style/MessageBoxStyle";
@@ -26,7 +27,7 @@ const MessageBox = ({ about }) => {
           {isViewMode && (
             <MessageBoxContainer>
               <MessageBoxMode>
-                <MessageBoxModeImage src={ViewButtonImage} />
+                <Icon imageSrc={ViewButtonImage} imageAlt="View Mode" />
                 시점 이동 모드
               </MessageBoxMode>
               <MessageBoxTitle>
@@ -43,7 +44,7 @@ const MessageBox = ({ about }) => {
           {isDragMode && (
             <MessageBoxContainer>
               <MessageBoxMode>
-                <MessageBoxModeImage src={DragButtonImage} />
+                <Icon imageSrc={DragButtonImage} imageAlt="Drag Mode" />
                 드래그 모드
               </MessageBoxMode>
               <MessageBoxTitle>
@@ -63,7 +64,7 @@ const MessageBox = ({ about }) => {
           {isRotateMode && (
             <MessageBoxContainer>
               <MessageBoxMode>
-                <MessageBoxModeImage src={RotateButtonImage} />
+                <Icon imageSrc={RotateButtonImage} imageAlt="Rotate Mode" />
                 회전 모드
               </MessageBoxMode>
               <MessageBoxTitle>
@@ -82,7 +83,7 @@ const MessageBox = ({ about }) => {
         <>
           <MessageBoxContainer $keyboard>
             <MessageBoxMode $keyboard>
-              <MessageBoxModeImage src={KeyboardImage} />
+              <Icon imageSrc={KeyboardImage} imageAlt="Shortcut Image" />
               단축키
             </MessageBoxMode>
             <MessageBoxTitle>[1, 2, 3] = 모드 전환</MessageBoxTitle>

@@ -8,15 +8,11 @@ const MessageBoxMode = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: ${({ $keyboard }) => ($keyboard ? "1rem" : "2rem")};
+  gap: 1rem;
   background-color: ${({ theme }) => theme.color.menuBackgroundColor};
   color: ${({ theme }) => theme.color.whiteColor};
-  padding: 0.5rem 0;
+  padding: 0.2rem 0;
   font-size: ${({ theme }) => theme.fontSize.small};
-`;
-
-const MessageBoxModeImage = styled.img`
-  width: 1.5rem;
 `;
 
 const MessageBoxTitle = styled.div`
@@ -36,7 +32,6 @@ const MessageBoxDescription = styled.div`
 export {
   MessageBoxContainer,
   MessageBoxMode,
-  MessageBoxModeImage,
   MessageBoxTitle,
   MessageBoxDescription,
 };
