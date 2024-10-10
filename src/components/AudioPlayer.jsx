@@ -90,10 +90,10 @@ const AudioPlayer = () => {
         onEnded={handleTimeEnd}
       />
       <ResetButton onClick={resetUploadedFile}>
-        <Icon imageSrc={ResetButtonImage} />
+        <Icon imageSrc={ResetButtonImage} imageAlt="Reset Button" />
       </ResetButton>
       <UploadButton onClick={handleOpenUploadModal}>
-        <Icon imageSrc={UploadButtonImage} />
+        <Icon imageSrc={UploadButtonImage} imageAlt="Upload Button" />
       </UploadButton>
       <RangeSlider
         type="range"
@@ -107,6 +107,7 @@ const AudioPlayer = () => {
       <ControlButton onClick={handlePlayButton}>
         <Icon
           imageSrc={isPlaying ? PauseButtonImage : PlayButtonImage}
+          imageAlt={isPlaying ? "Pause Button" : "Play Button"}
           $control={true}
         />
       </ControlButton>
