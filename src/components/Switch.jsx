@@ -2,13 +2,13 @@ import useModeStore from "../stores/useModeStore";
 import {
   SwitchContainer,
   SwitchNumber,
-  SwitchImage,
   SwitchButton,
 } from "../style/SwitchStyle";
 
 import ViewButtonImage from "../assets/images/view-button.svg";
 import DragButtonImage from "../assets/images/drag-button.svg";
 import RotateButtonImage from "../assets/images/rotate-button.svg";
+import Icon from "./common/Icon";
 
 const Switch = () => {
   const { isViewMode, isDragMode, isRotateMode, switchMode } = useModeStore();
@@ -17,18 +17,18 @@ const Switch = () => {
     <SwitchContainer>
       <SwitchButton $active={isViewMode()} onClick={() => switchMode("View")}>
         <SwitchNumber>1</SwitchNumber>
-        <SwitchImage src={ViewButtonImage} />
+        <Icon imageSrc={ViewButtonImage} imageAlt="View Mode Button" />
       </SwitchButton>
       <SwitchButton $active={isDragMode()} onClick={() => switchMode("Drag")}>
         <SwitchNumber>2</SwitchNumber>
-        <SwitchImage src={DragButtonImage} />
+        <Icon imageSrc={DragButtonImage} imageAlt="Drag Mode Button" />
       </SwitchButton>
       <SwitchButton
         $active={isRotateMode()}
         onClick={() => switchMode("Rotate")}
       >
         <SwitchNumber>3</SwitchNumber>
-        <SwitchImage src={RotateButtonImage} />
+        <Icon imageSrc={RotateButtonImage} imageAlt="Rotate Mode Button" />
       </SwitchButton>
     </SwitchContainer>
   );
