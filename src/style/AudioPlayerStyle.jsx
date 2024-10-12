@@ -4,7 +4,7 @@ const PlayerContainer = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 0.6rem;
 `;
 
 const RangeSlider = styled.input.attrs({ type: "range" })`
@@ -73,6 +73,7 @@ const RangeSlider = styled.input.attrs({ type: "range" })`
 
 const TimeTable = styled.div`
   font-weight: bold;
+  width: 7rem;
 
   .duration-time {
     color: ${({ theme }) => theme.color.subColor};
