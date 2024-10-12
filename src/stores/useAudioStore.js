@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import sampleFile from "../assets/sounds/sample.mp3";
 
-const useAudioStore = create((set) => ({
+const useAudioStore = create((set, get) => ({
   isPlaying: false,
   hasUploaded: false,
 
@@ -62,7 +62,12 @@ const useAudioStore = create((set) => ({
     }));
   },
 
-  resetUploadedFile: () =>
+  resetUploadedFile: () => {
+    const { fileName } = get();
+
+    if (fileName === "sample.mp3") {
+      return;
+    }
     set({
       isPlaying: false,
       hasUploaded: false,
@@ -70,7 +75,8 @@ const useAudioStore = create((set) => ({
       file: sampleFile,
       fileName: "sample.mp3",
       fileUrl: sampleFile,
-    }),
+    });
+  },
 }));
 
 export default useAudioStore;
