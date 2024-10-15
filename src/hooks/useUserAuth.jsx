@@ -13,29 +13,34 @@ import { getUserPosition } from "../services/userService";
 
 import useAuthStore from "../stores/useAuthStore";
 import useDataStore from "../stores/useDataStore";
-import useModalStore from "../stores/useModalStore";
 
 const useUserAuth = () => {
-  const { isLoggedIn, setIsLoggedIn, setErrorMessage } = useAuthStore();
+  const { isLoggedIn, setIsLoggedIn } = useAuthStore();
   const { setUserId, setUserData, resetUserData } = useDataStore();
-  const { openModal } = useModalStore();
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        setIsLoggedIn(true);
+        const response = await getUserPosition();
+
         setUserId(user.uid);
+        setIsLoggedIn(true);
+
+        setUserData(response.data.user);
       } else {
         setIsLoggedIn(false);
+        setUserId(null);
+
         resetUserData();
       }
     });
+
     return () => unsubscribe();
-  }, [setIsLoggedIn, setUserId, resetUserData]);
+  }, [setIsLoggedIn, setUserId, resetUserData, setUserData]);
 
   const handleError = (error) => {
-    setErrorMessage(error.response);
-    openModal("errorModal");
+    toast.error(error.message || "알 수 없는 에러가 발생했습니다.");
+
     setIsLoggedIn(false);
   };
 
@@ -48,6 +53,11 @@ const useUserAuth = () => {
 
       await loginUser(idToken);
 
+      const response = await getUserPosition();
+
+      setUserData(response.data.user);
+      setUserId(result.user.uid);
+
       setIsLoggedIn(true);
     } catch (error) {
       handleError(error);
@@ -57,22 +67,14 @@ const useUserAuth = () => {
   const handleLogout = async () => {
     try {
       await logoutUser();
+      await auth.signOut();
 
       setIsLoggedIn(false);
+      setUserId(null);
+
       resetUserData();
     } catch (error) {
       handleError(error);
-    }
-  };
-
-  const handleGallery = async (toggle) => {
-    try {
-      const response = await getUserPosition();
-      setUserData(response.data.user);
-
-      toggle();
-    } catch (error) {
-      toast.error("Failed to fetch user positions: " + error.message);
     }
   };
 
@@ -80,7 +82,6 @@ const useUserAuth = () => {
     isLoggedIn,
     handleLogin,
     handleLogout,
-    handleGallery,
   };
 };
 

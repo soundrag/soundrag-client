@@ -1,8 +1,26 @@
-const isEqualPosition = (currentPosition, newPosition) => {
+const isEqualVectors = (firstVectors, secondVectors, epsilon = 1e-6) => {
+  if (firstVectors.length !== secondVectors.length) return false;
+
+  for (let i = 0; i < firstVectors.length; i++) {
+    if (Math.abs(firstVectors[i] - secondVectors[i]) > epsilon) return false;
+  }
+
+  return true;
+};
+
+const deepEqual = (firstPosition, secondPosition, epsilon = 1e-6) => {
   return (
-    currentPosition[0] === newPosition[0] &&
-    currentPosition[1] === newPosition[1] &&
-    currentPosition[2] === newPosition[2]
+    isEqualVectors(
+      firstPosition.firstSpeaker,
+      secondPosition.firstSpeaker,
+      epsilon,
+    ) &&
+    isEqualVectors(
+      firstPosition.secondSpeaker,
+      secondPosition.secondSpeaker,
+      epsilon,
+    ) &&
+    isEqualVectors(firstPosition.listener, secondPosition.listener, epsilon)
   );
 };
 
@@ -22,4 +40,4 @@ const hasCurrentRef = (ref) => {
   return ref.current;
 };
 
-export { isEqualPosition, isValidatePosition, isValidateNumber, hasCurrentRef };
+export { deepEqual, isValidatePosition, isValidateNumber, hasCurrentRef };

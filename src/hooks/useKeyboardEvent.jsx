@@ -1,10 +1,22 @@
 import { useEffect } from "react";
 
-const useKeyboardEvent = (callback) => {
+import { toast } from "react-toastify";
+
+import useDataStore from "../stores/useDataStore";
+import useModeStore from "../stores/useModeStore";
+
+const useKeyboardEvent = () => {
+  const { userData, currentIndex, setCurrentIndex } = useDataStore();
+  const { switchMode } = useModeStore();
+
+  const userDataLength = userData.length;
+
   useEffect(() => {
-    const handleCallback = (event) => {
+    const handleKeyDown = (event) => {
       const target = event.target;
       const tagName = target.tagName.toUpperCase();
+      const isInitialIndex = currentIndex === 0;
+      const isLastIndex = currentIndex === userDataLength - 1;
 
       if (
         target.isContentEditable ||
@@ -15,15 +27,43 @@ const useKeyboardEvent = (callback) => {
         return;
       }
 
-      callback(event);
+      switch (event.key) {
+        case "1":
+          switchMode("View");
+          break;
+        case "2":
+          switchMode("Drag");
+          break;
+        case "3":
+          switchMode("Rotate");
+          break;
+        case "z":
+        case "ㅋ":
+          if (isInitialIndex) {
+            toast.info("처음입니다.");
+          } else {
+            setCurrentIndex(currentIndex - 1);
+          }
+          break;
+        case "x":
+        case "ㅌ":
+          if (isLastIndex) {
+            toast.info("마지막입니다.");
+          } else {
+            setCurrentIndex(currentIndex + 1);
+          }
+          break;
+        default:
+          break;
+      }
     };
 
-    window.addEventListener("keydown", handleCallback);
+    window.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      window.removeEventListener("keydown", handleCallback);
+      window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [callback]);
+  }, [switchMode, setCurrentIndex, currentIndex, userDataLength]);
 };
 
 export default useKeyboardEvent;

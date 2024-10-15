@@ -1,8 +1,7 @@
 import { useEffect } from "react";
 
 import useModelStore from "../stores/useModelStore";
-
-import { isValidatePosition } from "../utils/validators";
+import useDataStore from "../stores/useDataStore";
 
 import {
   STANDARD_SPEAKER_SCALE,
@@ -10,40 +9,46 @@ import {
   FIRST_SPEAKER_STARTING_POSITION,
   SECOND_SPEAKER_STARTING_POSITION,
   LISTENER_STARTING_POSITION,
+  DEFAULT_ROTATION,
+  LISTENER_STARTING_ROTATION,
 } from "../constants";
 
 const useLoadedModel = () => {
-  const { loadModel, setModelScale, setModelPositions, userPositions } =
+  const { userData, currentIndex } = useDataStore();
+  const { loadModel, setModelScale, setModelPositions, setModelRotations } =
     useModelStore();
+
+  const isUserData = userData.length > 0;
+  const isCorrectIndex = currentIndex >= 0 && currentIndex < userData.length;
 
   useEffect(() => {
     loadModel("firstSpeaker", "/models/speaker.gltf");
     setModelScale("firstSpeaker", STANDARD_SPEAKER_SCALE);
-
     loadModel("secondSpeaker", "/models/speaker.gltf");
     setModelScale("secondSpeaker", STANDARD_SPEAKER_SCALE);
-
     loadModel("listener", "/models/listener.gltf");
     setModelScale("listener", STANDARD_LISTENER_SCALE);
 
-    if (isValidatePosition(userPositions.firstSpeaker)) {
-      setModelPositions("firstSpeaker", userPositions.firstSpeaker);
+    if (isUserData && isCorrectIndex) {
+      const currentData = userData[currentIndex];
+
+      setModelPositions("firstSpeaker", currentData.firstSpeakerPosition);
+      setModelPositions("secondSpeaker", currentData.secondSpeakerPosition);
+      setModelPositions("listener", currentData.listenerPosition);
+      setModelRotations("firstSpeaker", currentData.firstSpeakerRotation);
+      setModelRotations("secondSpeaker", currentData.secondSpeakerRotation);
+      setModelRotations("listener", currentData.listenerRotation);
     } else {
       setModelPositions("firstSpeaker", FIRST_SPEAKER_STARTING_POSITION);
-    }
-
-    if (isValidatePosition(userPositions.secondSpeaker)) {
-      setModelPositions("secondSpeaker", userPositions.secondSpeaker);
-    } else {
       setModelPositions("secondSpeaker", SECOND_SPEAKER_STARTING_POSITION);
-    }
-
-    if (isValidatePosition(userPositions.listener)) {
-      setModelPositions("listener", userPositions.listener);
-    } else {
       setModelPositions("listener", LISTENER_STARTING_POSITION);
+      setModelRotations("firstSpeaker", DEFAULT_ROTATION);
+      setModelRotations("secondSpeaker", DEFAULT_ROTATION);
+      setModelRotations("listener", LISTENER_STARTING_ROTATION);
     }
-  }, [loadModel, setModelScale, setModelPositions, userPositions]);
+  }, [currentIndex, userData]);
+
+  return null;
 };
 
 export default useLoadedModel;
