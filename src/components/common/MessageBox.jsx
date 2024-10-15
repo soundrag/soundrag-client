@@ -87,7 +87,8 @@ const MessageBox = ({ about }) => {
               단축키
             </MessageBoxMode>
             <MessageBoxTitle>[1, 2, 3] = 모드 전환</MessageBoxTitle>
-            <MessageBoxTitle>[Backspace] = 자동 저장 취소</MessageBoxTitle>
+            <MessageBoxTitle>[z] = 이전</MessageBoxTitle>
+            <MessageBoxTitle>[x] = 다음</MessageBoxTitle>
             <MessageBoxTitle>
               [Shift] + Click = 스피커 천장 / 바닥 전환
             </MessageBoxTitle>
