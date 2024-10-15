@@ -2,27 +2,34 @@ import { create } from "zustand";
 
 const useDataStore = create((set) => ({
   userId: "",
+
   positionId: "",
   positionIdToDelete: "",
+
   userData: [],
 
-  speakers: [],
-
-  listenerPosition: [],
+  currentIndex: 0,
 
   setUserId: (userId) => set({ userId }),
 
   setPositionIdToDelete: (positionId) =>
     set({ positionIdToDelete: positionId }),
 
-  setUserData: (data) => set({ userData: data }),
+  setUserData: (data) =>
+    set({
+      userData: data,
+      currentIndex: data.length > 0 ? data.length - 1 : 0,
+    }),
 
-  setSpeakers: (speakers) => set({ speakers }),
+  resetUserData: () => set({ userData: [], currentIndex: 0 }),
 
-  setListenerPosition: (position) => set({ listenerPosition: position }),
-
-  resetUserData: () =>
-    set({ userData: [], speakers: [], listenerPosition: [] }),
+  setCurrentIndex: (index) =>
+    set((state) => ({
+      currentIndex:
+        index >= 0 && index < state.userData.length
+          ? index
+          : state.currentIndex,
+    })),
 }));
 
 export default useDataStore;

@@ -23,10 +23,13 @@ const Gallery = ({ data }) => {
   const { userData, setUserData, positionIdToDelete, setPositionIdToDelete } =
     useDataStore();
   const { modals, openModal, closeModal } = useModalStore();
-  const { setUserPositions } = useModelStore();
+  const { setModelPositions, setModelRotations } = useModelStore();
+
+  const filteredUserData = userData.filter((item) => item.name);
 
   const handleOpenDeleteModal = (item) => {
     setPositionIdToDelete(item.positionId);
+
     openModal("deleteModal");
   };
 
@@ -35,14 +38,12 @@ const Gallery = ({ data }) => {
   };
 
   const handleDetailButton = (item) => {
-    setUserPositions(
-      item.firstSpeakerPosition,
-      item.secondSpeakerPosition,
-      item.listenerPosition,
-      item.firstSpeakerRotation,
-      item.secondSpeakerRotation,
-      item.listenerRotation,
-    );
+    setModelPositions("firstSpeaker", item.firstSpeakerPosition);
+    setModelPositions("secondSpeaker", item.secondSpeakerPosition);
+    setModelPositions("listener", item.listenerPosition);
+    setModelRotations("firstSpeaker", item.firstSpeakerRotation);
+    setModelRotations("secondSpeaker", item.secondSpeakerRotation);
+    setModelRotations("listener", item.listenerRotation);
   };
 
   const handleDeleteButton = async (positionId) => {
@@ -68,7 +69,7 @@ const Gallery = ({ data }) => {
   return (
     <DataListContainer>
       <DataList>
-        {userData.length !== 0 && (
+        {filteredUserData.length !== 0 && (
           <thead>
             <tr>
               <th>이름</th>
@@ -77,22 +78,21 @@ const Gallery = ({ data }) => {
           </thead>
         )}
         <tbody>
-          {userData.length !== 0 &&
-            userData.map((item, index) => (
-              <DataListRow key={index}>
-                <DataListCell>{item.name}</DataListCell>
-                <DataListCell className="button-container">
-                  <Button
-                    text="보기"
-                    size="small"
-                    handleClick={() => handleDetailButton(item)}
-                  />
-                  <DeleteButton onClick={() => handleOpenDeleteModal(item)}>
-                    <img src={DeleteButtonImage} />
-                  </DeleteButton>
-                </DataListCell>
-              </DataListRow>
-            ))}
+          {filteredUserData.map((item, index) => (
+            <DataListRow key={index}>
+              <DataListCell>{item.name}</DataListCell>
+              <DataListCell className="button-container">
+                <Button
+                  text="보기"
+                  size="small"
+                  handleClick={() => handleDetailButton(item)}
+                />
+                <DeleteButton onClick={() => handleOpenDeleteModal(item)}>
+                  <img src={DeleteButtonImage} alt="Delete" />
+                </DeleteButton>
+              </DataListCell>
+            </DataListRow>
+          ))}
         </tbody>
       </DataList>
       {modals.deleteModal && (

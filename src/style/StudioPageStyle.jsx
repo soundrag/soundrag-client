@@ -30,6 +30,14 @@ const GalleryButtonContainer = styled.div`
   width: 100%;
 `;
 
+const VersionContainer = styled.div`
+  display: flex;
+  align-items: center;
+  width: 5rem;
+  font-size: ${({ theme }) => theme.fontSize.large};
+  color: ${({ theme }) => theme.color.galleryNameColor};
+`;
+
 const MyGalleryContainer = styled.div`
   position: absolute;
   top: 3.3rem;
@@ -75,6 +83,7 @@ export {
   StudioPageContainer,
   StudioContainer,
   GalleryButtonContainer,
+  VersionContainer,
   MyGalleryContainer,
   SwitchButtonContainer,
   TutorialContainer,

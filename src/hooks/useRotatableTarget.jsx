@@ -8,7 +8,7 @@ import useModelStore from "../stores/useModelStore";
 const useRotatableTarget = (modelName, isListener = false, isSpeaker) => {
   const meshRef = useRef(null);
 
-  const { rotations, setModelRotation } = useModelStore();
+  const { rotations, setModelRotations } = useModelStore();
 
   const initialRotation = isListener
     ? LISTENER_STARTING_ROTATION
@@ -21,7 +21,7 @@ const useRotatableTarget = (modelName, isListener = false, isSpeaker) => {
         const newAngleY = (currentRotation[1] + Math.PI / 2) % (2 * Math.PI);
         const newRotation = [currentRotation[0], newAngleY, currentRotation[2]];
 
-        setModelRotation(modelName, newRotation);
+        setModelRotations(modelName, newRotation);
       }
     },
   });
