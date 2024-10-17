@@ -24,10 +24,9 @@ _이러한 문제를 해결하기 위해, <br>
 </div>
 
 <br>
-
 <span id="top"></span>
-
 <br>
+
 ## 목차 
 
 <!-- toc -->
@@ -100,7 +99,9 @@ React 렌더링 시스템을 활용하여 불필요한 계산을 최소화하면
 
 <br>
 <br>
-<p align="right"><a href="#top">목차👆🏼</a></p>
+
+#### <p align="right"><a href="#top">목차👆🏼</a></p>
+
 <br>
 <br>
 
