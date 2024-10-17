@@ -128,6 +128,9 @@ React 렌더링 시스템을 활용하여 불필요한 계산을 최소화하면
 ✔️ **2D 화면**에서 정규화된 좌표 값으로 위치를 계산하고 계산된 값으로 **3D 공간**에서의 움직임을 구현하였습니다.
 
 <br>
+
+#### <p align="right"><a href="#top">목차👆🏼</a></p>
+
 <br>
 
 ### 위치에 따라 달라지는 소리: 공간 음향 구현하기
@@ -185,7 +188,9 @@ React 렌더링 시스템을 활용하여 불필요한 계산을 최소화하면
 
 <br>
 <br>
-<p align="right"><a href="#top">목차👆🏼</a></p>
+
+#### <p align="right"><a href="#top">목차👆🏼</a></p>
+
 <br>
 <br>
 
@@ -248,6 +253,9 @@ K. Hinckley, Two-handed Virtual Manipulation Vol.5, No.3, 1998, p.260-302
 ✔️ 사용자가 오른손으로 마우스를 조작하면서 왼손으로 키보드 입력을 **병행**할 수 있도록 구현하였습니다.
 
 <br>
+
+#### <p align="right"><a href="#top">목차👆🏼</a></p>
+
 <br>
 
 ### 자동 저장: 사용자의 최적 위치 정보 관리하기
@@ -323,6 +331,8 @@ K. Hinckley, Two-handed Virtual Manipulation Vol.5, No.3, 1998, p.260-302
 
 <br>
 <br>
-<p align="right"><a href="#top">목차👆🏼</a></p>
+
+#### <p align="right"><a href="#top">목차👆🏼</a></p>
+
 <br>
 <br>
