@@ -98,7 +98,6 @@ React 렌더링 시스템을 활용하여 불필요한 계산을 최소화하면
 #### Mongo DB
 
 <br>
-<br>
 
 #### <p align="right"><a href="#top">목차👆🏼</a></p>
 
@@ -182,7 +181,6 @@ React 렌더링 시스템을 활용하여 불필요한 계산을 최소화하면
 
 ✔️ 스피커의 **수직** 위치에 따른 공간 음향을 구현하였습니다.
 
-<br>
 <br>
 
 #### <p align="right"><a href="#top">목차👆🏼</a></p>
@@ -324,7 +322,6 @@ K. Hinckley, Two-handed Virtual Manipulation Vol.5, No.3, 1998, p.260-302
 
 ✔️ 데이터의 정확성을 유지하면서 **로컬스토리지**를 활용하여 오프라인, 온라인 사용자가 모두 사용할 수 있게끔 **사용자 접근성**을 향상시켰습니다.
 
-<br>
 <br>
 
 #### <p align="right"><a href="#top">목차👆🏼</a></p>
