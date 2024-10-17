@@ -100,7 +100,7 @@ React 렌더링 시스템을 활용하여 불필요한 계산을 최소화하면
 
 <br>
 <br>
-#### <p align="right"><a href="#top">목차👆🏼</a></p>
+<p align="right"><a href="#top">목차👆🏼</a></p>
 <br>
 <br>
 
@@ -183,8 +183,8 @@ React 렌더링 시스템을 활용하여 불필요한 계산을 최소화하면
 
 
 <br>
-
-#### <p align="right"><a href="#top">목차👆🏼</a></p>
+<br>
+<p align="right"><a href="#top">목차👆🏼</a></p>
 <br>
 <br>
 
@@ -321,6 +321,7 @@ K. Hinckley, Two-handed Virtual Manipulation Vol.5, No.3, 1998, p.260-302
 
 
 <br>
-
-#### <p align="right"><a href="#top">목차👆🏼</a></p>
+<br>
+<p align="right"><a href="#top">목차👆🏼</a></p>
+<br>
 <br>
