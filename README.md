@@ -102,7 +102,7 @@ React 렌더링 시스템을 활용하여 불필요한 계산을 최소화하면
 1. 사용자가 마우스를 클릭하거나 이동할 때, 화면의 [x, y] 좌표를 **NDC(Normalized Device Coordinates)** 좌표로 변환합니다.<br>
     <img src="https://github.com/user-attachments/assets/635258b9-4f44-436d-82e6-560064e78394">
 
-   - **NDC** 좌표란 화면의 모든 좌표를 -1에서 1 사이의 값으로 변환(정규화)한 좌표를 의미합니다.
+   - **NDC** 좌표란 화면의 모든 좌표를 `-1`에서 `1` 사이의 값으로 변환(정규화)한 좌표를 의미합니다.
 
 2. 변환된 **NDC** 좌표를 기반으로, 카메라에서 시작해 마우스 위치를 향하는 **광선(Raycaster)** 을 생성합니다.
     <img src="https://github.com/user-attachments/assets/e5eec1f2-107e-4303-ab48-b5142484ba00">
