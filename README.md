@@ -132,8 +132,7 @@ _이러한 문제를 해결하기 위해, <br>
 
 1.  **HRTF (Head-Related Transfer Function)**
     <br>
-    3D 공간 음향을 구현하기 위해서 방향과 거리에 대한 방법을 고려해야 합니다. <br>
-    **Web Audio API**에서는 방향에 대한 음향 변화를 구현하기 위한 아래 두 가지 옵션이 있습니다.
+    3D 공간 음향을 구현하기 위해 아래와 같이 **Web Audio API**에서 선택할 수 있는 두 가지 옵션이 있습니다.
 
     - **Equalpower**
 
