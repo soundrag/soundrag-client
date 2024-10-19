@@ -121,8 +121,9 @@ _이러한 문제를 해결하기 위해, <br>
    <br>
    | 3D 정규 좌표 (NDC) |
    |--------------------|
-   |<img width="600px" alt="스크린샷 2024-10-19 오후 10 19 36" src="https://github.com/user-attachments/assets/fe8205fb-9d9e-467d-afd5-1b799ba5a078">|
+   |<img width="600px" alt="스크린샷 2024-10-20 오전 8 37 06" src="https://github.com/user-attachments/assets/9a74caff-20c1-4c57-a6d0-52b205cf0da1">|
    <br>
+
 
 2. 변환된 **NDC** 좌표를 기반으로, 카메라에서 시작해 마우스 위치를 향하는 **광선(Raycaster)** 을 생성합니다. <br>사용자가 마우스를 이동할 때 **광선**이 생성되어 아래 그림과 같이 좌표 이동을 감지합니다.
    <br>
