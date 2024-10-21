@@ -11,19 +11,20 @@
   <br>
 
   <br>
+  
   <a href="https://soundrag-31cbb.web.app/">
     <img src="https://github.com/user-attachments/assets/10869a25-1536-44ca-8eca-adbe3370fa13">
   </a>
 
   <br>
-
+  <br>
+  
 _스피커를 이동하거나 최적의 위치를 찾는 것은 시간과 노력이 많이 소요됩니다._<br>
 _이러한 문제를 해결하기 위해<br>
 3D 가상 공간에서 스피커를 자유롭게 배치할 수 있는 환경을 구현하였습니다._
 
 </div>
 
-<br>
 <span id="top"></span>
 <br>
 
@@ -53,6 +54,8 @@ _이러한 문제를 해결하기 위해<br>
 ## 한 눈에 보기
 
 ### 1️⃣ 플로우 차트
+
+<br>
 
 ### 2️⃣ 기술 스택
 
