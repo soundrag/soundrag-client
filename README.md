@@ -7,6 +7,7 @@
   <br>
 
   <img width="300px" alt="project icon" src="https://github.com/user-attachments/assets/8f54c1ef-ac76-4dc0-a35a-4bc50a165fcc">
+  
   <br>
 
   <br>
@@ -17,8 +18,8 @@
   <br>
 
 _스피커를 이동하거나 최적의 위치를 찾는 것은 시간과 노력이 많이 소요됩니다._<br>
-_이러한 문제를 해결하기 위해 가상 공간에서 <br>
-스피커와 청취자의 **위치를 자유롭게 조절**할 수 있는 환경을 구현하였습니다._
+_이러한 문제를 해결하기 위해<br>
+3D 가상 공간에서 스피커를 자유롭게 배치할 수 있는 환경을 구현하였습니다._
 
 </div>
 
@@ -30,29 +31,26 @@ _이러한 문제를 해결하기 위해 가상 공간에서 <br>
 
 <!-- toc -->
 
-- [👁️ 한 눈에 보기](#%F0%9F%91%81%EF%B8%8F-%ED%95%9C-%EB%88%88%EC%97%90-%EB%B3%B4%EA%B8%B0)
-  * [1️⃣ 플로우 차트](#1%EF%B8%8F%E2%83%A3-%ED%94%8C%EB%A1%9C%EC%9A%B0-%EC%B0%A8%ED%8A%B8)
-  * [2️⃣ 기술 스택](#2%EF%B8%8F%E2%83%A3-%EA%B8%B0%EC%88%A0-%EC%8A%A4%ED%83%9D)
-    + [Client](#client)
-    + [Server](#server)
-    + [Deploy](#deploy)
-- [🔍 자세히 보기](#%F0%9F%94%8D-%EC%9E%90%EC%84%B8%ED%9E%88-%EB%B3%B4%EA%B8%B0)
-  * [1️⃣ 스피커 배치에 따른 소리의 변화](#1%EF%B8%8F%E2%83%A3-%EC%8A%A4%ED%94%BC%EC%BB%A4-%EB%B0%B0%EC%B9%98%EC%97%90-%EB%94%B0%EB%A5%B8-%EC%86%8C%EB%A6%AC%EC%9D%98-%EB%B3%80%ED%99%94)
-    + [2D 화면으로 3D 공간에 스피커 배치하기](#2d-%ED%99%94%EB%A9%B4%EC%9C%BC%EB%A1%9C-3d-%EA%B3%B5%EA%B0%84%EC%97%90-%EC%8A%A4%ED%94%BC%EC%BB%A4-%EB%B0%B0%EC%B9%98%ED%95%98%EA%B8%B0)
-    + [3D 공간에서 소리의 변화 구현하기](#3d-%EA%B3%B5%EA%B0%84%EC%97%90%EC%84%9C-%EC%86%8C%EB%A6%AC%EC%9D%98-%EB%B3%80%ED%99%94-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0)
-  * [2️⃣ 불편하지 않은 조작법에 대하여](#2%EF%B8%8F%E2%83%A3-%EB%B6%88%ED%8E%B8%ED%95%98%EC%A7%80-%EC%95%8A%EC%9D%80-%EC%A1%B0%EC%9E%91%EB%B2%95%EC%97%90-%EB%8C%80%ED%95%98%EC%97%AC)
-    + [오직 마우스로만 조작한다면?](#%EC%98%A4%EC%A7%81-%EB%A7%88%EC%9A%B0%EC%8A%A4%EB%A1%9C%EB%A7%8C-%EC%A1%B0%EC%9E%91%ED%95%9C%EB%8B%A4%EB%A9%B4)
-    + [마우스에 키보드 단축키를 곁들인 조작법](#%EB%A7%88%EC%9A%B0%EC%8A%A4%EC%97%90-%ED%82%A4%EB%B3%B4%EB%93%9C-%EB%8B%A8%EC%B6%95%ED%82%A4%EB%A5%BC-%EA%B3%81%EB%93%A4%EC%9D%B8-%EC%A1%B0%EC%9E%91%EB%B2%95)
-  * [3️⃣ 유연한 저장 기능](#3%EF%B8%8F%E2%83%A3-%EC%9C%A0%EC%97%B0%ED%95%9C-%EC%A0%80%EC%9E%A5-%EA%B8%B0%EB%8A%A5)
-    + [버튼 없이 자동으로 저장하기](#%EB%B2%84%ED%8A%BC-%EC%97%86%EC%9D%B4-%EC%9E%90%EB%8F%99%EC%9C%BC%EB%A1%9C-%EC%A0%80%EC%9E%A5%ED%95%98%EA%B8%B0)
-    + [누구나 사용할 수 있는 저장하기](#%EB%88%84%EA%B5%AC%EB%82%98-%EC%82%AC%EC%9A%A9%ED%95%A0-%EC%88%98-%EC%9E%88%EB%8A%94-%EC%A0%80%EC%9E%A5%ED%95%98%EA%B8%B0)
+- [한 눈에 보기](#%ED%95%9C-%EB%88%88%EC%97%90-%EB%B3%B4%EA%B8%B0)
+  - [1️⃣ 플로우 차트](#1%EF%B8%8F%E2%83%A3-%ED%94%8C%EB%A1%9C%EC%9A%B0-%EC%B0%A8%ED%8A%B8)
+  - [2️⃣ 기술 스택](#2%EF%B8%8F%E2%83%A3-%EA%B8%B0%EC%88%A0-%EC%8A%A4%ED%83%9D)
+- [자세히 보기](#%EC%9E%90%EC%84%B8%ED%9E%88-%EB%B3%B4%EA%B8%B0)
+  - [1️⃣ 스피커 배치에 따른 소리의 변화](#1%EF%B8%8F%E2%83%A3-%EC%8A%A4%ED%94%BC%EC%BB%A4-%EB%B0%B0%EC%B9%98%EC%97%90-%EB%94%B0%EB%A5%B8-%EC%86%8C%EB%A6%AC%EC%9D%98-%EB%B3%80%ED%99%94)
+    - [2D 화면으로 3D 공간에 스피커 배치하기](#2d-%ED%99%94%EB%A9%B4%EC%9C%BC%EB%A1%9C-3d-%EA%B3%B5%EA%B0%84%EC%97%90-%EC%8A%A4%ED%94%BC%EC%BB%A4-%EB%B0%B0%EC%B9%98%ED%95%98%EA%B8%B0)
+    - [3D 공간에서 소리의 변화 구현하기](#3d-%EA%B3%B5%EA%B0%84%EC%97%90%EC%84%9C-%EC%86%8C%EB%A6%AC%EC%9D%98-%EB%B3%80%ED%99%94-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0)
+  - [2️⃣ 불편하지 않은 조작법에 대하여](#2%EF%B8%8F%E2%83%A3-%EB%B6%88%ED%8E%B8%ED%95%98%EC%A7%80-%EC%95%8A%EC%9D%80-%EC%A1%B0%EC%9E%91%EB%B2%95%EC%97%90-%EB%8C%80%ED%95%98%EC%97%AC)
+    - [오직 마우스로만 조작한다면?](#%EC%98%A4%EC%A7%81-%EB%A7%88%EC%9A%B0%EC%8A%A4%EB%A1%9C%EB%A7%8C-%EC%A1%B0%EC%9E%91%ED%95%9C%EB%8B%A4%EB%A9%B4)
+    - [마우스에 키보드 단축키를 곁들인 조작법](#%EB%A7%88%EC%9A%B0%EC%8A%A4%EC%97%90-%ED%82%A4%EB%B3%B4%EB%93%9C-%EB%8B%A8%EC%B6%95%ED%82%A4%EB%A5%BC-%EA%B3%81%EB%93%A4%EC%9D%B8-%EC%A1%B0%EC%9E%91%EB%B2%95)
+  - [3️⃣ 유연한 저장 기능](#3%EF%B8%8F%E2%83%A3-%EC%9C%A0%EC%97%B0%ED%95%9C-%EC%A0%80%EC%9E%A5-%EA%B8%B0%EB%8A%A5)
+    - [버튼 없이 자동으로 저장하기](#%EB%B2%84%ED%8A%BC-%EC%97%86%EC%9D%B4-%EC%9E%90%EB%8F%99%EC%9C%BC%EB%A1%9C-%EC%A0%80%EC%9E%A5%ED%95%98%EA%B8%B0)
+    - [누구나 사용할 수 있는 저장하기](#%EB%88%84%EA%B5%AC%EB%82%98-%EC%82%AC%EC%9A%A9%ED%95%A0-%EC%88%98-%EC%9E%88%EB%8A%94-%EC%A0%80%EC%9E%A5%ED%95%98%EA%B8%B0)
 
 <!-- tocstop -->
 
 <br>
 <br>
 
-## 👁️ 한 눈에 보기
+## 한 눈에 보기
 
 ### 1️⃣ 플로우 차트
 
@@ -82,7 +80,7 @@ _이러한 문제를 해결하기 위해 가상 공간에서 <br>
 <br>
 <br>
 
-## 🔍 자세히 보기
+## 자세히 보기
 
 ### 1️⃣ 스피커 배치에 따른 소리의 변화
 
