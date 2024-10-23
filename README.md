@@ -68,7 +68,6 @@ _이러한 문제를 해결하기 위해<br>
 ![Vite](https://img.shields.io/badge/vite-%23404d59.svg?style=for-the-badge&logo=vite&logoColor=w)
 ![Axios](https://img.shields.io/badge/axios-%23404d59.svg?style=for-the-badge&logo=axios&logoColor=w)
 ![ThreeJS](https://img.shields.io/badge/Three.js-404d59?style=for-the-badge&logo=Three.js&logoColor=w)
-
 ![Zustand](https://img.shields.io/badge/zustand-%23404d59.svg?style=for-the-badge&logo=react&logoColor=black)
 ![Styled-components](https://img.shields.io/badge/styled_component-404d59.svg?style=for-the-badge&logo=styledcomponents&logoColor=DB7093)
 
