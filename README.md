@@ -65,8 +65,10 @@ _이러한 문제를 해결하기 위해<br>
 #### Client
 
 ![React](https://img.shields.io/badge/react-%23404d59.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
-![ThreeJS](https://img.shields.io/badge/Three.js-404d59?style=for-the-badge&logo=Three.js&logoColor=w)
 ![Vite](https://img.shields.io/badge/vite-%23404d59.svg?style=for-the-badge&logo=vite&logoColor=w)
+![Axios](https://img.shields.io/badge/axios-%23404d59.svg?style=for-the-badge&logo=axios&logoColor=w)
+![ThreeJS](https://img.shields.io/badge/Three.js-404d59?style=for-the-badge&logo=Three.js&logoColor=w)
+
 ![Zustand](https://img.shields.io/badge/zustand-%23404d59.svg?style=for-the-badge&logo=react&logoColor=black)
 ![Styled-components](https://img.shields.io/badge/styled_component-404d59.svg?style=for-the-badge&logo=styledcomponents&logoColor=DB7093)
 
@@ -90,13 +92,13 @@ _이러한 문제를 해결하기 위해<br>
 
 #### 2D 화면으로 3D 공간에 스피커 배치하기
 
-> 2D 화면으로 3D 공간에서 움직임을 구현하기 위해서 총 **3 단계**의 과정을 진행합니다.
+> 2D 화면으로 3D 공간에서 스피커 배치 움직임을 구현하기 위해서 총 **3 단계**의 과정을 진행합니다.
 
 <div align="center">
   <img width="600" alt="스크린샷 2024-10-22 오후 9 28 28" src="https://github.com/user-attachments/assets/d28ad8a5-99c9-409e-85f0-fd3940c164c5">
 
-**변환**된 모니터 화면의 `[x, y]` 좌표로 광선을 **생성**하여 z축 거리를 구한 뒤, 3D 가상 화면의 `[x, y, z]` 좌표를 구합니다. <br>
-그리고 구한 3D 좌표로 움직인 거리를 **계산**하여 **움직임**을 구현하였습니다.
+**변환**된 2D 화면의 좌표로 광선을 **생성**하여 z축 거리를 구한 뒤, 3D 가상 화면의 `[x, y, z]` 좌표를 구합니다. <br>
+그리고 구한 3D 좌표를 활용하여 움직인 거리를 **계산**하여 **움직임**을 구현하였습니다.
 
 </div>
 
@@ -121,14 +123,14 @@ _이러한 문제를 해결하기 위해<br>
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | <img width="400" height="260" alt="스크린샷 2024-10-22 오전 9 26 26" src="https://github.com/user-attachments/assets/0fb7a70f-e497-4d7d-a52f-855a62f6fee1"> | <img width="400" height="260" alt="스크린샷 2024-10-22 오전 9 25 28" src="https://github.com/user-attachments/assets/dc32b3d5-23af-44b9-abb0-4c59fc77e2a3"> |
 
-화면의 가장자리를 `-1`에서 `1` 사이 값으로 **변환**하여 사용자가 사용하는 모니터의 비율과 해상도에 맞는 독립적인 좌표계를 설정합니다.
+화면의 가장자리를 아래와 같이 **변환**하여 사용자가 사용하는 모니터의 비율과 해상도에 맞는 독립적인 좌표를 설정합니다.
 
 - 좌측 하단 `[-1, -1]`
 - 우측 상단 `[1, 1]`
 
 <div align="center">
 
-#### _이 좌표계를 통해 사용자의 어떠한 2D 모니터 화면에서 3D 공간의 좌표를 일관되게 적용합니다._
+#### _변환된 좌표를 통해 사용자의 어떠한 2D 모니터 화면에서도 3D 공간의 좌표를 일관되게 적용할 수 있습니다._
 
 </div>
 
@@ -137,7 +139,7 @@ _이러한 문제를 해결하기 위해<br>
 <br>
 
 **2. z축 거리 구하기**<br>
-단순히 2D 모니터 화면의 `[x, y]` 좌표로 **z축 좌표**를 알 수 없습니다. 이를 위해 모니터 화면과 3D 가상 화면(프로젝트의 화면) 을 **연결**하여 그 사이의 **깊이**를 먼저 파악합니다. 이 **깊이**를 z축 **거리**라 설정하고 거리 값을 구한 뒤, 모니터 화면에서 **z축 좌표**를 구할 수 있습니다.
+단순히 2D 모니터 화면의 `[x, y]` 좌표로 **z축 좌표**를 알 수 없습니다. 이를 위해 먼저 모니터 화면과 3D 가상 화면(프로젝트의 화면) 을 **연결**하여 그 사이의 **깊이**를 파악합니다. 파악한 **깊이**를 z축 **거리**라 설정하고 거리 값을 계산한 뒤, 그 값을 통해 모니터 화면에서의 **z축 좌표**를 구합니다.
 
 <br>
 
@@ -149,7 +151,7 @@ _이러한 문제를 해결하기 위해<br>
 
   <img width="800" alt="스크린샷 2024-10-22 오전 11 06 35" src="https://github.com/user-attachments/assets/134f10b0-1920-45de-b0fd-83e28d9735d1">
 
-**광선**은 모니터 화면을 시작점으로 3D 가상 화면까지 통과하여 **생성**됩니다.
+구하고자 하는 z축 거리를 위해 **광선**을 **생성**하여 z축 좌표를 구합니다.
 
 <div align="center">
 
