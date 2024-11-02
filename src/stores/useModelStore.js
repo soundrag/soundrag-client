@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { produce } from "immer";
 import { v4 as uuidv4 } from "uuid";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
@@ -39,34 +40,45 @@ const useModelStore = create((set, get) => ({
   loadModel: async (modelName, path) => {
     const loader = new GLTFLoader();
     const gltfFile = await loader.loadAsync(path);
-    const models = get().models;
 
-    set({ models: { ...models, [modelName]: gltfFile.scene } });
+    set(
+      produce((state) => {
+        state.models[modelName] = gltfFile.scene;
+      }),
+    );
   },
 
   setModelScale: (modelName, scale) => {
-    set((state) => ({ scales: { ...state.scales, [modelName]: scale } }));
+    set(
+      produce((state) => {
+        state.scales[modelName] = scale;
+      }),
+    );
   },
 
   setModelRotations: (modelName, rotation) => {
-    set((state) => ({
-      rotations: { ...state.rotations, [modelName]: rotation },
-    }));
+    set(
+      produce((state) => {
+        state.rotations[modelName] = rotation;
+      }),
+    );
   },
 
   setModelPositions: (modelName, position) => {
-    set((state) => {
-      return {
-        positions: { ...state.positions, [modelName]: position },
-        positionId: uuidv4(),
-      };
-    });
+    set(
+      produce((state) => {
+        state.positions[modelName] = position;
+        state.positionId = uuidv4();
+      }),
+    );
   },
 
   setModelDragState: (modelName, dragging) => {
-    set((state) => ({
-      isDragging: { ...state.isDragging, [modelName]: dragging },
-    }));
+    set(
+      produce((state) => {
+        state.isDragging[modelName] = dragging;
+      }),
+    );
   },
 
   getModelDragState: (modelName) => {
