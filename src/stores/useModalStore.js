@@ -1,13 +1,22 @@
 import { create } from "zustand";
+import { produce } from "immer";
 
 const useModalStore = create((set) => ({
   modals: {},
 
   openModal: (id) =>
-    set((state) => ({ modals: { ...state.modals, [id]: true } })),
+    set(
+      produce((state) => {
+        state.modals[id] = true;
+      }),
+    ),
 
   closeModal: (id) =>
-    set((state) => ({ modals: { ...state.modals, [id]: false } })),
+    set(
+      produce((state) => {
+        state.modals[id] = false;
+      }),
+    ),
 }));
 
 export default useModalStore;
