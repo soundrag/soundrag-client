@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { v4 as uuidv4 } from "uuid";
 import { toast } from "react-toastify";
 
 import {
@@ -27,11 +28,20 @@ const useUserAuth = () => {
         setIsLoggedIn(true);
 
         setUserData(response.data.user);
+
+        localStorage.removeItem("savedUserData");
       } else {
         setIsLoggedIn(false);
-        setUserId(null);
+        setUserId(uuidv4());
 
-        resetUserData();
+        const savedData = localStorage.getItem("savedUserData");
+        if (savedData) {
+          const parsedData = JSON.parse(savedData);
+
+          setUserData([...parsedData]);
+        } else {
+          resetUserData();
+        }
       }
     });
 
@@ -59,6 +69,8 @@ const useUserAuth = () => {
       setUserId(result.user.uid);
 
       setIsLoggedIn(true);
+
+      localStorage.removeItem("savedUserData");
     } catch (error) {
       handleError(error);
     }

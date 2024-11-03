@@ -2,8 +2,6 @@ import { useEffect, useRef } from "react";
 
 import { toast } from "react-toastify";
 
-import useNetworkStatus from "./useNetworkStatus";
-
 import { saveUserPosition } from "../services/userService";
 
 import useAuthStore from "../stores/useAuthStore";
@@ -16,8 +14,6 @@ const useAutoSavedPosition = () => {
   const { isLoggedIn } = useAuthStore();
   const { userId, userData, setUserData } = useDataStore();
   const { rotations, positions, positionId } = useModelStore();
-
-  const isOnline = useNetworkStatus();
 
   const positionsRef = useRef(positions);
   const rotationsRef = useRef(rotations);
@@ -42,7 +38,7 @@ const useAutoSavedPosition = () => {
         listenerRotation: rotations.listener,
       };
 
-      if (isOnline && isLoggedIn) {
+      if (isLoggedIn) {
         const isDuplicate = userData.some((data) => {
           const serverPositions = {
             firstSpeaker: data.firstSpeakerPosition,
@@ -62,7 +58,9 @@ const useAutoSavedPosition = () => {
           );
         });
 
-        if (!isDuplicate) {
+        if (isDuplicate) {
+          return;
+        } else {
           await saveUserPosition(userId, newUserData);
 
           toast.success("자동 저장되었습니다!");
@@ -70,11 +68,34 @@ const useAutoSavedPosition = () => {
           setUserData([...userData, newUserData]);
         }
       } else {
-        localStorage.setItem("savedUserData", JSON.stringify(newUserData));
+        const isDuplicate = userData.some((data) => {
+          const serverPositions = {
+            firstSpeaker: data.firstSpeakerPosition,
+            secondSpeaker: data.secondSpeakerPosition,
+            listener: data.listenerPosition,
+          };
 
-        setUserData([...userData, newUserData]);
+          const serverRotations = {
+            firstSpeaker: data.firstSpeakerRotation,
+            secondSpeaker: data.secondSpeakerRotation,
+            listener: data.listenerRotation,
+          };
 
-        toast.success("자동 저장되었습니다!");
+          return (
+            deepEqual(serverPositions, positions) &&
+            deepEqual(serverRotations, rotations)
+          );
+        });
+
+        if (isDuplicate) {
+          return;
+        } else {
+          localStorage.setItem("savedUserData", JSON.stringify(newUserData));
+
+          setUserData([...userData, newUserData]);
+
+          toast.success("자동 저장되었습니다!");
+        }
       }
 
       positionsRef.current = positions;
@@ -85,7 +106,6 @@ const useAutoSavedPosition = () => {
   }, [
     rotations,
     positions,
-    isOnline,
     isLoggedIn,
     userId,
     positionId,
