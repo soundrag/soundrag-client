@@ -6,11 +6,15 @@
 
   <br>
 
-<a target="blank" href="https://soundrag-31cbb.web.app/">
+<a target="blank" href="https://soundrag.co.kr/">
   <img width="300px" alt="project icon" src="https://github.com/user-attachments/assets/8f54c1ef-ac76-4dc0-a35a-4bc50a165fcc">
 </a>
 
   <br>
+  <br>
+
+[<img src="https://github.com/user-attachments/assets/c0e202b2-b44d-4fb0-908c-e26cfe5264e0">](https://soundrag.co.kr/)
+
   <br>
 
 _스피커를 이동하거나 최적의 위치를 찾는 것은 시간과 노력이 많이 소요됩니다._<br>
