@@ -8,11 +8,9 @@ const isEqualVectors = (
 ): boolean => {
   if (firstVectors.length !== secondVectors.length) return false;
 
-  for (let i = 0; i < firstVectors.length; i++) {
-    if (Math.abs(firstVectors[i] - secondVectors[i]) > epsilon) return false;
-  }
-
-  return true;
+  return firstVectors.every(
+    (value, index) => Math.abs(value - secondVectors[index]) <= epsilon,
+  );
 };
 
 const deepEqual = (
@@ -20,18 +18,17 @@ const deepEqual = (
   secondPosition: Positions,
   epsilon = 1e-6,
 ): boolean => {
-  return (
-    isEqualVectors(
-      firstPosition.firstSpeaker,
-      secondPosition.firstSpeaker,
-      epsilon,
-    ) &&
-    isEqualVectors(
-      firstPosition.secondSpeaker,
-      secondPosition.secondSpeaker,
-      epsilon,
-    ) &&
-    isEqualVectors(firstPosition.listener, secondPosition.listener, epsilon)
+  const firstPositionInfos = Object.keys(firstPosition);
+
+  if (
+    firstPositionInfos.length !== Object.keys(secondPosition).length ||
+    !firstPositionInfos.every((info) => info in secondPosition)
+  ) {
+    return false;
+  }
+
+  return firstPositionInfos.every((info) =>
+    isEqualVectors(firstPosition[info], secondPosition[info], epsilon),
   );
 };
 
