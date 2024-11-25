@@ -8,14 +8,12 @@ import SplashPage from "./pages/SplashPage";
 import StudioPage from "./pages/StudioPage";
 import GalleryPage from "./pages/GalleryPage";
 
-import useAutoSavedPosition from "./hooks/useAutoSavedPosition";
 import useKeyboardEvent from "./hooks/useKeyboardEvent";
 
 import GlobalStyle from "./style/GlobalStyle";
 import Theme from "./style/Theme";
 
 const App = () => {
-	useAutoSavedPosition();
 	useKeyboardEvent();
 
 	return (

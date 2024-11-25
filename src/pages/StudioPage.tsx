@@ -9,6 +9,8 @@ import Studio from "../components/Studio";
 import ModeSwitch from "../components/Switch";
 import UserInputs from "../components/UserInputs";
 
+import useAutoSavedPosition from "../hooks/useAutoSavedPosition";
+
 import { saveUserPosition } from "../services/userService";
 
 import useAuthStore from "../stores/useAuthStore";
@@ -111,6 +113,8 @@ const StudioPage = () => {
 	const handleCloseGalleryButton = () => {
 		closeGallery();
 	};
+
+	useAutoSavedPosition();
 
 	return (
 		<StudioPageContainer>
