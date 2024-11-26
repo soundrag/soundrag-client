@@ -25,11 +25,8 @@ import {
 	ControlButton,
 } from "../style/AudioPlayerStyle";
 
-import {
-	formatDuration,
-	formatFileName,
-	formatSilderValue,
-} from "../utils/formatters";
+import { formatDuration, formatFileName } from "../utils/formatters";
+import { calculateSliderValue } from "../utils/calculators";
 
 const AudioPlayer = () => {
 	const {
@@ -97,7 +94,7 @@ const AudioPlayer = () => {
 			</UploadButton>
 			<RangeSlider
 				type="range"
-				value={formatSilderValue(currentTime, duration)}
+				value={calculateSliderValue(currentTime, duration)}
 				max="100"
 				onChange={handleSeekChange}
 			/>
