@@ -5,10 +5,6 @@ const formatTime = (time: number): string => {
   return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
 };
 
-const formatSilderValue = (currentTime: number, duration: number): number => {
-  return (currentTime / duration) * 100 || 0;
-};
-
 const formatDuration = (currentTime: number, duration: number): string => {
   return `${formatTime(currentTime)} / ${formatTime(duration)}`;
 };
@@ -26,10 +22,4 @@ const formatFileName = (
     : fileName;
 };
 
-export {
-  formatTime,
-  formatSilderValue,
-  formatDuration,
-  formatDate,
-  formatFileName,
-};
+export { formatTime, formatDuration, formatDate, formatFileName };

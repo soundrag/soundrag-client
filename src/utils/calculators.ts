@@ -2,6 +2,13 @@ import { Vector2, Vector3, Plane, Raycaster } from "three";
 import type { Camera, WebGLRenderer } from "three";
 import type { Vector3Values } from "../types/common";
 
+const calculateSliderValue = (
+  currentTime: number,
+  duration: number,
+): number => {
+  return (currentTime / duration) * 100 || 0;
+};
+
 const getPlane = () => {
   return new Plane(new Vector3(0, 1, 0), 0);
 };
@@ -61,6 +68,7 @@ const calculatePan = (
 };
 
 export {
+  calculateSliderValue,
   getPlane,
   calculateIntersectPoint,
   calculateNewPosition,
