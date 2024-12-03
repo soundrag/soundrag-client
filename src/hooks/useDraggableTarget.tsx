@@ -1,146 +1,131 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import { useThree } from "@react-three/fiber";
 import { useGesture } from "@use-gesture/react";
 import { Vector3 } from "three";
 
+import useKeyboardEvent from "./useKeyboardEvent";
 import useModelStore from "../stores/useModelStore";
 import useModeStore from "../stores/useModeStore";
 
 import {
-	getPlane,
-	calculateIntersectPoint,
-	calculateNewPosition,
-	constrainPosition,
+  getPlane,
+  calculateIntersectPoint,
+  calculateNewPosition,
+  constrainPosition,
 } from "../utils/calculators";
 
 import {
-	SPEAKER_SIZE,
-	LISTENER_SIZE,
-	ROOM_SIZE,
-	WALL_HEIGHT,
+  SPEAKER_SIZE,
+  LISTENER_SIZE,
+  ROOM_SIZE,
+  WALL_HEIGHT,
 } from "../constants";
 
 const useDraggableTarget = ({ modelName }) => {
-	const [keyPressed, setKeyPressed] = useState(false);
-	const meshRef = useRef();
-	const initialPointerPosition = useRef(new Vector3());
-	const initialTargetPosition = useRef(new Vector3());
+  const [speakerPosition, setSpeakerPosition] = useState(null);
+  const meshRef = useRef(null);
+  const initialPointerPosition = useRef(new Vector3());
+  const initialTargetPosition = useRef(new Vector3());
 
-	const { camera, gl } = useThree();
-	const {
-		model,
-		scale,
-		position,
-		isDraggingModel,
-		setIsDraggingModel,
+  const { camera, gl } = useThree();
 
-		setModelPositions,
-	} = useModelStore((state) => ({
-		model: state.models[modelName],
-		scale: state.scales[modelName],
-		position: state.positions[modelName],
-		isDraggingModel: state.getModelDragState(modelName),
-		setIsDraggingModel: state.setModelDragState,
+  const { isShiftPressed } = useKeyboardEvent();
 
-		setModelPositions: state.setModelPositions,
-	}));
-	const { isDragMode } = useModeStore();
+  const {
+    model,
+    scale,
+    position,
+    isDraggingModel,
+    setIsDraggingModel,
+    setModelPositions,
+  } = useModelStore((state) => ({
+    model: state.models[modelName],
+    scale: state.scales[modelName],
+    position: state.positions[modelName],
+    isDraggingModel: state.getModelDragState(modelName),
+    setIsDraggingModel: state.setModelDragState,
+    setModelPositions: state.setModelPositions,
+  }));
+  const { isDragMode } = useModeStore();
 
-	const isSpeaker = modelName.includes("Speaker");
-	const size = isSpeaker ? SPEAKER_SIZE : LISTENER_SIZE;
-	const plane = getPlane();
+  const isSpeaker = modelName.includes("Speaker");
+  const size = isSpeaker ? SPEAKER_SIZE : LISTENER_SIZE;
+  const plane = getPlane();
 
-	useEffect(() => {
-		const handleKeyDown = (event) => {
-			if (event.key === "Shift" && isDragMode()) setKeyPressed(true);
-		};
+  const handlePointerDown = ({ event }) => {
+    if (!isDragMode()) return;
+    event.stopPropagation();
 
-		window.addEventListener("keydown", handleKeyDown);
+    if (isShiftPressed && isSpeaker) {
+      if (!speakerPosition) {
+        position[1] > 0
+          ? setSpeakerPosition("floor")
+          : setSpeakerPosition("ceiling");
+      } else if (speakerPosition === "ceiling") {
+        setSpeakerPosition("floor");
+      } else {
+        setSpeakerPosition("ceiling");
+      }
+    }
+  };
 
-		return () => {
-			window.removeEventListener("keydown", handleKeyDown);
-		};
-	}, [isDragMode]);
+  const handleDragStart = ({ event }) => {
+    if (!isDragMode()) return;
+    event.stopPropagation();
+    setIsDraggingModel(modelName, true);
 
-	const handlePointerDown = ({ event }) => {
-		if (!isDragMode()) return;
-		event.stopPropagation();
-		if (event.shiftKey && isSpeaker && isDragMode()) {
-			const newPosition = new Vector3(...position);
-			if (keyPressed === "ceiling") {
-				newPosition.y = WALL_HEIGHT - size * 4;
-				setKeyPressed("floor");
-			} else {
-				newPosition.y = -0.05;
-				setKeyPressed("ceiling");
-			}
+    initialPointerPosition.current = calculateIntersectPoint(
+      plane,
+      event,
+      camera,
+      gl,
+    );
+    initialTargetPosition.current.copy(new Vector3(...position));
+  };
 
-			setModelPositions(modelName, newPosition.toArray());
-		}
-	};
+  const handleDrag = ({ event }) => {
+    if (!isDragMode()) return;
+    event.stopPropagation();
 
-	const handleDragStart = ({ event }) => {
-		if (!isDragMode()) return;
-		event.stopPropagation();
-		if (!keyPressed) {
-			setIsDraggingModel(modelName, true);
-		}
+    const currentIntersect = calculateIntersectPoint(plane, event, camera, gl);
+    const newPosition = calculateNewPosition(
+      initialTargetPosition.current,
+      currentIntersect,
+      initialPointerPosition.current,
+    );
 
-		initialPointerPosition.current = calculateIntersectPoint(
-			plane,
-			event,
-			camera,
-			gl,
-		);
-		initialTargetPosition.current.copy(new Vector3(...position));
-	};
+    constrainPosition(newPosition, size, ROOM_SIZE);
 
-	const handleDrag = ({ event }) => {
-		if (!isDragMode()) return;
-		event.stopPropagation();
+    if (isSpeaker) {
+      newPosition.y =
+        speakerPosition === "ceiling" ? WALL_HEIGHT - size * 4 : -0.05;
+    }
 
-		const currentIntersect = calculateIntersectPoint(plane, event, camera, gl);
-		const newPosition = calculateNewPosition(
-			initialTargetPosition.current,
-			currentIntersect,
-			initialPointerPosition.current,
-		);
+    setModelPositions(modelName, newPosition.toArray());
+  };
 
-		constrainPosition(newPosition, size, ROOM_SIZE);
+  const handleDragEnd = ({ event }) => {
+    if (!isDragMode()) return;
+    event.stopPropagation();
 
-		if (isSpeaker) {
-			if (keyPressed === "ceiling") {
-				newPosition.y = WALL_HEIGHT - size * 4;
-			} else if (keyPressed === "floor") {
-				newPosition.y = -0.05;
-			}
-		}
+    setIsDraggingModel(modelName, false);
+  };
 
-		setModelPositions(modelName, newPosition.toArray());
-	};
+  const bind = useGesture({
+    onPointerDown: handlePointerDown,
+    onDragStart: handleDragStart,
+    onDrag: handleDrag,
+    onDragEnd: handleDragEnd,
+  });
 
-	const handleDragEnd = ({ event }) => {
-		if (!isDragMode()) return;
-		event.stopPropagation();
-
-		setIsDraggingModel(modelName, false);
-	};
-
-	const bind = useGesture({
-		onPointerDown: handlePointerDown,
-		onDragStart: handleDragStart,
-		onDrag: handleDrag,
-		onDragEnd: handleDragEnd,
-	});
-
-	return {
-		meshRef,
-		model,
-		position,
-		scale,
-		bind,
-		isDraggingModel,
-	};
+  return {
+    meshRef,
+    model,
+    position,
+    scale,
+    bind,
+    isDraggingModel,
+  };
 };
 
 export default useDraggableTarget;
