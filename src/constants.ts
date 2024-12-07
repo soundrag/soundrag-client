@@ -1,3 +1,4 @@
+import { Vector3, Euler } from "three";
 import type { Vector3Values } from "./types/common";
 import type { WallValues } from "./types/constants";
 
@@ -40,23 +41,23 @@ const DIRECTIONAL_LIGHT_POSITION: Vector3Values = [5, 5, 5];
 const WALL_POSITIONS: WallValues[] = [
   {
     direction: "forwardWall",
-    position: [0, WALL_HEIGHT / 2, -(ROOM_SIZE / 2)],
-    rotation: DEFAULT_POSITION,
+    position: new Vector3(0, WALL_HEIGHT / 2, -(ROOM_SIZE / 2)),
+    rotation: new Euler(...DEFAULT_ROTATION),
   },
   {
     direction: "backWall",
-    position: [0, WALL_HEIGHT / 2, ROOM_SIZE / 2],
-    rotation: DEFAULT_POSITION,
+    position: new Vector3(0, WALL_HEIGHT / 2, ROOM_SIZE / 2),
+    rotation: new Euler(...DEFAULT_ROTATION),
   },
   {
     direction: "leftWall",
-    position: [-(ROOM_SIZE / 2), WALL_HEIGHT / 2, 0],
-    rotation: ROTATE_Y_90_DEGREES,
+    position: new Vector3(-(ROOM_SIZE / 2), WALL_HEIGHT / 2, 0),
+    rotation: new Euler(...ROTATE_Y_90_DEGREES),
   },
   {
     direction: "rightWall",
-    position: [ROOM_SIZE / 2, WALL_HEIGHT / 2, 0],
-    rotation: ROTATE_Y_90_DEGREES,
+    position: new Vector3(ROOM_SIZE / 2, WALL_HEIGHT / 2, 0),
+    rotation: new Euler(...ROTATE_Y_90_DEGREES),
   },
 ];
 

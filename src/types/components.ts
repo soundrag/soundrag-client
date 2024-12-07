@@ -1,5 +1,6 @@
+import type { ModelName } from "./common";
 import type { UserData } from "./common";
-import type { WallValues } from "./constants";
+import type { Vector3, Euler } from "three";
 
 export interface ButtonProps {
   text: string;
@@ -29,12 +30,12 @@ export interface ModalProps {
 }
 
 export interface ModelProps {
-  modelName: string;
+  modelName: ModelName;
 }
 
 export interface WallProps {
-  position: WallValues;
-  rotation: WallValues;
+  position: Vector3;
+  rotation: Euler;
 }
 
 export interface GalleryProps {

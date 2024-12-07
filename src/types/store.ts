@@ -1,9 +1,8 @@
 import type { Object3D } from "three";
+import type { Mode } from "../types/common";
+import type { ModelName } from "../types/common";
 import type { UserData } from "../types/common";
 import type { Vector3Values } from "../types/common";
-
-type Mode = "View" | "Drag" | "Rotate";
-type ModelName = "firstSpeaker" | "secondSpeaker" | "listener";
 
 export interface AudioState {
   isPlaying: boolean;
@@ -79,15 +78,10 @@ export interface ModelState {
   rotations: Record<ModelName, Vector3Values>;
   positions: Record<ModelName, Vector3Values>;
   positionId: string;
-  isDragging: Record<string, boolean>;
-  speakers: string[];
 
-  loadModel: (modelName: string, path: string) => Promise<void>;
-  setModelScale: (modelName: string, scale: number) => void;
+  setModelName: (modelName: string, scene: Object3D) => void;
   setModelRotations: (modelName: string, rotation: Vector3Values) => void;
   setModelPositions: (modelName: string, position: Vector3Values) => void;
-  setModelDragState: (modelName: string, dragging: boolean) => void;
-  getModelDragState: (modelName: string) => boolean;
 }
 
 export interface ModeState {

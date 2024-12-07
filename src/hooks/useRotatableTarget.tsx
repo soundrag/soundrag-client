@@ -5,36 +5,43 @@ import { DEFAULT_ROTATION, LISTENER_STARTING_ROTATION } from "../constants";
 
 import useModelStore from "../stores/useModelStore";
 
-const useRotatableTarget = (
-	modelName: string,
-	isListener = false,
-	isSpeaker: boolean,
-) => {
-	const meshRef = useRef(null);
+import type { GestureHandlers } from "@use-gesture/react";
 
-	const { rotations, setModelRotations } = useModelStore();
+import type { ModelControlHookProps, Vector3Values } from "../types/common";
 
-	const initialRotation = isListener
-		? LISTENER_STARTING_ROTATION
-		: DEFAULT_ROTATION;
+const useRotatableTarget = ({
+  modelName,
+  isSpeaker,
+}: ModelControlHookProps) => {
+  const meshRef = useRef(null);
 
-	const bind = useGesture({
-		onClick: () => {
-			if (isSpeaker) {
-				const currentRotation = rotations[modelName] || initialRotation;
-				const newAngleY = (currentRotation[1] + Math.PI / 2) % (2 * Math.PI);
-				const newRotation = [currentRotation[0], newAngleY, currentRotation[2]];
+  const { rotations, setModelRotations } = useModelStore();
 
-				setModelRotations(modelName, newRotation);
-			}
-		},
-	});
+  const initialRotation = isSpeaker
+    ? DEFAULT_ROTATION
+    : LISTENER_STARTING_ROTATION;
 
-	return {
-		meshRef,
-		rotation: rotations[modelName] || initialRotation,
-		bind,
-	};
+  const bind = useGesture<GestureHandlers>({
+    onClick: () => {
+      if (isSpeaker) {
+        const currentRotation = rotations[modelName] || initialRotation;
+        const newAngleY = (currentRotation[1] + Math.PI / 2) % (2 * Math.PI);
+        const newRotation: Vector3Values = [
+          currentRotation[0],
+          newAngleY,
+          currentRotation[2],
+        ];
+
+        setModelRotations(modelName, newRotation);
+      }
+    },
+  });
+
+  return {
+    meshRef,
+    bind,
+    rotation: rotations[modelName] || initialRotation,
+  };
 };
 
 export default useRotatableTarget;
