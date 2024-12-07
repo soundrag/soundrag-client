@@ -1,6 +1,10 @@
 import { useRef, useState } from "react";
 import { useThree } from "@react-three/fiber";
-import { useGesture } from "@use-gesture/react";
+import {
+  useGesture,
+  SharedGestureState,
+  FullGestureState,
+} from "@use-gesture/react";
 import { Vector3 } from "three";
 
 import useKeyboardEvent from "./useKeyboardEvent";
@@ -21,7 +25,14 @@ import {
   WALL_HEIGHT,
 } from "../constants";
 
-const useDraggableTarget = ({ modelName }) => {
+import type { GestureHandlers } from "@use-gesture/react";
+
+import { ModelControlHookProps } from "../types/common";
+
+const useDraggableTarget = ({
+  modelName,
+  isSpeaker,
+}: ModelControlHookProps) => {
   const [speakerPosition, setSpeakerPosition] = useState(null);
   const meshRef = useRef(null);
   const initialPointerPosition = useRef(new Vector3());
@@ -31,28 +42,21 @@ const useDraggableTarget = ({ modelName }) => {
 
   const { isShiftPressed } = useKeyboardEvent();
 
-  const {
-    model,
-    scale,
-    position,
-    isDraggingModel,
-    setIsDraggingModel,
-    setModelPositions,
-  } = useModelStore((state) => ({
+  const { position, setModelPositions } = useModelStore((state) => ({
     model: state.models[modelName],
     scale: state.scales[modelName],
     position: state.positions[modelName],
-    isDraggingModel: state.getModelDragState(modelName),
-    setIsDraggingModel: state.setModelDragState,
     setModelPositions: state.setModelPositions,
   }));
   const { isDragMode } = useModeStore();
 
-  const isSpeaker = modelName.includes("Speaker");
   const size = isSpeaker ? SPEAKER_SIZE : LISTENER_SIZE;
   const plane = getPlane();
 
-  const handlePointerDown = ({ event }) => {
+  const handlePointerDown = (
+    state: SharedGestureState & { event: PointerEvent },
+  ) => {
+    const { event } = state;
     if (!isDragMode()) return;
     event.stopPropagation();
 
@@ -69,25 +73,29 @@ const useDraggableTarget = ({ modelName }) => {
     }
   };
 
-  const handleDragStart = ({ event }) => {
+  const handleDragStart = ({ event }: FullGestureState<"drag">) => {
     if (!isDragMode()) return;
     event.stopPropagation();
-    setIsDraggingModel(modelName, true);
 
     initialPointerPosition.current = calculateIntersectPoint(
       plane,
-      event,
+      event as MouseEvent,
       camera,
       gl,
     );
     initialTargetPosition.current.copy(new Vector3(...position));
   };
 
-  const handleDrag = ({ event }) => {
+  const handleDrag = ({ event }: FullGestureState<"drag">) => {
     if (!isDragMode()) return;
     event.stopPropagation();
 
-    const currentIntersect = calculateIntersectPoint(plane, event, camera, gl);
+    const currentIntersect = calculateIntersectPoint(
+      plane,
+      event as MouseEvent,
+      camera,
+      gl,
+    );
     const newPosition = calculateNewPosition(
       initialTargetPosition.current,
       currentIntersect,
@@ -104,14 +112,12 @@ const useDraggableTarget = ({ modelName }) => {
     setModelPositions(modelName, newPosition.toArray());
   };
 
-  const handleDragEnd = ({ event }) => {
+  const handleDragEnd = ({ event }: FullGestureState<"drag">) => {
     if (!isDragMode()) return;
     event.stopPropagation();
-
-    setIsDraggingModel(modelName, false);
   };
 
-  const bind = useGesture({
+  const bind = useGesture<GestureHandlers>({
     onPointerDown: handlePointerDown,
     onDragStart: handleDragStart,
     onDrag: handleDrag,
@@ -120,11 +126,8 @@ const useDraggableTarget = ({ modelName }) => {
 
   return {
     meshRef,
-    model,
-    position,
-    scale,
     bind,
-    isDraggingModel,
+    position,
   };
 };
 

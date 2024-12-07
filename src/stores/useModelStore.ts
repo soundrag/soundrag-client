@@ -13,7 +13,7 @@ import {
 
 import type { ModelState } from "../types/store";
 
-const useModelStore = create<ModelState>((set, get) => ({
+const useModelStore = create<ModelState>((set) => ({
   models: {},
 
   scales: {
@@ -33,9 +33,6 @@ const useModelStore = create<ModelState>((set, get) => ({
   },
 
   positionId: uuidv4(),
-
-  isDragging: {},
-  speakers: ["firstSpeaker", "secondSpeaker"],
 
   setModelName: (modelName, scene) => {
     set(
@@ -60,18 +57,6 @@ const useModelStore = create<ModelState>((set, get) => ({
         state.positionId = uuidv4();
       }),
     );
-  },
-
-  setModelDragState: (modelName, dragging) => {
-    set(
-      produce((state) => {
-        state.isDragging[modelName] = dragging;
-      }),
-    );
-  },
-
-  getModelDragState: (modelName) => {
-    return get().isDragging[modelName] || false;
   },
 }));
 

@@ -1,5 +1,7 @@
+import type { Vector3, Euler } from "three";
+
 export interface WallValues {
   direction: string;
-  position: [number, number, number];
-  rotation: [number, number, number];
+  position: Vector3;
+  rotation: Euler;
 }
