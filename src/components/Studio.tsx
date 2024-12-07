@@ -1,51 +1,41 @@
 import { OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 
-import Room from "./targets/Room";
-import Listener from "./targets/Listener";
-import Speaker from "./targets/Speaker";
+import Model from "./common/Model";
+import Room from "./Room";
 
-import useLoadedModel from "../hooks/useLoadedModel";
-import useModelStore from "../stores/useModelStore";
+import {
+  CAMERA_STARTING_POSITION,
+  MEDIUM_LIGHT_INTENSITY,
+  HARD_LIGHT_INTENSITY,
+  DIRECTIONAL_LIGHT_POSITION,
+} from "../constants";
 
 import useModeStore from "../stores/useModeStore";
 
-import {
-	CAMERA_STARTING_POSITION,
-	MEDIUM_LIGHT_INTENSITY,
-	HARD_LIGHT_INTENSITY,
-	DIRECTIONAL_LIGHT_POSITION,
-} from "../constants";
-
 const Studio = () => {
-	const { isViewMode } = useModeStore();
-	const { speakers } = useModelStore();
+  const { isViewMode } = useModeStore();
 
-	useLoadedModel();
-
-	return (
-		<>
-			<Canvas camera={{ position: CAMERA_STARTING_POSITION }}>
-				<OrbitControls
-					enabled={isViewMode()}
-					enableDamping={false}
-					enablePan={false}
-					minDistance={20}
-					maxDistance={40}
-				/>
-				<ambientLight intensity={MEDIUM_LIGHT_INTENSITY} />
-				<directionalLight
-					position={DIRECTIONAL_LIGHT_POSITION}
-					intensity={HARD_LIGHT_INTENSITY}
-				/>
-				<Room />
-				{speakers.map((speakerName) => (
-					<Speaker key={speakerName} modelName={speakerName} />
-				))}
-				<Listener modelName="listener" />
-			</Canvas>
-		</>
-	);
+  return (
+    <Canvas camera={{ position: CAMERA_STARTING_POSITION }}>
+      <OrbitControls
+        enabled={isViewMode()}
+        enableDamping={false}
+        enablePan={false}
+        minDistance={20}
+        maxDistance={40}
+      />
+      <ambientLight intensity={MEDIUM_LIGHT_INTENSITY} />
+      <directionalLight
+        position={DIRECTIONAL_LIGHT_POSITION}
+        intensity={HARD_LIGHT_INTENSITY}
+      />
+      <Room />
+      <Model modelName="firstSpeaker" />
+      <Model modelName="secondSpeaker" />
+      <Model modelName="listener" />
+    </Canvas>
+  );
 };
 
 export default Studio;
