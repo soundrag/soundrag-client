@@ -1,3 +1,4 @@
+import { useGLTF, useTexture } from "@react-three/drei";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 
@@ -8,32 +9,33 @@ import SplashPage from "./pages/SplashPage";
 import StudioPage from "./pages/StudioPage";
 import GalleryPage from "./pages/GalleryPage";
 
-import useKeyboardEvent from "./hooks/useKeyboardEvent";
-
 import GlobalStyle from "./style/GlobalStyle";
 import Theme from "./style/Theme";
 
-const App = () => {
-	useKeyboardEvent();
+useGLTF.preload("/models/speaker.gltf");
+useGLTF.preload("/models/listener.gltf");
+useTexture.preload("/textures/carpet.jpg");
+useTexture.preload("/textures/foam.jpg");
 
-	return (
-		<ThemeProvider theme={Theme}>
-			<GlobalStyle />
-			<ToastContainer
-				position="bottom-right"
-				theme="dark"
-				autoClose={1000}
-				limit={2}
-			/>
-			<BrowserRouter>
-				<Routes>
-					<Route path="/" element={<SplashPage />} />
-					<Route path="/studio" element={<StudioPage />} />
-					<Route path="/user" element={<GalleryPage />} />
-				</Routes>
-			</BrowserRouter>
-		</ThemeProvider>
-	);
+const App = () => {
+  return (
+    <ThemeProvider theme={Theme}>
+      <GlobalStyle />
+      <ToastContainer
+        position="bottom-right"
+        theme="dark"
+        autoClose={1000}
+        limit={2}
+      />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<SplashPage />} />
+          <Route path="/studio" element={<StudioPage />} />
+          <Route path="/user" element={<GalleryPage />} />
+        </Routes>
+      </BrowserRouter>
+    </ThemeProvider>
+  );
 };
 
 export default App;

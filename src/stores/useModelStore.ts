@@ -1,7 +1,6 @@
 import { create } from "zustand";
 import { produce } from "immer";
 import { v4 as uuidv4 } from "uuid";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import {
   STANDARD_SPEAKER_SCALE,
   STANDARD_LISTENER_SCALE,
@@ -38,21 +37,10 @@ const useModelStore = create<ModelState>((set, get) => ({
   isDragging: {},
   speakers: ["firstSpeaker", "secondSpeaker"],
 
-  loadModel: async (modelName, path) => {
-    const loader = new GLTFLoader();
-    const gltfFile = await loader.loadAsync(path);
-
+  setModelName: (modelName, scene) => {
     set(
       produce((state) => {
-        state.models[modelName] = gltfFile.scene;
-      }),
-    );
-  },
-
-  setModelScale: (modelName, scale) => {
-    set(
-      produce((state) => {
-        state.scales[modelName] = scale;
+        state.models[modelName] = scene;
       }),
     );
   },
