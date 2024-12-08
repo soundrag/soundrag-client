@@ -1,6 +1,7 @@
 export type Mode = "View" | "Drag" | "Rotate";
 export type ModelName = "firstSpeaker" | "secondSpeaker" | "listener";
 export type Vector3Values = [number, number, number];
+export type Positions = Record<string, Vector3Values>;
 
 export interface UserData {
   name?: string;
