@@ -1,5 +1,5 @@
 import type { RefObject } from "react";
-import type { Positions } from "../types/common";
+import type { Positions, Rotations, UserData } from "../types/common";
 
 function isEqualVectors(
   firstVectors: number[],
@@ -13,7 +13,7 @@ function isEqualVectors(
   );
 }
 
-function deepEqual(
+function comparePositions(
   firstPosition: Positions,
   secondPosition: Positions,
   epsilon = 1e-6,
@@ -32,6 +32,31 @@ function deepEqual(
   );
 }
 
+function isDuplicateData(
+  userData: UserData[],
+  positions: Positions,
+  rotations: Rotations,
+): boolean {
+  return userData.some((data) => {
+    const serverPositions = {
+      firstSpeakerPosition: data.firstSpeakerPosition,
+      secondSpeakerPosition: data.secondSpeakerPosition,
+      listenerPosition: data.listenerPosition,
+    };
+
+    const serverRotations = {
+      firstSpeakerRotation: data.firstSpeakerRotation,
+      secondSpeakerRotation: data.secondSpeakerRotation,
+      listenerRotation: data.listenerRotation,
+    };
+
+    return (
+      comparePositions(serverPositions, positions) &&
+      comparePositions(serverRotations, rotations)
+    );
+  });
+}
+
 function isFiniteNumber(value: number): boolean {
   return typeof value === "number" && Number.isFinite(value);
 }
@@ -41,7 +66,7 @@ function isValidateNumber(x: number, y: number, z: number): boolean {
 }
 
 function hasCurrentRef<T>(ref: RefObject<T>): T | null {
-  return ref.current;
+  return ref.current ?? null;
 }
 
-export { deepEqual, isValidateNumber, hasCurrentRef };
+export { comparePositions, isDuplicateData, isValidateNumber, hasCurrentRef };
