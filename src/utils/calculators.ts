@@ -2,23 +2,20 @@ import { Vector2, Vector3, Plane, Raycaster } from "three";
 import type { Camera, WebGLRenderer } from "three";
 import type { Vector3Values } from "../types/common";
 
-const calculateSliderValue = (
-  currentTime: number,
-  duration: number,
-): number => {
+function calculateSliderValue(currentTime: number, duration: number): number {
   return (currentTime / duration) * 100 || 0;
-};
+}
 
-const getPlane = () => {
+function getPlane() {
   return new Plane(new Vector3(0, 1, 0), 0);
-};
+}
 
-const calculateIntersectPoint = (
+function calculateIntersectPoint(
   plane: Plane,
   event: MouseEvent,
   camera: Camera,
   gl: WebGLRenderer,
-): Vector3 => {
+): Vector3 {
   const raycaster = new Raycaster();
   const mouse = new Vector2(
     (event.clientX / gl.domElement.clientWidth) * 2 - 1,
@@ -30,17 +27,17 @@ const calculateIntersectPoint = (
   raycaster.ray.intersectPlane(plane, intersectPoint);
 
   return intersectPoint;
-};
+}
 
-const calculateNewPosition = (
+function calculateNewPosition(
   initialPosition: Vector3,
   currentIntersect: Vector3,
   initialIntersect: Vector3,
-) => {
+) {
   const delta = currentIntersect.clone().sub(initialIntersect);
 
   return initialPosition.clone().add(delta);
-};
+}
 
 const constrainPosition = (
   newPosition: Vector3,

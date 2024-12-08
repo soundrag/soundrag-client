@@ -9,7 +9,7 @@ import useSpeakerLight from "../../hooks/useSpeakerLight";
 import useModeStore from "../../stores/useModeStore";
 import useModelStore from "../../stores/useModelStore";
 
-import { createCeilingIndicator } from "../../utils/creator";
+import { createCeilingIndicator } from "../../utils/creators";
 
 import type { ModelProps } from "../../types/components";
 
