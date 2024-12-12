@@ -127,7 +127,7 @@ const StudioPage = () => {
         <Studio />
         <GalleryContainer>
           <GalleryButtonContainer>
-            <VersionContainer>
+            <VersionContainer data-testid="version-text">
               버전: {isLastIndex ? "최신" : currentIndex + 1}
             </VersionContainer>
             <Button
@@ -135,12 +135,14 @@ const StudioPage = () => {
               size="large"
               isDisabled={!isLoggedIn}
               handleClick={handleGalleryButton}
+              $testId="show-button"
             />
             <Button
               text="프리셋 저장"
               size="large"
               isDisabled={!isLoggedIn}
               handleClick={() => openModal("saveModal")}
+              $testId="save-button"
             />
           </GalleryButtonContainer>
           {isGallery && (

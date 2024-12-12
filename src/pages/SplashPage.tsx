@@ -15,14 +15,18 @@ import {
 const SplashPage = () => {
   return (
     <SplashPageContainer>
-      <SplashTitle>
+      <SplashTitle data-testid="title-text">
         Soun
         <SubText>drag</SubText>
       </SplashTitle>
-      <SplashLogo src={SoundragLogo} alt="Soundrag Logo" />
+      <SplashLogo
+        src={SoundragLogo}
+        alt="Soundrag Logo"
+        data-testid="logo-image"
+      />
       <SplashButtonContainer>
         <Link to="/studio" style={{ textDecoration: "none" }}>
-          <Button text="Skip" size="xLarge" />
+          <Button text="Skip" size="xLarge" $testId="skip-button" />
         </Link>
       </SplashButtonContainer>
     </SplashPageContainer>

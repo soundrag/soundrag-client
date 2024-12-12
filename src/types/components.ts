@@ -7,6 +7,7 @@ export interface ButtonProps {
   size?: "small" | "medium" | "large" | "xLarge";
   isDisabled?: boolean;
   handleClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  $testId: string;
 }
 
 export interface IconProps {
@@ -27,6 +28,9 @@ export interface ModalProps {
   secondButtonText?: string;
   handleFirstButton?: () => void;
   handleSecondButton?: () => void;
+  $modalTestId?: string;
+  $firstButtonTestId?: string;
+  $secondButtonTestId?: string;
 }
 
 export interface ModelProps {
