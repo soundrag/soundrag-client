@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import sampleFile from "../assets/sounds/sample.mp3";
+import sampleFile from "../../public/sounds/sample.mp3";
 
 import type { AudioState } from "../types/store";
 

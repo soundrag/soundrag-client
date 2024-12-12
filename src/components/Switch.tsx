@@ -14,17 +14,29 @@ const Switch = () => {
   const { isViewMode, isDragMode, isRotateMode, switchMode } = useModeStore();
 
   return (
-    <SwitchContainer>
-      <SwitchButton $active={isViewMode()} onClick={() => switchMode("View")}>
+    <SwitchContainer data-testid="mode-switch">
+      <SwitchButton
+        $active={isViewMode()}
+        data-active={isViewMode() ? "true" : "false"}
+        data-testid="view-button"
+        onClick={() => switchMode("View")}
+      >
         <SwitchNumber>1</SwitchNumber>
         <Icon imageSrc={ViewButtonImage} imageAlt="View Mode Button" />
       </SwitchButton>
-      <SwitchButton $active={isDragMode()} onClick={() => switchMode("Drag")}>
+      <SwitchButton
+        $active={isDragMode()}
+        data-active={isDragMode() ? "true" : "false"}
+        data-testid="drag-button"
+        onClick={() => switchMode("Drag")}
+      >
         <SwitchNumber>2</SwitchNumber>
         <Icon imageSrc={DragButtonImage} imageAlt="Drag Mode Button" />
       </SwitchButton>
       <SwitchButton
         $active={isRotateMode()}
+        data-active={isRotateMode() ? "true" : "false"}
+        data-testid="rotate-button"
         onClick={() => switchMode("Rotate")}
       >
         <SwitchNumber>3</SwitchNumber>

@@ -17,7 +17,10 @@ const Studio = () => {
   const { isViewMode } = useModeStore();
 
   return (
-    <Canvas camera={{ position: CAMERA_STARTING_POSITION }}>
+    <Canvas
+      camera={{ position: CAMERA_STARTING_POSITION }}
+      data-testid="canvas"
+    >
       <OrbitControls
         enabled={isViewMode()}
         enableDamping={false}
