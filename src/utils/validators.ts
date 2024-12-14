@@ -1,11 +1,15 @@
 import type { RefObject } from "react";
-import type { Positions, Rotations, UserData } from "../types/common";
+import type { Transformation, UserData } from "../types/common";
 
 function isEqualVectors(
   firstVectors: number[],
   secondVectors: number[],
   epsilon = 1e-6,
 ): boolean {
+  if (!Array.isArray(firstVectors) || !Array.isArray(secondVectors)) {
+    return false;
+  }
+
   if (firstVectors.length !== secondVectors.length) return false;
 
   return firstVectors.every(
@@ -13,47 +17,62 @@ function isEqualVectors(
   );
 }
 
-function comparePositions(
-  firstPosition: Positions,
-  secondPosition: Positions,
+function compareTransformation(
+  firstTransformation: Transformation,
+  secondTransformation: Transformation,
   epsilon = 1e-6,
 ): boolean {
-  const firstPositionInfos = Object.keys(firstPosition);
+  const firstDetails = Object.keys(firstTransformation);
 
   if (
-    firstPositionInfos.length !== Object.keys(secondPosition).length ||
-    !firstPositionInfos.every((info) => info in secondPosition)
+    firstDetails.length !== Object.keys(secondTransformation).length ||
+    !firstDetails.every((info) => info in secondTransformation)
   ) {
     return false;
   }
 
-  return firstPositionInfos.every((info) =>
-    isEqualVectors(firstPosition[info], secondPosition[info], epsilon),
+  return firstDetails.every((info) =>
+    isEqualVectors(
+      firstTransformation[info],
+      secondTransformation[info],
+      epsilon,
+    ),
   );
 }
 
 function isDuplicateData(
   userData: UserData[],
-  positions: Positions,
-  rotations: Rotations,
+  positions: Transformation,
+  rotations: Transformation,
 ): boolean {
   return userData.some((data) => {
-    const serverPositions = {
-      firstSpeakerPosition: data.firstSpeakerPosition,
-      secondSpeakerPosition: data.secondSpeakerPosition,
-      listenerPosition: data.listenerPosition,
-    };
-
-    const serverRotations = {
-      firstSpeakerRotation: data.firstSpeakerRotation,
-      secondSpeakerRotation: data.secondSpeakerRotation,
-      listenerRotation: data.listenerRotation,
-    };
-
-    return (
-      comparePositions(serverPositions, positions) &&
-      comparePositions(serverRotations, rotations)
+    const isPositionSame = compareTransformation(
+      {
+        firstSpeakerPosition: data.firstSpeakerPosition,
+        secondSpeakerPosition: data.secondSpeakerPosition,
+        listenerPosition: data.listenerPosition,
+      },
+      {
+        firstSpeakerPosition: positions.firstSpeaker,
+        secondSpeakerPosition: positions.secondSpeaker,
+        listenerPosition: positions.listener,
+      },
     );
+
+    const isRotationSame = compareTransformation(
+      {
+        firstSpeakerRotation: data.firstSpeakerRotation,
+        secondSpeakerRotation: data.secondSpeakerRotation,
+        listenerRotation: data.listenerRotation,
+      },
+      {
+        firstSpeakerRotation: rotations.firstSpeaker,
+        secondSpeakerRotation: rotations.secondSpeaker,
+        listenerRotation: rotations.listener,
+      },
+    );
+
+    return isPositionSame && isRotationSame;
   });
 }
 
@@ -69,4 +88,9 @@ function hasCurrentRef<T>(ref: RefObject<T>): T | null {
   return ref.current ?? null;
 }
 
-export { comparePositions, isDuplicateData, isValidateNumber, hasCurrentRef };
+export {
+  compareTransformation,
+  isDuplicateData,
+  isValidateNumber,
+  hasCurrentRef,
+};
