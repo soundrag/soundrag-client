@@ -40,40 +40,57 @@ function compareTransformation(
   );
 }
 
+function isSameData(
+  firstData: Partial<UserData>,
+  secondData: Partial<UserData>,
+  epsilon = 1e-6,
+): boolean {
+  const isPositionSame = compareTransformation(
+    {
+      firstSpeakerPosition: firstData.firstSpeakerPosition,
+      secondSpeakerPosition: firstData.secondSpeakerPosition,
+      listenerPosition: firstData.listenerPosition,
+    },
+    {
+      firstSpeakerPosition: secondData.firstSpeakerPosition,
+      secondSpeakerPosition: secondData.secondSpeakerPosition,
+      listenerPosition: secondData.listenerPosition,
+    },
+    epsilon,
+  );
+
+  const isRotationSame = compareTransformation(
+    {
+      firstSpeakerRotation: firstData.firstSpeakerRotation,
+      secondSpeakerRotation: firstData.secondSpeakerRotation,
+      listenerRotation: firstData.listenerRotation,
+    },
+    {
+      firstSpeakerRotation: secondData.firstSpeakerRotation,
+      secondSpeakerRotation: secondData.secondSpeakerRotation,
+      listenerRotation: secondData.listenerRotation,
+    },
+    epsilon,
+  );
+
+  return isPositionSame && isRotationSame;
+}
+
 function isDuplicateData(
   userData: UserData[],
   positions: Transformation,
   rotations: Transformation,
 ): boolean {
-  return userData.some((data) => {
-    const isPositionSame = compareTransformation(
-      {
-        firstSpeakerPosition: data.firstSpeakerPosition,
-        secondSpeakerPosition: data.secondSpeakerPosition,
-        listenerPosition: data.listenerPosition,
-      },
-      {
-        firstSpeakerPosition: positions.firstSpeaker,
-        secondSpeakerPosition: positions.secondSpeaker,
-        listenerPosition: positions.listener,
-      },
-    );
+  const targetData = {
+    firstSpeakerPosition: positions.firstSpeaker,
+    secondSpeakerPosition: positions.secondSpeaker,
+    listenerPosition: positions.listener,
+    firstSpeakerRotation: rotations.firstSpeaker,
+    secondSpeakerRotation: rotations.secondSpeaker,
+    listenerRotation: rotations.listener,
+  };
 
-    const isRotationSame = compareTransformation(
-      {
-        firstSpeakerRotation: data.firstSpeakerRotation,
-        secondSpeakerRotation: data.secondSpeakerRotation,
-        listenerRotation: data.listenerRotation,
-      },
-      {
-        firstSpeakerRotation: rotations.firstSpeaker,
-        secondSpeakerRotation: rotations.secondSpeaker,
-        listenerRotation: rotations.listener,
-      },
-    );
-
-    return isPositionSame && isRotationSame;
-  });
+  return userData.some((data) => isSameData(data, targetData));
 }
 
 function isFiniteNumber(value: number): boolean {
@@ -90,6 +107,7 @@ function hasCurrentRef<T>(ref: RefObject<T>): T | null {
 
 export {
   compareTransformation,
+  isSameData,
   isDuplicateData,
   isValidateNumber,
   hasCurrentRef,
