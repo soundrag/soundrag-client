@@ -39,21 +39,21 @@ function calculateNewPosition(
   return initialPosition.clone().add(delta);
 }
 
-const constrainPosition = (
+function constrainPosition(
   newPosition: Vector3,
   size: number,
   ROOM_SIZE: number,
-) => {
+) {
   const halfSize = ROOM_SIZE / 2 - size;
 
   newPosition.x = Math.max(-halfSize, Math.min(halfSize, newPosition.x));
   newPosition.z = Math.max(-halfSize, Math.min(halfSize, newPosition.z));
-};
+}
 
-const calculatePan = (
+function calculatePan(
   listenerPosition: Vector3Values,
   speakerPosition: Vector3Values,
-): number => {
+): number {
   const distanceX = listenerPosition[0] - speakerPosition[0];
   const distanceZ = listenerPosition[2] - speakerPosition[2];
 
@@ -62,7 +62,7 @@ const calculatePan = (
   const pan = Math.cos(azimuth);
 
   return pan;
-};
+}
 
 export {
   calculateSliderValue,

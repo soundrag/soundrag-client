@@ -1,6 +1,6 @@
 import { MeshBasicMaterial, BoxGeometry, Mesh } from "three";
 
-export function createCeilingIndicator() {
+function createCeilingIndicator() {
   const material = new MeshBasicMaterial({
     color: 0x00ff00,
     transparent: true,
@@ -10,3 +10,5 @@ export function createCeilingIndicator() {
 
   return new Mesh(geometry, material);
 }
+
+export { createCeilingIndicator };
