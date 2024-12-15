@@ -4,6 +4,7 @@ import googleLogo from "../assets/images/google-logo.svg";
 
 import useUserAuth from "../hooks/useUserAuth";
 
+import useAuthStore from "../stores/useAuthStore";
 import useModalStore from "../stores/useModalStore";
 
 import {
@@ -14,7 +15,9 @@ import {
 } from "../style/AuthPanelStyle";
 
 const AuthPanel = () => {
-  const { handleLogin, handleLogout, isLoggedIn } = useUserAuth();
+  const { handleLogin, handleLogout } = useUserAuth();
+
+  const { isLoggedIn } = useAuthStore();
   const { modals, closeModal } = useModalStore();
 
   if (isLoggedIn === undefined) {

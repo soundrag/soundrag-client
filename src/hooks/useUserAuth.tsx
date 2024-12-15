@@ -1,100 +1,130 @@
 import { useEffect } from "react";
-import { v4 as uuidv4 } from "uuid";
 import { toast } from "react-toastify";
 
 import {
-	GoogleAuthProvider,
-	signInWithPopup,
-	onAuthStateChanged,
+  GoogleAuthProvider,
+  signInWithPopup,
+  onAuthStateChanged,
 } from "firebase/auth";
 import auth from "../../firebase";
 
 import { loginUser, logoutUser } from "../services/authService";
-import { getUserPosition } from "../services/userService";
+import { getUserPosition, saveUserPosition } from "../services/userService";
 
 import useAuthStore from "../stores/useAuthStore";
 import useDataStore from "../stores/useDataStore";
 
+import { isSameData } from "../utils/validators";
+
+import { UserData } from "../types/common";
+
 const useUserAuth = () => {
-	const { isLoggedIn, setIsLoggedIn } = useAuthStore();
-	const { setUserId, setUserData, resetUserData } = useDataStore();
+  const { setIsLoggedIn } = useAuthStore();
+  const { setUserId, setUserData, resetUserData } = useDataStore();
 
-	useEffect(() => {
-		const unsubscribe = onAuthStateChanged(auth, async (user) => {
-			if (user) {
-				const response = await getUserPosition();
+  const getLocalData = () => {
+    const savedData = localStorage.getItem("savedUserData");
+    return savedData ? JSON.parse(savedData) : [];
+  };
 
-				setUserId(user.uid);
-				setIsLoggedIn(true);
+  const filterUniqueData = (userData: UserData[], localData: UserData[]) => {
+    return localData.filter(
+      (local) => !userData.some((user) => isSameData(user, local)),
+    );
+  };
 
-				setUserData(response.data.user);
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        updateUserData(user);
+      } else {
+        updateLocalData();
+      }
+    });
 
-				localStorage.removeItem("savedUserData");
-			} else {
-				setIsLoggedIn(false);
-				setUserId(uuidv4());
+    return () => unsubscribe();
+  }, []);
 
-				const savedData = localStorage.getItem("savedUserData");
-				if (savedData) {
-					const parsedData = JSON.parse(savedData);
+  const updateUserData = async (user: any) => {
+    try {
+      const response = await getUserPosition();
+      const savedUserData = response.data.user;
+      const userId = user.uid;
 
-					setUserData([...parsedData]);
-				} else {
-					resetUserData();
-				}
-			}
-		});
+      setUserId(userId);
+      setIsLoggedIn(true);
 
-		return () => unsubscribe();
-	}, [setIsLoggedIn, setUserId, resetUserData, setUserData]);
+      const savedLocalData = getLocalData();
 
-	const handleError = (error: Error) => {
-		toast.error(error.message || "알 수 없는 에러가 발생했습니다.");
+      const uniqueData = filterUniqueData(savedUserData, savedLocalData).map(
+        (data) => ({
+          ...data,
+          userId,
+        }),
+      );
+      const mergedData = [...savedUserData, ...uniqueData];
 
-		setIsLoggedIn(false);
-	};
+      setUserData(mergedData);
 
-	const handleLogin = async () => {
-		const provider = new GoogleAuthProvider();
+      await Promise.all(
+        uniqueData.map((data) => saveUserPosition(userId, data)),
+      );
 
-		try {
-			const result = await signInWithPopup(auth, provider);
-			const idToken = await result.user.getIdToken();
+      localStorage.removeItem("savedUserData");
+    } catch (error) {
+      setIsLoggedIn(false);
 
-			await loginUser(idToken);
+      console.error(error);
+    }
+  };
 
-			const response = await getUserPosition();
+  const updateLocalData = () => {
+    const savedLocalData = getLocalData();
 
-			setUserData(response.data.user);
-			setUserId(result.user.uid);
+    if (savedLocalData.length > 0) {
+      setUserData(savedLocalData);
+    } else {
+      resetUserData();
+    }
+  };
 
-			setIsLoggedIn(true);
+  const handleLogin = async () => {
+    const provider = new GoogleAuthProvider();
 
-			localStorage.removeItem("savedUserData");
-		} catch (error) {
-			handleError(error);
-		}
-	};
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const idToken = await result.user.getIdToken();
 
-	const handleLogout = async () => {
-		try {
-			await logoutUser();
-			await auth.signOut();
+      await loginUser(idToken);
 
-			setIsLoggedIn(false);
-			setUserId(null);
+      setIsLoggedIn(true);
+    } catch (error) {
+      toast.error(
+        (error && error.message) || "알 수 없는 에러가 발생했습니다.",
+      );
+    }
+  };
 
-			resetUserData();
-		} catch (error) {
-			handleError(error);
-		}
-	};
+  const handleLogout = async () => {
+    try {
+      await logoutUser();
+      await auth.signOut();
 
-	return {
-		isLoggedIn,
-		handleLogin,
-		handleLogout,
-	};
+      setIsLoggedIn(false);
+      setUserId(null);
+
+      resetUserData();
+    } catch (error) {
+      toast.error(
+        (error && error.message) || "알 수 없는 에러가 발생했습니다.",
+      );
+    }
+  };
+
+  return {
+    handleLogin,
+    handleLogout,
+  };
 };
 
 export default useUserAuth;
