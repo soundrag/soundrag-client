@@ -9,7 +9,7 @@ import {
   UploadInputText,
   UploadSubText,
 } from "../style/UploadZoneStyle";
-import { UploadFileProps } from "../types/common";
+import { UploadFileProps } from "../types/components";
 
 const UploadZone = ({ hasUploadFile, setHasUploadFile }: UploadFileProps) => {
   const { temporaryFileName, setTemporaryFile } = useFileStore();
