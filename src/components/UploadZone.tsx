@@ -1,6 +1,7 @@
-import useDropFile from "../hooks/useDropFile";
+import { useDropzone } from "react-dropzone";
+import type { DropzoneOptions } from "react-dropzone";
 
-import useAudioStore from "../stores/useAudioStore";
+import useFileStore from "../stores/useFileStore";
 
 import {
   UploadZoneContainer,
@@ -8,11 +9,28 @@ import {
   UploadInputText,
   UploadSubText,
 } from "../style/UploadZoneStyle";
+import { UploadFileProps } from "../types/common";
 
-const UploadZone = () => {
-  const { getRootProps, getInputProps, isDragActive } = useDropFile();
+const UploadZone = ({ hasUploadFile, setHasUploadFile }: UploadFileProps) => {
+  const { temporaryFileName, setTemporaryFile } = useFileStore();
 
-  const { hasUploaded, temporaryFileName } = useAudioStore();
+  const handleDrop = (acceptedFiles: File[]) => {
+    if (acceptedFiles.length > 0) {
+      const file = acceptedFiles[0];
+
+      setTemporaryFile(file);
+      setHasUploadFile(true);
+    }
+  };
+
+  const dropzoneOptions: DropzoneOptions = {
+    onDrop: handleDrop,
+    accept: { "audio/*": [".mp3", ".wav", ".ogg"] },
+    maxFiles: 1,
+  };
+
+  const { getRootProps, getInputProps, isDragActive } =
+    useDropzone(dropzoneOptions);
 
   return (
     <UploadZoneContainer {...getRootProps()}>
@@ -22,13 +40,13 @@ const UploadZone = () => {
           Drop It Here!
         </UploadInputText>
       ) : (
-        <UploadInputText $upload={hasUploaded}>
-          {hasUploaded ? temporaryFileName : "드래그 영역"}
-          <UploadSubText $upload={hasUploaded}>
-            {!hasUploaded && (
+        <UploadInputText $upload={hasUploadFile}>
+          {hasUploadFile ? temporaryFileName : "드래그 영역"}
+          <UploadSubText $upload={hasUploadFile}>
+            {!hasUploadFile && (
               <p className="file-message">(오디오 파일만 가능)</p>
             )}
-            {!hasUploaded && (
+            {!hasUploadFile && (
               <p className="click-message">(클릭하여 업로드 가능)</p>
             )}
           </UploadSubText>

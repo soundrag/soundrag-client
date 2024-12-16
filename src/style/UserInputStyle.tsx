@@ -17,7 +17,7 @@ const UserLabel = styled.label`
   }
 `;
 
-const UserInput = styled.input`
+const UserInputTag = styled.input`
   padding: 0.3rem;
   border: 0.1rem solid ${({ theme }) => theme.color.buttonMainFontColor};
   border-radius: 0.4rem;
@@ -26,4 +26,4 @@ const UserInput = styled.input`
   outline: none;
 `;
 
-export { UserForm, UserLabel, UserInput };
+export { UserForm, UserLabel, UserInputTag };
