@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { toast } from "react-toastify";
+import { v4 as uuidv4 } from "uuid";
 
 import Modal from "../components/common/Modal";
 import NavHeader from "../components/common/NavHeader";
@@ -7,7 +9,7 @@ import MessageBox from "../components/common/MessageBox";
 import Gallery from "../components/Gallery";
 import Studio from "../components/Studio";
 import ModeSwitch from "../components/Switch";
-import UserInputs from "../components/UserInputs";
+import UserInput from "../components/UserInput";
 
 import useAutoSavedPosition from "../hooks/useAutoSavedPosition";
 import useNavigateData from "../hooks/useNavigateData";
@@ -17,10 +19,8 @@ import { saveUserPosition } from "../services/userService";
 
 import useAuthStore from "../stores/useAuthStore";
 import useDataStore from "../stores/useDataStore";
-import useGalleryStore from "../stores/useGalleryStore";
 import useModalStore from "../stores/useModalStore";
 import useModelStore from "../stores/useModelStore";
-import useInputStore from "../stores/useInputStore";
 
 import {
   GalleryContainer,
@@ -35,12 +35,13 @@ import {
 } from "../style/StudioPageStyle";
 
 const StudioPage = () => {
+  const [openGallery, setOpenGallery] = useState(false);
+  const [name, setName] = useState("");
+
   const { isLoggedIn } = useAuthStore();
   const { userId, userData, setUserData, currentIndex } = useDataStore();
-  const { isGallery, toggleGallery, closeGallery } = useGalleryStore();
   const { modals, openModal, closeModal } = useModalStore();
-  const { rotations, positions, positionId } = useModelStore();
-  const { name, setName } = useInputStore();
+  const { rotations, positions } = useModelStore();
 
   const lastIndex = userData.length - 1;
   const isLastIndex = currentIndex === lastIndex;
@@ -71,6 +72,8 @@ const StudioPage = () => {
 
       return;
     }
+
+    const positionId = uuidv4();
 
     const userDataToSave = {
       userId,
@@ -109,11 +112,13 @@ const StudioPage = () => {
   const handleGalleryButton = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
 
-    toggleGallery();
+    setOpenGallery(true);
   };
 
   const handleCloseGalleryButton = () => {
-    closeGallery();
+    setName("");
+
+    setOpenGallery(false);
   };
 
   useAutoSavedPosition();
@@ -131,7 +136,7 @@ const StudioPage = () => {
               버전: {isLastIndex ? "최신" : currentIndex + 1}
             </VersionContainer>
             <Button
-              text={isGallery ? "뒤로" : "프리셋 보기"}
+              text={openGallery ? "뒤로" : "프리셋 보기"}
               size="large"
               isDisabled={!isLoggedIn}
               handleClick={handleGalleryButton}
@@ -145,7 +150,7 @@ const StudioPage = () => {
               $testId="save-button"
             />
           </GalleryButtonContainer>
-          {isGallery && (
+          {openGallery && (
             <MyGalleryContainer
               onClick={(event: React.MouseEvent<HTMLDivElement>) =>
                 event.stopPropagation()
@@ -167,13 +172,14 @@ const StudioPage = () => {
       </TutorialContainer>
       {modals.saveModal && (
         <Modal
-          modalId="saveModal"
+          modalName="saveModal"
           modalTitle="저장"
-          content={<UserInputs />}
+          content={<UserInput value={name} setValue={setName} />}
           firstButtonText="취소"
           secondButtonText="저장"
           handleFirstButton={handleCancelButton}
           handleSecondButton={handleSaveButton}
+          isEnabled={name.length > 0 && name.length < 20}
         />
       )}
     </StudioPageContainer>

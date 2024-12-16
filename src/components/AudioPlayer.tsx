@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { toast } from "react-toastify";
 
 import Icon from "./common/Icon";
@@ -12,7 +13,7 @@ import ResetButtonImage from "../assets/images/reset-button.svg";
 import useAudioControl from "../hooks/useAudioControl";
 import useSpatialAudio from "../hooks/useSpatialAudio";
 
-import useAudioStore from "../stores/useAudioStore";
+import useFileStore from "../stores/useFileStore";
 import useModalStore from "../stores/useModalStore";
 
 import {
@@ -29,6 +30,8 @@ import { formatDuration, formatFileName } from "../utils/formatters";
 import { calculateSliderValue } from "../utils/calculators";
 
 const AudioPlayer = () => {
+  const [hasUploadFile, setHasUploadFile] = useState(false);
+
   const {
     audioRef,
     handlePlayPause,
@@ -36,13 +39,14 @@ const AudioPlayer = () => {
     handleTimeUpdate,
     handleTimeEnd,
     handleSeekChange,
+    isPlaying,
+    setIsPlaying,
+    duration,
+    currentTime,
   } = useAudioControl();
   const { startAudioContext } = useSpatialAudio(audioRef);
 
   const {
-    isPlaying,
-    duration,
-    currentTime,
     fileName,
     fileUrl,
     showFullFileName,
@@ -50,7 +54,7 @@ const AudioPlayer = () => {
     resetTemporaryFile,
     resetUploadedFile,
     setUploadedFile,
-  } = useAudioStore();
+  } = useFileStore();
   const { modals, openModal, closeModal } = useModalStore();
 
   const handleOpenUploadModal = () => {
@@ -58,12 +62,15 @@ const AudioPlayer = () => {
   };
 
   const handleCloseUploadModal = () => {
+    setHasUploadFile(false);
     resetTemporaryFile();
     closeModal("uploadModal");
   };
 
   const handleUploadButton = () => {
     setUploadedFile();
+    setIsPlaying(false);
+    setHasUploadFile(false);
     closeModal("uploadModal");
     toast.success("Complete! (Upload)");
   };
@@ -115,13 +122,19 @@ const AudioPlayer = () => {
       </FileName>
       {modals.uploadModal && (
         <Modal
-          modalId="uploadModal"
+          modalName="uploadModal"
           modalTitle="업로드"
-          content={<UploadZone />}
+          content={
+            <UploadZone
+              hasUploadFile={hasUploadFile}
+              setHasUploadFile={setHasUploadFile}
+            />
+          }
           firstButtonText="취소"
           secondButtonText="업로드"
           handleFirstButton={handleCloseUploadModal}
           handleSecondButton={handleUploadButton}
+          isEnabled={hasUploadFile}
           $modalTestId="audio-modal"
           $firstButtonTestId="cancel-button"
           $secondButtonTestId="confirm-button"

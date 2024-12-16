@@ -10,31 +10,26 @@ import {
   ModalButtonContainer,
 } from "../../style/ModalStyle";
 
-import useAudioStore from "../../stores/useAudioStore";
-import useInputStore from "../../stores/useInputStore";
-
 import type { ModalProps } from "../../types/components";
 
 const Modal = ({
-  modalId,
+  modalName,
   modalTitle,
   content,
   firstButtonText,
   secondButtonText,
   handleFirstButton,
   handleSecondButton,
+  isEnabled,
   $modalTestId,
   $firstButtonTestId,
   $secondButtonTestId,
 }: ModalProps) => {
-  const { hasUploaded } = useAudioStore();
   const { closeModal } = useModalStore();
-  const { isNameValid } = useInputStore();
-
   const hasSecondButton = firstButtonText && secondButtonText;
 
   return (
-    <ModalBackground onClick={() => closeModal(modalId)}>
+    <ModalBackground onClick={() => closeModal(modalName)}>
       <ModalContainer
         onClick={(event: React.MouseEvent<HTMLDivElement>) =>
           event.stopPropagation()
@@ -55,10 +50,7 @@ const Modal = ({
             <Button
               text={secondButtonText}
               handleClick={handleSecondButton}
-              isDisabled={
-                (modalId === "uploadModal" && !hasUploaded) ||
-                (modalId === "saveModal" && !isNameValid)
-              }
+              isDisabled={!isEnabled}
               $testId={$secondButtonTestId}
             />
           )}

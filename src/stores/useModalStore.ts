@@ -6,17 +6,16 @@ import type { ModalState } from "../types/store";
 const useModalStore = create<ModalState>((set) => ({
   modals: {},
 
-  openModal: (id) =>
+  openModal: (modalName) =>
     set(
       produce((state) => {
-        state.modals[id] = true;
+        state.modals[modalName] = true;
       }),
     ),
-
-  closeModal: (id) =>
+  closeModal: (modalName) =>
     set(
       produce((state) => {
-        state.modals[id] = false;
+        state.modals[modalName] = false;
       }),
     ),
 }));

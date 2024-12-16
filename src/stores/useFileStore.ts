@@ -1,84 +1,53 @@
 import { create } from "zustand";
 import sampleFile from "../../public/sounds/sample.mp3";
 
-import type { AudioState } from "../types/store";
+import type { FileState } from "../types/store";
 
-const useAudioStore = create<AudioState>((set, get) => ({
-  isPlaying: false,
+const useFileStore = create<FileState>((set, get) => ({
   hasUploaded: false,
-
-  duration: 0,
-  currentTime: 0,
-
-  file: sampleFile,
   fileName: "sample.mp3",
   fileUrl: sampleFile,
   showFullFileName: false,
-
-  temporaryFile: null,
   temporaryFileName: null,
   temporaryAudioUrl: null,
 
-  togglePlayPause: () => set((state) => ({ isPlaying: !state.isPlaying })),
-
-  setDuration: (duration) => set({ duration }),
-
-  setCurrentTime: (currentTime) => set({ currentTime }),
-
   setShowFullFileName: () =>
     set((state) => ({ showFullFileName: !state.showFullFileName })),
-
   setTemporaryFile: (file) => {
     const audioUrl = URL.createObjectURL(file);
 
     set({
-      temporaryFile: file,
       temporaryFileName: file.name,
       temporaryAudioUrl: audioUrl,
-      hasUploaded: true,
     });
   },
-
   resetTemporaryFile: () => {
     set({
-      hasUploaded: false,
-
-      temporaryFile: null,
       temporaryFileName: null,
       temporaryAudioUrl: null,
     });
   },
-
   setUploadedFile: () => {
     set((state) => ({
-      isPlaying: false,
-      hasUploaded: false,
-
-      file: state.temporaryFile,
       fileName: state.temporaryFileName,
       fileUrl: state.temporaryAudioUrl,
 
-      temporaryFile: null,
       temporaryFileName: null,
       temporaryAudioUrl: null,
     }));
   },
-
   resetUploadedFile: () => {
     const { fileName } = get();
 
     if (fileName === "sample.mp3") {
       return;
     }
-    set({
-      isPlaying: false,
-      hasUploaded: false,
 
-      file: sampleFile,
+    set({
       fileName: "sample.mp3",
       fileUrl: sampleFile,
     });
   },
 }));
 
-export default useAudioStore;
+export default useFileStore;

@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import { produce } from "immer";
-import { v4 as uuidv4 } from "uuid";
 import {
   STANDARD_SPEAKER_SCALE,
   STANDARD_LISTENER_SCALE,
@@ -14,8 +13,6 @@ import {
 import type { ModelState } from "../types/store";
 
 const useModelStore = create<ModelState>((set) => ({
-  models: {},
-
   scales: {
     firstSpeaker: STANDARD_SPEAKER_SCALE,
     secondSpeaker: STANDARD_SPEAKER_SCALE,
@@ -32,8 +29,6 @@ const useModelStore = create<ModelState>((set) => ({
     listener: LISTENER_STARTING_POSITION,
   },
 
-  positionId: uuidv4(),
-
   setModelName: (modelName, scene) => {
     set(
       produce((state) => {
@@ -41,7 +36,6 @@ const useModelStore = create<ModelState>((set) => ({
       }),
     );
   },
-
   setModelRotations: (modelName, rotation) => {
     set(
       produce((state) => {
@@ -49,12 +43,10 @@ const useModelStore = create<ModelState>((set) => ({
       }),
     );
   },
-
   setModelPositions: (modelName, position) => {
     set(
       produce((state) => {
         state.positions[modelName] = position;
-        state.positionId = uuidv4();
       }),
     );
   },

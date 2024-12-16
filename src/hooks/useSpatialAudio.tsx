@@ -1,6 +1,5 @@
 import { useEffect, useRef } from "react";
 
-import useAudioStore from "../stores/useAudioStore";
 import useModelStore from "../stores/useModelStore";
 
 import { calculatePan } from "../utils/calculators";
@@ -12,7 +11,9 @@ import {
   DEFAULT_POSITION,
 } from "../constants";
 
-const useSpatialAudio = (audioRef) => {
+const useSpatialAudio = (
+  audioRef: React.MutableRefObject<HTMLAudioElement>,
+) => {
   const audioContextRef = useRef(null);
   const sourceRef = useRef(null);
 
@@ -25,7 +26,6 @@ const useSpatialAudio = (audioRef) => {
   const firstBiquadFilterRef = useRef(null);
   const secondBiquadFilterRef = useRef(null);
 
-  const { isPlaying } = useAudioStore();
   const { positions } = useModelStore((state) => ({
     positions: state.positions,
   }));
@@ -50,8 +50,7 @@ const useSpatialAudio = (audioRef) => {
 
   const startAudioContext = async () => {
     if (hasNotAudioContext) {
-      audioContextRef.current = new (window.AudioContext ||
-        window.webkitAudioContext)();
+      audioContextRef.current = new AudioContext();
 
       sourceRef.current = audioContextRef.current.createMediaElementSource(
         audioRef.current,
@@ -156,7 +155,7 @@ const useSpatialAudio = (audioRef) => {
         }
       }
     }
-  }, [firstSpeakerPosition, isPlaying]);
+  }, [firstSpeakerPosition]);
 
   useEffect(() => {
     if (hasPannerNodeSecondSpeaker) {
@@ -229,7 +228,7 @@ const useSpatialAudio = (audioRef) => {
         }
       }
     }
-  }, [secondSpeakerPosition, isPlaying]);
+  }, [secondSpeakerPosition]);
 
   useEffect(() => {
     if (hasListener) {
@@ -255,7 +254,7 @@ const useSpatialAudio = (audioRef) => {
         listener.positionZ = z;
       }
     }
-  }, [listenerPosition, isPlaying]);
+  }, [listenerPosition]);
 
   useEffect(() => {
     if (hasStereoPannerNodeAll) {
@@ -273,12 +272,7 @@ const useSpatialAudio = (audioRef) => {
         audioContextRef.current.currentTime,
       );
     }
-  }, [
-    firstSpeakerPosition,
-    secondSpeakerPosition,
-    listenerPosition,
-    isPlaying,
-  ]);
+  }, [firstSpeakerPosition, secondSpeakerPosition, listenerPosition, ,]);
 
   return { startAudioContext };
 };
