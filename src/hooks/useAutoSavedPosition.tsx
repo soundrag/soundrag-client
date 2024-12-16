@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { toast } from "react-toastify";
+import { v4 as uuidv4 } from "uuid";
 
 import { saveUserPosition } from "../services/userService";
 
@@ -14,12 +15,13 @@ import type { UserData } from "../types/common";
 const useAutoSavedPosition = (): null => {
   const { isLoggedIn } = useAuthStore();
   const { userId, userData, setUserData } = useDataStore();
-  const { positions, rotations, positionId } = useModelStore();
+  const { positions, rotations } = useModelStore();
 
   const timeoutRef = useRef(null);
   const isDuplicate = isDuplicateData(userData, positions, rotations);
 
   const saveChanges = async () => {
+    const positionId = uuidv4();
     const newUserData: UserData = {
       userId,
       positionId,

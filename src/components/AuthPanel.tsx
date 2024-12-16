@@ -41,7 +41,7 @@ const AuthPanel = () => {
 
       {modals.errorModal && (
         <Modal
-          modalId="errorModal"
+          modalName="errorModal"
           firstButtonText="Back"
           handleFirstButton={() => closeModal("errorModal")}
           $modalTestId="error-modal"

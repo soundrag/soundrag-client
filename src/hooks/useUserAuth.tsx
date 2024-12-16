@@ -20,7 +20,7 @@ import { UserData } from "../types/common";
 
 const useUserAuth = () => {
   const { setIsLoggedIn } = useAuthStore();
-  const { setUserId, setUserData, resetUserData } = useDataStore();
+  const { setUserId, setUserData, setCurrentIndex } = useDataStore();
 
   const getLocalData = () => {
     const savedData = localStorage.getItem("savedUserData");
@@ -47,9 +47,10 @@ const useUserAuth = () => {
 
   const updateUserData = async (user: any) => {
     try {
-      const response = await getUserPosition();
-      const savedUserData = response.data.user;
       const userId = user.uid;
+
+      const response = await getUserPosition();
+      const savedUserData = response.user;
 
       setUserId(userId);
       setIsLoggedIn(true);
@@ -84,7 +85,8 @@ const useUserAuth = () => {
     if (savedLocalData.length > 0) {
       setUserData(savedLocalData);
     } else {
-      resetUserData();
+      setUserData([]);
+      setCurrentIndex(0);
     }
   };
 
@@ -112,8 +114,8 @@ const useUserAuth = () => {
 
       setIsLoggedIn(false);
       setUserId(null);
-
-      resetUserData();
+      setUserData([]);
+      setCurrentIndex(0);
     } catch (error) {
       toast.error(
         (error && error.message) || "알 수 없는 에러가 발생했습니다.",

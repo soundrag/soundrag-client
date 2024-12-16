@@ -43,7 +43,6 @@ const useDraggableTarget = ({
   const { isShiftPressed } = useKeyboardEvent();
 
   const { position, setModelPositions } = useModelStore((state) => ({
-    model: state.models[modelName],
     scale: state.scales[modelName],
     position: state.positions[modelName],
     setModelPositions: state.setModelPositions,
