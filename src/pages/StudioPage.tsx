@@ -49,7 +49,6 @@ const StudioPage = () => {
   const handleSaveButton = async () => {
     if (!userId) {
       toast.error("로그인이 필요합니다.");
-
       return;
     }
 
@@ -69,7 +68,6 @@ const StudioPage = () => {
       toast.error("이미 존재하는 위치입니다.");
 
       setName("");
-
       return;
     }
 
@@ -88,13 +86,13 @@ const StudioPage = () => {
     };
 
     try {
-      await saveUserPosition(userId, userDataToSave);
-
       const newUserData = [...userData, userDataToSave];
 
-      setUserData(newUserData);
-      setName("");
+      setUserData([...newUserData]);
 
+      await saveUserPosition(userId, userDataToSave);
+
+      setName("");
       closeModal("saveModal");
 
       toast.success("Complete! (Save)");
@@ -105,7 +103,6 @@ const StudioPage = () => {
 
   const handleCancelButton = () => {
     setName("");
-
     closeModal("saveModal");
   };
 
@@ -117,7 +114,6 @@ const StudioPage = () => {
 
   const handleCloseGalleryButton = () => {
     setName("");
-
     setOpenGallery(false);
   };
 
