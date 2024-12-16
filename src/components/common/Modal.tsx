@@ -20,7 +20,7 @@ const Modal = ({
   secondButtonText,
   handleFirstButton,
   handleSecondButton,
-  isEnabled,
+  isEnabled = true,
   $modalTestId,
   $firstButtonTestId,
   $secondButtonTestId,
