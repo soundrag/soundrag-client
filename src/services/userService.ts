@@ -1,28 +1,33 @@
 import axiosInstance from "./instance";
-import type { AxiosResponse } from "axios";
-import type { UserData } from "../types/common";
 
-const getUserPosition = async (): Promise<AxiosResponse> => {
+import type { UserData } from "../types/common";
+import type {
+  InquirePosition,
+  SavePosition,
+  DeletePosition,
+} from "../types/services";
+
+const getUserPosition = async (): Promise<InquirePosition> => {
   const response = await axiosInstance.get("/studio");
 
-  return response;
+  return response.data;
 };
 
 const saveUserPosition = async (
   userId: string,
   userData: UserData,
-): Promise<AxiosResponse> => {
+): Promise<SavePosition> => {
   const response = await axiosInstance.post(`/studio/${userId}`, userData);
 
-  return response;
+  return response.data;
 };
 
 const deleteUserPosition = async (
   positionId: string,
-): Promise<AxiosResponse> => {
+): Promise<DeletePosition> => {
   const response = await axiosInstance.delete(`/studio/${positionId}`);
 
-  return response;
+  return response.data;
 };
 
 export { getUserPosition, saveUserPosition, deleteUserPosition };

@@ -21,16 +21,17 @@ export interface MessageBoxProps {
 }
 
 export interface ModalProps {
-  modalId: string;
+  modalName: string;
   modalTitle?: string;
   content?: string | React.ReactNode;
-  firstButtonText?: string;
+  firstButtonText: string;
   secondButtonText?: string;
-  handleFirstButton?: () => void;
+  handleFirstButton: () => void;
   handleSecondButton?: () => void;
   $modalTestId?: string;
   $firstButtonTestId?: string;
   $secondButtonTestId?: string;
+  isEnabled?: boolean;
 }
 
 export interface ModelProps {
@@ -44,4 +45,14 @@ export interface WallProps {
 
 export interface GalleryProps {
   data: UserData[];
+}
+
+export interface UserInputProps {
+  value: string;
+  setValue: (value: string) => void;
+}
+
+export interface UploadFileProps {
+  hasUploadFile: boolean;
+  setHasUploadFile: (hasUploadFile: boolean) => void;
 }

@@ -4,9 +4,9 @@ export type Vector3Values = [number, number, number];
 export type Transformation = Record<string, Vector3Values>;
 
 export interface UserData {
-  name?: string;
   userId?: string;
   positionId: string;
+  name?: string;
   firstSpeakerPosition: Vector3Values;
   secondSpeakerPosition: Vector3Values;
   listenerPosition: Vector3Values;
