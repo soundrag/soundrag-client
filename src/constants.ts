@@ -2,6 +2,8 @@ import { Vector3, Euler } from "three";
 import type { Vector3Values } from "./types/common";
 import type { WallValues } from "./types/constants";
 
+const AUTO_SAVE_DELAY = 5000;
+
 const AUDIO_STARTING_POINT = 0;
 
 const HAVE_NOTHING = 0;
@@ -65,6 +67,7 @@ const MEDIUM_LIGHT_INTENSITY = 0.5;
 const HARD_LIGHT_INTENSITY = 1;
 
 export {
+  AUTO_SAVE_DELAY,
   AUDIO_STARTING_POINT,
   HAVE_NOTHING,
   HAVE_METADATA,

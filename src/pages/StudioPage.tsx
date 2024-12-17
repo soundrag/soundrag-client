@@ -2,6 +2,8 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
 
+import { AUTO_SAVE_DELAY } from "../constants";
+
 import Modal from "../components/common/Modal";
 import NavHeader from "../components/common/NavHeader";
 import Button from "../components/common/Button";
@@ -11,7 +13,7 @@ import Studio from "../components/Studio";
 import ModeSwitch from "../components/Switch";
 import UserInput from "../components/UserInput";
 
-import useAutoSavedPosition from "../hooks/useAutoSavedPosition";
+import useAutoSavePosition from "../hooks/useAutoSavePosition";
 import useNavigateData from "../hooks/useNavigateData";
 import useKeyboardEvent from "../hooks/useKeyboardEvent";
 
@@ -117,7 +119,7 @@ const StudioPage = () => {
     setOpenGallery(false);
   };
 
-  useAutoSavedPosition();
+  useAutoSavePosition(AUTO_SAVE_DELAY);
   useNavigateData();
   useKeyboardEvent();
 
