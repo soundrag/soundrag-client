@@ -28,20 +28,42 @@ const GalleryButtonContainer = styled.div`
   display: flex;
   gap: 2rem;
   width: 100%;
+  @media (max-width: 1010px) {
+    flex-direction: column;
+  }
+`;
+
+const GalleryButtons = styled.div`
+  display: flex;
+  gap: 2rem;
 `;
 
 const VersionContainer = styled.div`
   display: flex;
   align-items: center;
-  width: 5rem;
+  width: 20rem;
+  gap: 2rem;
   font-size: ${({ theme }) => theme.fontSize.large};
   color: ${({ theme }) => theme.color.galleryNameColor};
+`;
+
+const VersionShortCut = styled.div`
+  display: flex;
+  padding: 0.5rem;
+  gap: 1rem;
+  font-size: ${({ theme }) => theme.fontSize.small};
+  border: 1px dashed ${({ theme }) => theme.color.galleryNameColor};
 `;
 
 const MyGalleryContainer = styled.div`
   position: absolute;
   top: 3.3rem;
   right: 3rem;
+
+  @media (max-width: 1010px) {
+    top: 7.3rem;
+    right: 5.7rem;
+  }
 `;
 
 const KeyboardTutorialContainer = styled.div`
@@ -83,7 +105,9 @@ export {
   StudioPageContainer,
   StudioContainer,
   GalleryButtonContainer,
+  GalleryButtons,
   VersionContainer,
+  VersionShortCut,
   MyGalleryContainer,
   SwitchButtonContainer,
   TutorialContainer,

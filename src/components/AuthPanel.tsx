@@ -1,11 +1,18 @@
-import Modal from "./common/Modal";
+import { toast } from "react-toastify";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import auth from "../../firebase";
 
 import googleLogo from "../assets/images/google-logo.svg";
 
-import useUserAuth from "../hooks/useUserAuth";
+import Modal from "./common/Modal";
+
+import useUpdateData from "../hooks/useUpdateData";
+
+import { loginUser, logoutUser } from "../services/authService";
 
 import useAuthStore from "../stores/useAuthStore";
 import useModalStore from "../stores/useModalStore";
+import useDataStore from "../stores/useDataStore";
 
 import {
   AuthPanelContainer,
@@ -15,14 +22,44 @@ import {
 } from "../style/AuthPanelStyle";
 
 const AuthPanel = () => {
-  const { handleLogin, handleLogout } = useUserAuth();
-
-  const { isLoggedIn } = useAuthStore();
+  const { isLoggedIn, setIsLoggedIn } = useAuthStore();
+  const { setUserId, setUserData, setCurrentIndex } = useDataStore();
   const { modals, closeModal } = useModalStore();
 
-  if (isLoggedIn === undefined) {
-    return null;
-  }
+  const handleLogin = async () => {
+    const provider = new GoogleAuthProvider();
+
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const idToken = await result.user.getIdToken();
+
+      await loginUser(idToken);
+
+      setIsLoggedIn(true);
+    } catch (loginError) {
+      setIsLoggedIn(false);
+
+      toast.error("로그인을 다시 시도해주세요.");
+      console.error("로그인 에러가 발생하였습니다:", loginError);
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      await logoutUser();
+      await auth.signOut();
+
+      setIsLoggedIn(false);
+      setUserId(null);
+      setUserData([]);
+      setCurrentIndex(0);
+    } catch (logoutError) {
+      toast.error("로그아웃을 다시 시도해주세요.");
+      console.error("로그아웃 에러가 발생하였습니다:", logoutError);
+    }
+  };
+
+  useUpdateData();
 
   return (
     <AuthPanelContainer data-testid="auth-panel">
@@ -42,7 +79,7 @@ const AuthPanel = () => {
       {modals.errorModal && (
         <Modal
           modalName="errorModal"
-          firstButtonText="Back"
+          firstButtonText="뒤로"
           handleFirstButton={() => closeModal("errorModal")}
           $modalTestId="error-modal"
           $firstButtonTestId="cancel-button"

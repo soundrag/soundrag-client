@@ -13,13 +13,14 @@ import { isDuplicateData } from "../utils/validators";
 
 import type { UserData } from "../types/common";
 
-const useAutoSavedPosition = (): null => {
+const useAutoSavePosition = (delay: number): null => {
+  const timeoutRef = useRef(null);
+
   const { isLoggedIn } = useAuthStore();
   const { userId, userData, setUserData } = useDataStore();
   const { modals } = useModalStore();
   const { positions, rotations } = useModelStore();
 
-  const timeoutRef = useRef(null);
   const isDuplicate = isDuplicateData(userData, positions, rotations);
   const openSaveModal = modals.saveModal;
 
@@ -37,35 +38,43 @@ const useAutoSavedPosition = (): null => {
     };
 
     if (isLoggedIn) {
-      await saveUserPosition(userId, newUserData);
-      setUserData([...userData, newUserData]);
-      toast.success("자동 저장되었습니다!");
+      try {
+        setUserData([...userData, newUserData]);
+        await saveUserPosition(userId, newUserData);
+
+        toast.success("자동 저장되었습니다!");
+      } catch (autoSaveError) {
+        console.error("서버에 자동 저장을 실패하였습니다: ", autoSaveError);
+        toast.error("저장을 실패하였습니다.");
+      }
     } else {
-      localStorage.setItem(
-        "savedUserData",
-        JSON.stringify([...userData, newUserData]),
-      );
-      setUserData([...userData, newUserData]);
-      toast.success("자동 저장되었습니다!");
+      try {
+        localStorage.setItem(
+          "savedUserData",
+          JSON.stringify([...userData, newUserData]),
+        );
+        setUserData([...userData, newUserData]);
+
+        toast.success("자동 저장되었습니다!");
+      } catch (autoSaveError) {
+        console.error(
+          "로컬 스토리지에 자동 저장을 실패하였습니다: ",
+          autoSaveError,
+        );
+        toast.error("자동 저장을 실패하였습니다.");
+      }
     }
   };
 
   useEffect(() => {
     if (openSaveModal) {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
       return;
     }
 
     if (!isDuplicate) {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-
       timeoutRef.current = setTimeout(() => {
         saveChanges();
-      }, 5000);
+      }, delay);
     }
 
     return () => {
@@ -78,4 +87,4 @@ const useAutoSavedPosition = (): null => {
   return null;
 };
 
-export default useAutoSavedPosition;
+export default useAutoSavePosition;
