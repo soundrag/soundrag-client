@@ -1,15 +1,15 @@
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 
-import useDataStore from "../stores/useDataStore";
 import useModeStore from "../stores/useModeStore";
+import useVersionStore from "../stores/useVersionStore";
 
 const useKeyboardEvent = () => {
-  const { userData, currentIndex, setCurrentIndex } = useDataStore();
+  const { userVersion, versionIndex, setVersionIndex } = useVersionStore();
   const { switchMode } = useModeStore();
 
   const [isShiftPressed, setIsShiftPressed] = useState(false);
-  const userDataLength = userData.length;
+  const userVersionLength = userVersion.length;
 
   const handleModeSwitch = (key: string) => {
     switch (key) {
@@ -28,20 +28,20 @@ const useKeyboardEvent = () => {
   };
 
   const handleDataNavigation = (key: string) => {
-    const isInitialIndex = currentIndex === 0;
-    const isLastIndex = currentIndex === userDataLength - 1;
+    const isInitialIndex = versionIndex === 0;
+    const isLastIndex = versionIndex === userVersionLength - 1;
 
     if (key === "z" || key === "ㅋ") {
       if (isInitialIndex) {
-        toast.info("처음입니다.");
+        toast.info("처음 버전입니다.");
       } else {
-        setCurrentIndex(currentIndex - 1);
+        setVersionIndex(versionIndex - 1);
       }
     } else if (key === "x" || key === "ㅌ") {
       if (isLastIndex) {
-        toast.info("마지막입니다.");
+        toast.info("마지막 버전입니다.");
       } else {
-        setCurrentIndex(currentIndex + 1);
+        setVersionIndex(versionIndex + 1);
       }
     }
   };
@@ -91,7 +91,7 @@ const useKeyboardEvent = () => {
       window.removeEventListener("keydown", handleKeyDown);
       window.removeEventListener("keyup", handleKeyUp);
     };
-  }, [currentIndex, userDataLength]);
+  }, [versionIndex, userVersion]);
 
   return { isShiftPressed };
 };

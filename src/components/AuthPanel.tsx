@@ -13,6 +13,7 @@ import { loginUser, logoutUser } from "../services/authService";
 import useAuthStore from "../stores/useAuthStore";
 import useModalStore from "../stores/useModalStore";
 import useDataStore from "../stores/useDataStore";
+import useVersionStore from "../stores/useVersionStore";
 
 import {
   AuthPanelContainer,
@@ -23,7 +24,8 @@ import {
 
 const AuthPanel = () => {
   const { isLoggedIn, setIsLoggedIn } = useAuthStore();
-  const { setUserId, setUserData, setCurrentIndex } = useDataStore();
+  const { setUserId, setUserData } = useDataStore();
+  const { setUserVersion, setVersionIndex } = useVersionStore();
   const { modals, closeModal } = useModalStore();
 
   const handleLogin = async () => {
@@ -52,7 +54,8 @@ const AuthPanel = () => {
       setIsLoggedIn(false);
       setUserId(null);
       setUserData([]);
-      setCurrentIndex(0);
+      setUserVersion([]);
+      setVersionIndex(0);
     } catch (logoutError) {
       toast.error("로그아웃을 다시 시도해주세요.");
       console.error("로그아웃 에러가 발생하였습니다:", logoutError);

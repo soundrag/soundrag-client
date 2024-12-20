@@ -20,18 +20,26 @@ export interface FileState {
 
 export interface AuthState {
   isLoggedIn: boolean;
+  isAuthChecked: boolean;
 
   setIsLoggedIn: (loggedIn: boolean) => void;
+  setIsAuthChecked: (authChecked: boolean) => void;
 }
 
 export interface DataState {
   userId: string;
   userData: UserData[];
-  currentIndex: number;
 
   setUserId: (userId: string) => void;
   setUserData: (data: UserData[]) => void;
-  setCurrentIndex: (index: number) => void;
+}
+
+export interface VersionState {
+  userVersion: UserData[];
+  versionIndex: number;
+
+  setUserVersion: (data: UserData[]) => void;
+  setVersionIndex: (index: number) => void;
 }
 
 export interface ModalState {

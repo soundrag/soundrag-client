@@ -7,7 +7,7 @@ export interface ButtonProps {
   size?: "small" | "medium" | "large" | "xLarge";
   isDisabled?: boolean;
   handleClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  $testId: string;
+  $testId?: string;
 }
 
 export interface IconProps {

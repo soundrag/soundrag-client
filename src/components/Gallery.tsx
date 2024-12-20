@@ -20,17 +20,14 @@ import {
 } from "../style/GalleryStyle";
 
 import type { UserData } from "../types/common";
-import type { GalleryProps } from "../types/components";
 import { useState } from "react";
 
-const Gallery = ({ data }: GalleryProps) => {
+const Gallery = () => {
   const [positionIdToDelete, setPositionIdToDelete] = useState(null);
 
   const { userData, setUserData } = useDataStore();
   const { modals, openModal, closeModal } = useModalStore();
   const { setModelPositions, setModelRotations } = useModelStore();
-
-  const filteredUserData = userData.filter((item) => item.name);
 
   const handleOpenDeleteModal = (item: UserData) => {
     setPositionIdToDelete(item.positionId);
@@ -64,7 +61,7 @@ const Gallery = ({ data }: GalleryProps) => {
 
       toast.success("삭제되었습니다.");
     } catch (deleteError) {
-      setUserData(data);
+      setUserData(userData);
 
       closeModal("deleteModal");
 
@@ -76,7 +73,7 @@ const Gallery = ({ data }: GalleryProps) => {
   return (
     <DataListContainer>
       <DataList>
-        {filteredUserData.length !== 0 && (
+        {userData.length !== 0 && (
           <thead>
             <tr>
               <th>이름</th>
@@ -85,7 +82,7 @@ const Gallery = ({ data }: GalleryProps) => {
           </thead>
         )}
         <tbody>
-          {filteredUserData.map((item) => (
+          {userData.map((item) => (
             <DataListRow key={item.positionId}>
               <DataListCell>{item.name}</DataListCell>
               <DataListCell className="button-container">

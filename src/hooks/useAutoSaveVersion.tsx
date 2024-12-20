@@ -12,21 +12,23 @@ import useModelStore from "../stores/useModelStore";
 import { isDuplicateData } from "../utils/validators";
 
 import type { UserData } from "../types/common";
+import useVersionStore from "../stores/useVersionStore";
 
-const useAutoSavePosition = (delay: number): null => {
+const useAutoSaveVersion = (delay: number): null => {
   const timeoutRef = useRef(null);
 
-  const { isLoggedIn } = useAuthStore();
-  const { userId, userData, setUserData } = useDataStore();
+  const { isLoggedIn, isAuthChecked } = useAuthStore();
+  const { userId } = useDataStore();
+  const { userVersion, setUserVersion } = useVersionStore();
   const { modals } = useModalStore();
   const { positions, rotations } = useModelStore();
 
-  const isDuplicate = isDuplicateData(userData, positions, rotations);
+  const isDuplicate = isDuplicateData(userVersion, positions, rotations);
   const openSaveModal = modals.saveModal;
 
   const saveChanges = async () => {
     const positionId = uuidv4();
-    const newUserData: UserData = {
+    const newVersion: UserData = {
       userId,
       positionId,
       firstSpeakerPosition: positions.firstSpeaker,
@@ -39,8 +41,8 @@ const useAutoSavePosition = (delay: number): null => {
 
     if (isLoggedIn) {
       try {
-        setUserData([...userData, newUserData]);
-        await saveUserPosition(userId, newUserData);
+        setUserVersion([...userVersion, newVersion]);
+        await saveUserPosition(userId, newVersion);
 
         toast.success("자동 저장되었습니다!");
       } catch (autoSaveError) {
@@ -50,10 +52,10 @@ const useAutoSavePosition = (delay: number): null => {
     } else {
       try {
         localStorage.setItem(
-          "savedUserData",
-          JSON.stringify([...userData, newUserData]),
+          "localData",
+          JSON.stringify([...userVersion, newVersion]),
         );
-        setUserData([...userData, newUserData]);
+        setUserVersion([...userVersion, newVersion]);
 
         toast.success("자동 저장되었습니다!");
       } catch (autoSaveError) {
@@ -67,7 +69,7 @@ const useAutoSavePosition = (delay: number): null => {
   };
 
   useEffect(() => {
-    if (openSaveModal) {
+    if (!isAuthChecked || openSaveModal) {
       return;
     }
 
@@ -87,4 +89,4 @@ const useAutoSavePosition = (delay: number): null => {
   return null;
 };
 
-export default useAutoSavePosition;
+export default useAutoSaveVersion;

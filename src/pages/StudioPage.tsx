@@ -13,8 +13,8 @@ import Studio from "../components/Studio";
 import ModeSwitch from "../components/Switch";
 import UserInput from "../components/UserInput";
 
-import useAutoSavePosition from "../hooks/useAutoSavePosition";
-import useNavigateData from "../hooks/useNavigateData";
+import useAutoSavePosition from "../hooks/useAutoSaveVersion";
+import useNavigateData from "../hooks/useNavigateVersion";
 import useKeyboardEvent from "../hooks/useKeyboardEvent";
 
 import { saveUserPosition, deleteUserPosition } from "../services/userService";
@@ -36,19 +36,25 @@ import {
   TutorialContainer,
   VersionContainer,
   VersionShortCut,
+  VersionText,
+  VersionContent,
+  VersionTutorial,
 } from "../style/StudioPageStyle";
+import useVersionStore from "../stores/useVersionStore";
 
 const StudioPage = () => {
   const [openGallery, setOpenGallery] = useState(false);
   const [name, setName] = useState("");
+  const [isHovered, setIsHovered] = useState(false);
 
   const { isLoggedIn } = useAuthStore();
-  const { userId, userData, setUserData, currentIndex } = useDataStore();
+  const { userId, userData, setUserData } = useDataStore();
+  const { userVersion, setUserVersion, versionIndex } = useVersionStore();
   const { modals, openModal, closeModal } = useModalStore();
   const { rotations, positions } = useModelStore();
 
-  const lastIndex = userData.length - 1;
-  const isLastIndex = currentIndex === lastIndex;
+  const lastIndex = userVersion.length - 1;
+  const isLastIndex = versionIndex === lastIndex;
 
   const handleSaveButton = async () => {
     if (!userId) {
@@ -111,21 +117,17 @@ const StudioPage = () => {
 
   const handleResetButton = async () => {
     if (isLoggedIn) {
-      const dataWithoutName = userData.filter((item) => !item.name);
-      const dataWithName = userData.filter((item) => item.name);
-
       try {
-        setUserData(dataWithName);
-
         await Promise.all(
-          dataWithoutName.map((data) => {
-            deleteUserPosition(data.positionId);
+          userVersion.map((version) => {
+            deleteUserPosition(version.positionId);
           }),
         );
 
+        setUserVersion([]);
         toast.success("버전을 초기화하였습니다.");
       } catch (resetError) {
-        setUserData(userData);
+        setUserVersion(userVersion);
 
         toast.error("초기화에 실패하였습니다.");
         console.error(
@@ -135,13 +137,13 @@ const StudioPage = () => {
       }
     } else {
       try {
-        localStorage.removeItem("savedUserData");
+        localStorage.removeItem("localData");
 
-        setUserData([]);
+        setUserVersion([]);
 
         toast.success("버전을 초기화하였습니다.");
       } catch (resetError) {
-        setUserData(userData);
+        setUserVersion(userVersion);
 
         toast.error("초기화에 실패하였습니다.");
         console.error(
@@ -170,11 +172,9 @@ const StudioPage = () => {
 
   const isEmptyVersion = () => {
     if (isLoggedIn) {
-      const dataWithoutName = userData.filter((item) => !item.name);
-
-      if (dataWithoutName.length === 0) return true;
+      if (userVersion.length === 0) return true;
     } else {
-      const localVersion = localStorage.getItem("savedUserData");
+      const localVersion = localStorage.getItem("localData");
 
       if (!localVersion) return true;
     }
@@ -192,22 +192,38 @@ const StudioPage = () => {
       <StudioContainer onClick={handleCloseGalleryButton}>
         <Studio />
         <GalleryContainer>
-          <GalleryButtonContainer>
+          <VersionContainer data-testid="version-text">
+            <VersionTutorial
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+            >
+              버전이란?
+            </VersionTutorial>
+            {isHovered && (
+              <VersionContent>
+                <div>버전은</div>
+                <div>5초 동안 움직임이 없을 때,</div>
+                <div>
+                  <p className="auto-save">자동 저장</p>되는 데이터입니다.
+                </div>
+              </VersionContent>
+            )}
             <Button
               text="버전 초기화"
               size="large"
               handleClick={handleResetButton}
               isDisabled={isEmptyVersion()}
-              $testId="reset-button"
             />
-            <VersionContainer data-testid="version-text">
-              <VersionShortCut>
-                <div>이전 버전 (Z)</div>
-                <div>/</div>
-                <div>다음 버전 (X)</div>
-              </VersionShortCut>
-              버전: {isLastIndex ? "최신" : currentIndex + 1}
-            </VersionContainer>
+            <VersionShortCut>
+              <div>이전 버전 (Z)</div>
+              <div>/</div>
+              <div>다음 버전 (X)</div>
+            </VersionShortCut>
+            <VersionText>
+              버전: {isLastIndex ? "최신" : versionIndex + 1}
+            </VersionText>
+          </VersionContainer>
+          <GalleryButtonContainer>
             <GalleryButtons>
               <Button
                 text={openGallery ? "뒤로" : "나만의 공간"}
@@ -231,7 +247,7 @@ const StudioPage = () => {
                 event.stopPropagation()
               }
             >
-              <Gallery data={userData} />
+              <Gallery />
             </MyGalleryContainer>
           )}
         </GalleryContainer>

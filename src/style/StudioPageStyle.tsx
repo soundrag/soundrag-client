@@ -1,11 +1,5 @@
 import styled from "styled-components";
 
-const GalleryContainer = styled.div`
-  position: absolute;
-  top: 10rem;
-  right: 2rem;
-`;
-
 const StudioPageContainer = styled.div``;
 
 const StudioContainer = styled.div`
@@ -24,8 +18,67 @@ const StudioContainer = styled.div`
   );
 `;
 
+const VersionContainer = styled.div`
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  width: 40rem;
+  gap: 2rem;
+  font-size: ${({ theme }) => theme.fontSize.large};
+  color: ${({ theme }) => theme.color.galleryNameColor};
+  position: relative;
+`;
+
+const VersionTutorial = styled.div`
+  padding: 0.5rem;
+  font-weight: bold;
+  font-size: ${({ theme }) => theme.fontSize.small};
+  z-index: 99999;
+  text-decoration: underline;
+`;
+
+const VersionContent = styled.div`
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 10rem;
+  padding: 0.5rem;
+  top: 50%;
+  right: 80%;
+  font-size: ${({ theme }) => theme.fontSize.small};
+
+  .auto-save {
+    display: inline;
+    color: ${({ theme }) => theme.color.redColor};
+  }
+`;
+
+const VersionShortCut = styled.div`
+  display: flex;
+  padding: 0.5rem;
+  gap: 1rem;
+  font-size: ${({ theme }) => theme.fontSize.small};
+  border: 1px dashed ${({ theme }) => theme.color.galleryNameColor};
+`;
+
+const VersionText = styled.div`
+  min-width: 6rem;
+  text-align: center;
+`;
+
+const GalleryContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  position: absolute;
+  top: 10rem;
+  right: 2rem;
+`;
+
 const GalleryButtonContainer = styled.div`
   display: flex;
+  justify-content: end;
   gap: 2rem;
   width: 100%;
   @media (max-width: 1010px) {
@@ -38,27 +91,10 @@ const GalleryButtons = styled.div`
   gap: 2rem;
 `;
 
-const VersionContainer = styled.div`
-  display: flex;
-  align-items: center;
-  width: 20rem;
-  gap: 2rem;
-  font-size: ${({ theme }) => theme.fontSize.large};
-  color: ${({ theme }) => theme.color.galleryNameColor};
-`;
-
-const VersionShortCut = styled.div`
-  display: flex;
-  padding: 0.5rem;
-  gap: 1rem;
-  font-size: ${({ theme }) => theme.fontSize.small};
-  border: 1px dashed ${({ theme }) => theme.color.galleryNameColor};
-`;
-
 const MyGalleryContainer = styled.div`
   position: absolute;
-  top: 3.3rem;
-  right: 3rem;
+  top: 6.3rem;
+  right: 4.3rem;
 
   @media (max-width: 1010px) {
     top: 7.3rem;
@@ -107,7 +143,10 @@ export {
   GalleryButtonContainer,
   GalleryButtons,
   VersionContainer,
+  VersionTutorial,
   VersionShortCut,
+  VersionText,
+  VersionContent,
   MyGalleryContainer,
   SwitchButtonContainer,
   TutorialContainer,
