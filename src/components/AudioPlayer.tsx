@@ -114,7 +114,7 @@ const AudioPlayer = () => {
         <Icon
           imageSrc={isPlaying ? PauseButtonImage : PlayButtonImage}
           imageAlt={isPlaying ? "Pause Button" : "Play Button"}
-          $control={true}
+          $control
         />
       </ControlButton>
       <FileName onClick={toggleFileName} data-testid="file-name-text">

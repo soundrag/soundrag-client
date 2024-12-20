@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import Icon from "./Icon";
 
 import ViewButtonImage from "../../assets/images/view-button.svg";
@@ -17,10 +19,16 @@ import {
 import type { MessageBoxProps } from "../../types/components";
 
 const MessageBox = ({ about }: MessageBoxProps) => {
+  const [isShortCutTutorial, setIsShortCutTutorial] = useState(false);
+
   const isViewMode = useModeStore((state) => state.isViewMode());
   const isDragMode = useModeStore((state) => state.isDragMode());
   const isRotateMode = useModeStore((state) => state.isRotateMode());
   const aboutMode = about === "mode";
+
+  const handleShortCutTutorialButton = () => {
+    setIsShortCutTutorial(!isShortCutTutorial);
+  };
 
   return (
     <>
@@ -84,16 +92,20 @@ const MessageBox = ({ about }: MessageBoxProps) => {
       ) : (
         <>
           <MessageBoxContainer $keyboard data-testid="shortcuts">
-            <MessageBoxMode $keyboard>
+            <MessageBoxMode $keyboard onClick={handleShortCutTutorialButton}>
               <Icon imageSrc={KeyboardImage} imageAlt="Shortcut Image" />
-              단축키
+              단축키 (Click)
             </MessageBoxMode>
-            <MessageBoxTitle>[1, 2, 3] = 모드 전환</MessageBoxTitle>
-            <MessageBoxTitle>[z] = 이전</MessageBoxTitle>
-            <MessageBoxTitle>[x] = 다음</MessageBoxTitle>
-            <MessageBoxTitle>
-              [Shift] + Click = 스피커 천장 / 바닥 전환
-            </MessageBoxTitle>
+            {isShortCutTutorial && (
+              <div>
+                <MessageBoxTitle>[1, 2, 3] = 모드 전환</MessageBoxTitle>
+                <MessageBoxTitle>[z] = 이전</MessageBoxTitle>
+                <MessageBoxTitle>[x] = 다음</MessageBoxTitle>
+                <MessageBoxTitle>
+                  [Shift] + Click = 스피커 천장 / 바닥 전환
+                </MessageBoxTitle>
+              </div>
+            )}
           </MessageBoxContainer>
         </>
       )}

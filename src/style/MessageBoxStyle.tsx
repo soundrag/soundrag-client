@@ -4,15 +4,23 @@ const MessageBoxContainer = styled.div`
   width: ${({ $keyboard }) => !$keyboard && "25rem"};
 `;
 
-const MessageBoxMode = styled.div`
+const MessageBoxMode = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 1rem;
   background-color: ${({ theme }) => theme.color.menuBackgroundColor};
   color: ${({ theme }) => theme.color.whiteColor};
-  padding: 0.2rem 0;
+  padding: 0.2rem 5rem;
   font-size: ${({ theme }) => theme.fontSize.small};
+  width: 100%;
+  border: 1px solid #a45216;
+  cursor: ${({ $keyboard }) => ($keyboard ? "pointer" : "auto")};
+
+  &:hover {
+    background-color: ${({ theme, $keyboard }) =>
+      $keyboard ? theme.color.blackColor : theme.color.menuBackgroundColor};
+  }
 `;
 
 const MessageBoxTitle = styled.div`

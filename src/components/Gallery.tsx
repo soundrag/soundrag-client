@@ -62,11 +62,14 @@ const Gallery = ({ data }: GalleryProps) => {
 
       closeModal("deleteModal");
 
-      toast.success("Complete! (Delete)");
-    } catch (error) {
+      toast.success("삭제되었습니다.");
+    } catch (deleteError) {
       setUserData(data);
 
-      throw error;
+      closeModal("deleteModal");
+
+      toast.error("관리자에게 문의해주세요.");
+      console.error("삭제되지 않았습니다.", deleteError);
     }
   };
 
