@@ -19,7 +19,9 @@ const IconContainer = styled.div`
       height: 0.4rem;
       border: 0.2rem solid
         ${({ theme, $control }) =>
-          $control ? theme.color.mainColor : theme.color.buttonHoverFontColor};
+          $control
+            ? theme.color.buttonHoverSubColor
+            : theme.color.buttonHoverFontColor};
     }
 
     &::before {

@@ -1,16 +1,22 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Soundrag</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Jura:wght@300..700&display=swap"
-      rel="stylesheet"
+    <meta
+      name="description"
+      content="Soundrag는 스피커 위치에 따른 소리의 변화를 경험할 수 있는 3D 공간 음향 시뮬레이터입니다."
     />
+    <meta property="og:title" content="Soundrag" />
+    <meta
+      property="og:description"
+      content="Soundrag는 사용자가 스피커 위치에 따라 소리의 변화를 경험할 수 있는 3D 공간 음향 시뮬레이터입니다."
+    />
+    <meta property="og:image" content="https://soundrag.co.kr/logo.png" />
+    <meta property="og:url" content="https://soundrag.co.kr" />
+    <meta property="og:type" content="website" />
+    <title>Soundrag</title>
     <!-- Google tag (gtag.js) -->
     <script
       async
@@ -23,7 +29,9 @@
       }
       gtag("js", new Date());
 
-      gtag("config", "G-R1NNKEHV11");
+      gtag("config", "GA_TRACKING_ID", {
+        cookie_flags: "SameSite=None; Secure",
+      });
     </script>
   </head>
   <body>

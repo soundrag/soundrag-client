@@ -24,7 +24,7 @@ const NavContainer = styled.nav`
 const NavItem = styled.div`
   display: flex;
   align-items: center;
-  color: ${({ theme }) => theme.color.mainColor};
+  color: ${({ theme }) => theme.color.buttonHoverSubColor};
   font-size: ${({ theme }) => theme.fontSize.large};
   font-weight: bold;
 `;

@@ -7,7 +7,6 @@ import SoundragLogo from "../assets/images/logo.svg";
 import {
   SplashPageContainer,
   SplashTitle,
-  SubText,
   SplashLogo,
   SplashButtonContainer,
 } from "../style/SplashPageStyle";
@@ -15,10 +14,7 @@ import {
 const SplashPage = () => {
   return (
     <SplashPageContainer>
-      <SplashTitle data-testid="title-text">
-        Soun
-        <SubText>drag</SubText>
-      </SplashTitle>
+      <SplashTitle data-testid="title-text">Soundrag</SplashTitle>
       <SplashLogo
         src={SoundragLogo}
         alt="Soundrag Logo"

@@ -30,7 +30,7 @@ const AuthButton = styled.button`
   align-items: center;
   padding: 0;
   background: transparent;
-  color: ${({ theme }) => theme.color.mainColor};
+  color: ${({ theme }) => theme.color.buttonHoverSubColor};
   font-size: ${({ theme }) => theme.fontSize.large};
   font-weight: bold;
   border: none;

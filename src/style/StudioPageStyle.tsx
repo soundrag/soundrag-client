@@ -25,7 +25,7 @@ const VersionContainer = styled.div`
   width: 40rem;
   gap: 2rem;
   font-size: ${({ theme }) => theme.fontSize.large};
-  color: ${({ theme }) => theme.color.galleryNameColor};
+  color: ${({ theme }) => theme.color.buttonHoverSubColor};
   position: relative;
 `;
 
@@ -59,7 +59,7 @@ const VersionShortCut = styled.div`
   padding: 0.5rem;
   gap: 1rem;
   font-size: ${({ theme }) => theme.fontSize.small};
-  border: 1px dashed ${({ theme }) => theme.color.galleryNameColor};
+  border: 1px dashed ${({ theme }) => theme.color.buttonHoverSubColor};
 `;
 
 const VersionText = styled.div`

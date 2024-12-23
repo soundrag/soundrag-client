@@ -92,7 +92,7 @@ const Gallery = () => {
                   handleClick={() => handleDetailButton(item)}
                 />
                 <DeleteButton onClick={() => handleOpenDeleteModal(item)}>
-                  <img src={DeleteButtonImage} alt="Delete" />
+                  <img src={DeleteButtonImage} alt="삭제 버튼" />
                 </DeleteButton>
               </DataListCell>
             </DataListRow>

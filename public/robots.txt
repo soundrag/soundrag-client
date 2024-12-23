@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /static/
+Disallow: /private/
+Sitemap: https://soundrag.co.kr/sitemap.xml

@@ -11,13 +11,9 @@ const SplashPageContainer = styled.div`
 
 const SplashTitle = styled.h1`
   display: flex;
-  color: ${({ theme }) => theme.color.subColor};
+  color: ${({ theme }) => theme.color.buttonHoverSubColor};
   font-size: ${({ theme }) => theme.fontSize.title};
   font-weight: bold;
-`;
-
-const SubText = styled.p`
-  color: ${({ theme }) => theme.color.mainColor};
 `;
 
 const moveAround = keyframes`
@@ -104,10 +100,4 @@ const SplashButtonContainer = styled.div`
   width: 200%;
 `;
 
-export {
-  SplashPageContainer,
-  SplashTitle,
-  SubText,
-  SplashLogo,
-  SplashButtonContainer,
-};
+export { SplashPageContainer, SplashTitle, SplashLogo, SplashButtonContainer };

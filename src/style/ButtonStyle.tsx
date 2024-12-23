@@ -10,16 +10,17 @@ const ButtonContainer = styled.button`
   border: none;
   border-radius: 5%;
   background-color: ${({ disabled, theme }) =>
-    disabled ? theme.color.buttonDisabledColor : theme.color.mainColor};
+    disabled
+      ? theme.color.buttonDisabledColor
+      : theme.color.buttonHoverSubColor};
   color: ${({ disabled, theme }) =>
-    disabled ? theme.color.mainColor : theme.color.buttonMainFontColor};
+    disabled ? theme.color.mainColor : theme.color.menuBackgroundColor};
   cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
 
   &:hover {
     background-color: ${({ disabled, theme }) =>
-      !disabled && theme.color.buttonHoverColor};
-    color: ${({ disabled, theme }) =>
-      !disabled && theme.color.buttonHoverFontColor};
+      !disabled && theme.color.galleryNameColor};
+    color: ${({ disabled, theme }) => !disabled && theme.color.blackColor};
   }
 `;
 

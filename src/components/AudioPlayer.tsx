@@ -102,9 +102,11 @@ const AudioPlayer = () => {
       </UploadButton>
       <RangeSlider
         type="range"
+        id="slider"
         value={calculateSliderValue(currentTime, duration)}
         max="100"
         onChange={handleSeekChange}
+        aria-label="Seek slider"
         data-testid="range-slider"
       />
       <TimeTable>
