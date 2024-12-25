@@ -44,6 +44,7 @@ const AudioPlayer = () => {
     duration,
     currentTime,
   } = useAudioControl();
+
   const { startAudioContext } = useSpatialAudio(audioRef);
 
   const {
@@ -55,6 +56,7 @@ const AudioPlayer = () => {
     resetUploadedFile,
     setUploadedFile,
   } = useFileStore();
+
   const { modals, openModal, closeModal } = useModalStore();
 
   const handleOpenUploadModal = () => {
@@ -94,12 +96,15 @@ const AudioPlayer = () => {
         onEnded={handleTimeEnd}
         data-testid="audio"
       />
+
       <ResetButton onClick={resetUploadedFile} data-testid="reset-button">
         <Icon imageSrc={ResetButtonImage} imageAlt="Reset Button" />
       </ResetButton>
+
       <UploadButton onClick={handleOpenUploadModal} data-testid="upload-button">
         <Icon imageSrc={UploadButtonImage} imageAlt="Upload Button" />
       </UploadButton>
+
       <RangeSlider
         type="range"
         id="slider"
@@ -109,9 +114,11 @@ const AudioPlayer = () => {
         aria-label="Seek slider"
         data-testid="range-slider"
       />
+
       <TimeTable>
         <span>{formatDuration(currentTime, duration)}</span>
       </TimeTable>
+
       <ControlButton onClick={handlePlayButton} data-testid="control-button">
         <Icon
           imageSrc={isPlaying ? PauseButtonImage : PlayButtonImage}
@@ -119,9 +126,11 @@ const AudioPlayer = () => {
           $control
         />
       </ControlButton>
+
       <FileName onClick={toggleFileName} data-testid="file-name-text">
         {formatFileName(fileName, showFullFileName)}
       </FileName>
+
       {modals.uploadModal && (
         <Modal
           modalName="uploadModal"
