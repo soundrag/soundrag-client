@@ -64,7 +64,7 @@ describe("isDuplicateData function", () => {
     };
 
     expect(isDuplicateData(userData1, currentPosition, currentRotation)).toBe(
-      true,
+      true
     );
   });
 
@@ -76,7 +76,7 @@ describe("isDuplicateData function", () => {
     };
 
     expect(isDuplicateData(userData1, currentPosition, currentRotation)).toBe(
-      false,
+      false
     );
   });
 });
@@ -87,9 +87,9 @@ describe("isValidateNumber function", () => {
   });
 
   it("should return false for invalid numbers", () => {
-    expect(isValidateNumber(NaN, 2.0, 3.0)).toBe(false);
-    expect(isValidateNumber(1.0, Infinity, 3.0)).toBe(false);
-    expect(isValidateNumber(1.0, 2.0, -Infinity)).toBe(false);
+    expect(isValidateNumber(Number.NaN, 2.0, 3.0)).toBe(false);
+    expect(isValidateNumber(1.0, Number.POSITIVE_INFINITY, 3.0)).toBe(false);
+    expect(isValidateNumber(1.0, 2.0, Number.NEGATIVE_INFINITY)).toBe(false);
   });
 });
 

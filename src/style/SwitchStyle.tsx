@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
+interface SwitchStyleProps {
+	$active?: boolean;
+}
+
 const SwitchContainer = styled.div`
   display: flex;
   gap: 0.5rem;
@@ -18,7 +22,7 @@ const SwitchNumber = styled.div`
   font-size: ${({ theme }) => theme.fontSize.xSmall};
 `;
 
-const SwitchButton = styled.button`
+const SwitchButton = styled.button<SwitchStyleProps>`
   position: relative;
   width: 50%;
   padding: 0.2rem 0.4rem;

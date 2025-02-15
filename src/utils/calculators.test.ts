@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { Vector3, Plane, Camera, WebGLRenderer } from "three";
+import { Vector3, Plane, Camera } from "three";
 
 import {
   calculateSliderValue,
@@ -8,6 +8,8 @@ import {
   constrainPosition,
   calculatePan,
 } from "./calculators";
+
+import type { WebGLRenderer } from "three";
 
 describe("calculateSliderValue function", () => {
   it("should format the slider value to percentage", () => {
@@ -43,7 +45,7 @@ describe("calculateNewPosition function", () => {
     const newPosition = calculateNewPosition(
       initialPosition,
       currentIntersect,
-      initialIntersect,
+      initialIntersect
     );
     expect(newPosition.equals(new Vector3(1, 0, 1))).toBe(true);
   });

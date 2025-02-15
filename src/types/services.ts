@@ -1,5 +1,5 @@
 import type { AxiosRequestConfig } from "axios";
-import { UserData } from "./common";
+import type { UserData } from "./common";
 
 export interface ExtendedAxiosRequestConfig extends AxiosRequestConfig {
   _retry?: boolean;

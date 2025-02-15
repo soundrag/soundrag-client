@@ -16,7 +16,7 @@ const logoutUser = async (): Promise<AxiosResponse> => {
 };
 
 const verifyUserAuth = async (): Promise<AxiosResponse> => {
-  const idToken = await auth.currentUser.getIdToken();
+  const idToken = await auth.currentUser?.getIdToken();
 
   if (!idToken) {
     throw new Error("User is not authenticated");

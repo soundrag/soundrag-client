@@ -1,6 +1,10 @@
 import styled from "styled-components";
 
-const IconContainer = styled.div`
+interface IconStyleProps {
+	$control?: boolean;
+}
+
+const IconContainer = styled.div<IconStyleProps>`
   width: 2rem;
   height: 2rem;
   display: flex;
@@ -19,9 +23,9 @@ const IconContainer = styled.div`
       height: 0.4rem;
       border: 0.2rem solid
         ${({ theme, $control }) =>
-          $control
-            ? theme.color.buttonHoverSubColor
-            : theme.color.buttonHoverFontColor};
+					$control
+						? theme.color.buttonHoverSubColor
+						: theme.color.buttonHoverFontColor};
     }
 
     &::before {

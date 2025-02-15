@@ -4,7 +4,16 @@ import type { Vector3, Euler } from "three";
 
 export interface ButtonProps {
   text: string;
-  size?: "small" | "medium" | "large" | "xLarge";
+  size?:
+    | "xxxSmall"
+    | "xxSmall"
+    | "xSmall"
+    | "small"
+    | "large"
+    | "xLarge"
+    | "xxLarge"
+    | "xxxLarge"
+    | "title";
   isDisabled?: boolean;
   handleClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   $testId?: string;

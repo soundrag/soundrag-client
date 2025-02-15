@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-import { VersionState } from "../types/store";
+import type { VersionState } from "../types/store";
 
 const useVersionStore = create<VersionState>((set) => ({
   userVersion: [],

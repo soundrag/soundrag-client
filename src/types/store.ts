@@ -30,7 +30,7 @@ export interface DataState {
   userId: string;
   userData: UserData[];
 
-  setUserId: (userId: string) => void;
+  setUserId: (userId: string | null) => void;
   setUserData: (data: UserData[]) => void;
 }
 

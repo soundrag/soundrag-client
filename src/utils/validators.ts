@@ -4,7 +4,7 @@ import type { Transformation, UserData } from "../types/common";
 function isEqualVectors(
   firstVectors: number[],
   secondVectors: number[],
-  epsilon = 1e-6,
+  epsilon = 1e-6
 ): boolean {
   if (!Array.isArray(firstVectors) || !Array.isArray(secondVectors)) {
     return false;
@@ -13,14 +13,14 @@ function isEqualVectors(
   if (firstVectors.length !== secondVectors.length) return false;
 
   return firstVectors.every(
-    (value, index) => Math.abs(value - secondVectors[index]) <= epsilon,
+    (value, index) => Math.abs(value - secondVectors[index]) <= epsilon
   );
 }
 
 function compareTransformation(
   firstTransformation: Transformation,
   secondTransformation: Transformation,
-  epsilon = 1e-6,
+  epsilon = 1e-6
 ): boolean {
   const firstDetails = Object.keys(firstTransformation);
 
@@ -35,15 +35,15 @@ function compareTransformation(
     isEqualVectors(
       firstTransformation[info],
       secondTransformation[info],
-      epsilon,
-    ),
+      epsilon
+    )
   );
 }
 
 function isSameData(
   firstData: Partial<UserData>,
   secondData: Partial<UserData>,
-  epsilon = 1e-6,
+  epsilon = 1e-6
 ): boolean {
   const isPositionSame = compareTransformation(
     {
@@ -56,7 +56,7 @@ function isSameData(
       secondSpeakerPosition: secondData.secondSpeakerPosition,
       listenerPosition: secondData.listenerPosition,
     },
-    epsilon,
+    epsilon
   );
 
   const isRotationSame = compareTransformation(
@@ -70,7 +70,7 @@ function isSameData(
       secondSpeakerRotation: secondData.secondSpeakerRotation,
       listenerRotation: secondData.listenerRotation,
     },
-    epsilon,
+    epsilon
   );
 
   return isPositionSame && isRotationSame;
@@ -79,7 +79,7 @@ function isSameData(
 function isDuplicateData(
   userData: UserData[],
   positions: Transformation,
-  rotations: Transformation,
+  rotations: Transformation
 ): boolean {
   const targetData = {
     firstSpeakerPosition: positions.firstSpeaker,

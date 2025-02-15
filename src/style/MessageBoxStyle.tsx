@@ -1,10 +1,14 @@
 import styled from "styled-components";
 
-const MessageBoxContainer = styled.div`
+interface MessageBoxStyleProps {
+	$keyboard?: boolean;
+}
+
+const MessageBoxContainer = styled.div<MessageBoxStyleProps>`
   width: ${({ $keyboard }) => !$keyboard && "25rem"};
 `;
 
-const MessageBoxMode = styled.button`
+const MessageBoxMode = styled.button<MessageBoxStyleProps>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -19,7 +23,7 @@ const MessageBoxMode = styled.button`
 
   &:hover {
     background-color: ${({ theme, $keyboard }) =>
-      $keyboard ? theme.color.blackColor : theme.color.menuBackgroundColor};
+			$keyboard ? theme.color.blackColor : theme.color.menuBackgroundColor};
   }
 `;
 
@@ -38,8 +42,8 @@ const MessageBoxDescription = styled.div`
 `;
 
 export {
-  MessageBoxContainer,
-  MessageBoxMode,
-  MessageBoxTitle,
-  MessageBoxDescription,
+	MessageBoxContainer,
+	MessageBoxMode,
+	MessageBoxTitle,
+	MessageBoxDescription,
 };

@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
+interface ModalStyleProps {
+	$hasSecondButton?: boolean;
+}
+
 const ModalBackground = styled.div`
   position: fixed;
   top: 0;
@@ -48,17 +52,17 @@ const ModalContent = styled.div`
   }
 `;
 
-const ModalButtonContainer = styled.div`
+const ModalButtonContainer = styled.div<ModalStyleProps>`
   display: flex;
   justify-content: ${({ $hasSecondButton }) =>
-    $hasSecondButton ? "space-between" : "center"};
+		$hasSecondButton ? "space-between" : "center"};
   width: 100%;
 `;
 
 export {
-  ModalBackground,
-  ModalContainer,
-  ModalTitle,
-  ModalContent,
-  ModalButtonContainer,
+	ModalBackground,
+	ModalContainer,
+	ModalTitle,
+	ModalContent,
+	ModalButtonContainer,
 };

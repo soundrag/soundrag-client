@@ -26,7 +26,7 @@ axiosInstance.interceptors.request.use(
   },
   (error) => {
     return Promise.reject(error);
-  },
+  }
 );
 
 axiosInstance.interceptors.response.use(
@@ -56,7 +56,9 @@ axiosInstance.interceptors.response.use(
 
         const newIdToken = await user.getIdToken();
 
-        originalRequest.headers.Authorization = `Bearer ${newIdToken}`;
+        if (originalRequest.headers) {
+          originalRequest.headers.Authorization = `Bearer ${newIdToken}`;
+        }
 
         return axiosInstance(originalRequest);
       } catch (refreshError) {
@@ -72,7 +74,7 @@ axiosInstance.interceptors.response.use(
       console.error("An error occurred:", error.response.status);
     }
     return Promise.reject(error);
-  },
+  }
 );
 
 export default axiosInstance;

@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
+interface UserInputStyleProps {
+	maxLength?: string;
+}
+
 const UserForm = styled.form`
   display: flex;
   flex-direction: column;
@@ -17,7 +21,7 @@ const UserLabel = styled.label`
   }
 `;
 
-const UserInputTag = styled.input`
+const UserInputTag = styled.input<UserInputStyleProps>`
   padding: 0.3rem;
   border: 0.1rem solid ${({ theme }) => theme.color.buttonMainFontColor};
   border-radius: 0.4rem;

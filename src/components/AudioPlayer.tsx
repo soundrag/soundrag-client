@@ -17,142 +17,142 @@ import useFileStore from "../stores/useFileStore";
 import useModalStore from "../stores/useModalStore";
 
 import {
-  PlayerContainer,
-  RangeSlider,
-  TimeTable,
-  FileName,
-  ResetButton,
-  UploadButton,
-  ControlButton,
+	PlayerContainer,
+	RangeSlider,
+	TimeTable,
+	FileName,
+	ResetButton,
+	UploadButton,
+	ControlButton,
 } from "../style/AudioPlayerStyle";
 
 import { formatDuration, formatFileName } from "../utils/formatters";
 import { calculateSliderValue } from "../utils/calculators";
 
 const AudioPlayer = () => {
-  const [hasUploadFile, setHasUploadFile] = useState(false);
+	const [hasUploadFile, setHasUploadFile] = useState(false);
 
-  const {
-    audioRef,
-    handlePlayPause,
-    handleLoadedMetadata,
-    handleTimeUpdate,
-    handleTimeEnd,
-    handleSeekChange,
-    isPlaying,
-    setIsPlaying,
-    duration,
-    currentTime,
-  } = useAudioControl();
+	const {
+		audioRef,
+		handlePlayPause,
+		handleLoadedMetadata,
+		handleTimeUpdate,
+		handleTimeEnd,
+		handleSeekChange,
+		isPlaying,
+		setIsPlaying,
+		duration,
+		currentTime,
+	} = useAudioControl();
 
-  const { startAudioContext } = useSpatialAudio(audioRef);
+	const { startAudioContext } = useSpatialAudio(audioRef);
 
-  const {
-    fileName,
-    fileUrl,
-    showFullFileName,
-    setShowFullFileName,
-    resetTemporaryFile,
-    resetUploadedFile,
-    setUploadedFile,
-  } = useFileStore();
+	const {
+		fileName,
+		fileUrl,
+		showFullFileName,
+		setShowFullFileName,
+		resetTemporaryFile,
+		resetUploadedFile,
+		setUploadedFile,
+	} = useFileStore();
 
-  const { modals, openModal, closeModal } = useModalStore();
+	const { modals, openModal, closeModal } = useModalStore();
 
-  const handleOpenUploadModal = () => {
-    openModal("uploadModal");
-  };
+	const handleOpenUploadModal = () => {
+		openModal("uploadModal");
+	};
 
-  const handleCloseUploadModal = () => {
-    setHasUploadFile(false);
-    resetTemporaryFile();
-    closeModal("uploadModal");
-  };
+	const handleCloseUploadModal = () => {
+		setHasUploadFile(false);
+		resetTemporaryFile();
+		closeModal("uploadModal");
+	};
 
-  const handleUploadButton = () => {
-    setUploadedFile();
-    setIsPlaying(false);
-    setHasUploadFile(false);
-    closeModal("uploadModal");
-    toast.success("Complete! (Upload)");
-  };
+	const handleUploadButton = () => {
+		setUploadedFile();
+		setIsPlaying(false);
+		setHasUploadFile(false);
+		closeModal("uploadModal");
+		toast.success("Complete! (Upload)");
+	};
 
-  const handlePlayButton = async () => {
-    await startAudioContext();
-    handlePlayPause();
-  };
+	const handlePlayButton = async () => {
+		await startAudioContext();
+		handlePlayPause();
+	};
 
-  const toggleFileName = () => {
-    setShowFullFileName(!showFullFileName);
-  };
+	const toggleFileName = () => {
+		setShowFullFileName(!showFullFileName);
+	};
 
-  return (
-    <PlayerContainer data-testid="audio-player">
-      <audio
-        ref={audioRef}
-        src={fileUrl}
-        onLoadedMetadata={handleLoadedMetadata}
-        onTimeUpdate={handleTimeUpdate}
-        onEnded={handleTimeEnd}
-        data-testid="audio"
-      />
+	return (
+		<PlayerContainer data-testid="audio-player">
+			<audio
+				ref={audioRef}
+				src={fileUrl}
+				onLoadedMetadata={handleLoadedMetadata}
+				onTimeUpdate={handleTimeUpdate}
+				onEnded={handleTimeEnd}
+				data-testid="audio"
+			/>
 
-      <ResetButton onClick={resetUploadedFile} data-testid="reset-button">
-        <Icon imageSrc={ResetButtonImage} imageAlt="Reset Button" />
-      </ResetButton>
+			<ResetButton onClick={resetUploadedFile} data-testid="reset-button">
+				<Icon imageSrc={ResetButtonImage} imageAlt="Reset Button" />
+			</ResetButton>
 
-      <UploadButton onClick={handleOpenUploadModal} data-testid="upload-button">
-        <Icon imageSrc={UploadButtonImage} imageAlt="Upload Button" />
-      </UploadButton>
+			<UploadButton onClick={handleOpenUploadModal} data-testid="upload-button">
+				<Icon imageSrc={UploadButtonImage} imageAlt="Upload Button" />
+			</UploadButton>
 
-      <RangeSlider
-        type="range"
-        id="slider"
-        value={calculateSliderValue(currentTime, duration)}
-        max="100"
-        onChange={handleSeekChange}
-        aria-label="Seek slider"
-        data-testid="range-slider"
-      />
+			<RangeSlider
+				type="range"
+				id="slider"
+				value={calculateSliderValue(currentTime, duration)}
+				max="100"
+				onChange={handleSeekChange}
+				aria-label="Seek slider"
+				data-testid="range-slider"
+			/>
 
-      <TimeTable>
-        <span>{formatDuration(currentTime, duration)}</span>
-      </TimeTable>
+			<TimeTable>
+				<span>{formatDuration(currentTime, duration)}</span>
+			</TimeTable>
 
-      <ControlButton onClick={handlePlayButton} data-testid="control-button">
-        <Icon
-          imageSrc={isPlaying ? PauseButtonImage : PlayButtonImage}
-          imageAlt={isPlaying ? "Pause Button" : "Play Button"}
-          $control
-        />
-      </ControlButton>
+			<ControlButton onClick={handlePlayButton} data-testid="control-button">
+				<Icon
+					imageSrc={isPlaying ? PauseButtonImage : PlayButtonImage}
+					imageAlt={isPlaying ? "Pause Button" : "Play Button"}
+					$control
+				/>
+			</ControlButton>
 
-      <FileName onClick={toggleFileName} data-testid="file-name-text">
-        {formatFileName(fileName, showFullFileName)}
-      </FileName>
+			<FileName onClick={toggleFileName} data-testid="file-name-text">
+				{formatFileName(fileName, showFullFileName)}
+			</FileName>
 
-      {modals.uploadModal && (
-        <Modal
-          modalName="uploadModal"
-          modalTitle="업로드"
-          content={
-            <UploadZone
-              hasUploadFile={hasUploadFile}
-              setHasUploadFile={setHasUploadFile}
-            />
-          }
-          firstButtonText="취소"
-          secondButtonText="업로드"
-          handleFirstButton={handleCloseUploadModal}
-          handleSecondButton={handleUploadButton}
-          isEnabled={hasUploadFile}
-          $modalTestId="audio-modal"
-          $firstButtonTestId="cancel-button"
-          $secondButtonTestId="confirm-button"
-        />
-      )}
-    </PlayerContainer>
-  );
+			{modals.uploadModal && (
+				<Modal
+					modalName="uploadModal"
+					modalTitle="업로드"
+					content={
+						<UploadZone
+							hasUploadFile={hasUploadFile}
+							setHasUploadFile={setHasUploadFile}
+						/>
+					}
+					firstButtonText="취소"
+					secondButtonText="업로드"
+					handleFirstButton={handleCloseUploadModal}
+					handleSecondButton={handleUploadButton}
+					isEnabled={hasUploadFile}
+					$modalTestId="audio-modal"
+					$firstButtonTestId="cancel-button"
+					$secondButtonTestId="confirm-button"
+				/>
+			)}
+		</PlayerContainer>
+	);
 };
 
 export default AudioPlayer;
